@@ -82,7 +82,6 @@ class RefreshView: UIView {
     /// 将要添加到父控件的时候调用此方法 系统调用
     /// - Parameter newSuperview: 将要添加到的父控件
     override func willMove(toSuperview newSuperview: UIView?) {
-        super.willMove(toSuperview: newSuperview)
         if newSuperview == nil || newSuperview?.isKind(of: UIScrollView.self) == false {return}
         scrollview = newSuperview as? UIScrollView
         if isLeftOrRightOrientation() {
@@ -97,11 +96,9 @@ class RefreshView: UIView {
             }
         }
         panGestureRecognizer = scrollview?.panGestureRecognizer
-        //removeObserver()
         addObserver()
     }
-    
-    
+
     /// 监听scrollview的状态
     func addObserver(){
         scrollview?.addObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset), options: .new, context: nil)
@@ -244,6 +241,10 @@ class RefreshView: UIView {
                 self.isHidden = true
             }
         }
+    }
+    
+    deinit {
+        removeObserver()
     }
 }
 

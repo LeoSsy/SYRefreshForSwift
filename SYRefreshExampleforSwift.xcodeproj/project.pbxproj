@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A1CD7F71EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD7F61EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift */; };
+		2A1CD7F81EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD7F61EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift */; };
+		2A1CD7F91EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD7F61EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift */; };
+		2A1CD7FB1EEB866300EA5146 /* GIFAnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD7FA1EEB866300EA5146 /* GIFAnimatedImageView.swift */; };
+		2A1CD7FC1EEB866300EA5146 /* GIFAnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD7FA1EEB866300EA5146 /* GIFAnimatedImageView.swift */; };
+		2A1CD7FD1EEB866300EA5146 /* GIFAnimatedImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD7FA1EEB866300EA5146 /* GIFAnimatedImageView.swift */; };
 		2A5A66961EE8EFEB00521D32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66951EE8EFEB00521D32 /* AppDelegate.swift */; };
 		2A5A66981EE8EFEB00521D32 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66971EE8EFEB00521D32 /* ViewController.swift */; };
 		2A5A669B1EE8EFEB00521D32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A66991EE8EFEB00521D32 /* Main.storyboard */; };
@@ -79,6 +85,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A1CD7F61EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHorizontalNormalCollectionViewController.swift; sourceTree = "<group>"; };
+		2A1CD7FA1EEB866300EA5146 /* GIFAnimatedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIFAnimatedImageView.swift; sourceTree = "<group>"; };
 		2A5A66921EE8EFEB00521D32 /* SYRefreshExampleforSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SYRefreshExampleforSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A5A66951EE8EFEB00521D32 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A5A66971EE8EFEB00521D32 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +177,7 @@
 				2A684FEF1EEA8C4A00E14989 /* TestHorizontalCollectionViewController.swift */,
 				2A6850031EEAA2AF00E14989 /* TestVerticalGifCollectionViewController.swift */,
 				2A684FFF1EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift */,
+				2A1CD7F61EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift */,
 				2A5A66991EE8EFEB00521D32 /* Main.storyboard */,
 				2A5A669C1EE8EFEB00521D32 /* Assets.xcassets */,
 				2A5A669E1EE8EFEB00521D32 /* LaunchScreen.storyboard */,
@@ -199,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				2A5A66C41EE8F26E00521D32 /* RefreshView.swift */,
+				2A1CD7FA1EEB866300EA5146 /* GIFAnimatedImageView.swift */,
 				2A684FCF1EE942AB00E14989 /* RefreshTextHeaderFooter.swift */,
 				2A684FDF1EEA413200E14989 /* RefreshViewGifHeaderFooter.swift */,
 				2A684FFB1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift */,
@@ -359,12 +369,14 @@
 				2A5A66981EE8EFEB00521D32 /* ViewController.swift in Sources */,
 				2A6850001EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift in Sources */,
 				2A5A66C91EE8F98500521D32 /* UIScrollViewExtention.swift in Sources */,
+				2A1CD7F71EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */,
 				2A684FD81EE94B8300E14989 /* AccessoryView.swift in Sources */,
 				2A684FE41EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */,
 				2A684FE01EEA413200E14989 /* RefreshViewGifHeaderFooter.swift in Sources */,
 				2A5A66C51EE8F26E00521D32 /* RefreshView.swift in Sources */,
 				2A5A66961EE8EFEB00521D32 /* AppDelegate.swift in Sources */,
 				2A684FEC1EEA821C00E14989 /* TestVerticalCollectionViewController.swift in Sources */,
+				2A1CD7FB1EEB866300EA5146 /* GIFAnimatedImageView.swift in Sources */,
 				2A6850041EEAA2AF00E14989 /* TestVerticalGifCollectionViewController.swift in Sources */,
 				2A684FF01EEA8C4A00E14989 /* TestHorizontalCollectionViewController.swift in Sources */,
 				2A684FD41EE94AFF00E14989 /* TestTableViewController.swift in Sources */,
@@ -378,6 +390,8 @@
 				2A5A66CA1EE8F98500521D32 /* UIScrollViewExtention.swift in Sources */,
 				2A6850011EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift in Sources */,
 				2A684FE51EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */,
+				2A1CD7F81EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */,
+				2A1CD7FC1EEB866300EA5146 /* GIFAnimatedImageView.swift in Sources */,
 				2A5A66C61EE8F26E00521D32 /* RefreshView.swift in Sources */,
 				2A684FE11EEA413200E14989 /* RefreshViewGifHeaderFooter.swift in Sources */,
 				2A5A66AB1EE8EFEB00521D32 /* SYRefreshExampleTests.swift in Sources */,
@@ -398,6 +412,8 @@
 				2A5A66CB1EE8F98500521D32 /* UIScrollViewExtention.swift in Sources */,
 				2A6850021EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift in Sources */,
 				2A684FE61EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */,
+				2A1CD7F91EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */,
+				2A1CD7FD1EEB866300EA5146 /* GIFAnimatedImageView.swift in Sources */,
 				2A5A66C71EE8F26E00521D32 /* RefreshView.swift in Sources */,
 				2A684FE21EEA413200E14989 /* RefreshViewGifHeaderFooter.swift in Sources */,
 				2A5A66B61EE8EFEB00521D32 /* SYRefreshExampleUITests.swift in Sources */,

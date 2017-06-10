@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RefreshTextHeader: RefreshView {
+class RefreshTextHeaderFooter: RefreshView {
     
     private var accessoryView:AccessoryView //辅助试图
     private var textItem:TextItem //文本视图
@@ -26,8 +26,8 @@ class RefreshTextHeader: RefreshView {
         self.accessoryView = AccessoryView(color: color)
         self.textItem = TextItem(normalText: normalText, pullingText: pullingText, refreshingText: refreshingText, font: font, color: color)
         super.init(orientaton: orientation, height: height, completion: completion)
-        self.accessoryView.isLeftOrRightOrientation = self.isLeftOrRightOrientation()
-        layer.addSublayer(accessoryView.arrowLayer)
+        self.accessoryView.isLeftOrRightOrientation = self.isLeftOrRightOrientation() //传递刷新的方向
+        layer.addSublayer(accessoryView.arrowLayer())
         addSubview(accessoryView.indicatorView)
         addSubview(textItem.label)
     }
@@ -48,11 +48,17 @@ class RefreshTextHeader: RefreshView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let point = CGPoint(x: (bounds.width - textItem.label.bounds.width*0.5-15)*0.5, y: bounds.midY)
-        let labelCenter = CGPoint(x: (bounds.width+textItem.label.bounds.width*0.5+15)*0.5, y: bounds.midY)
+        var point = CGPoint(x: (bounds.width - textItem.label.bounds.width*0.5-15)*0.5, y: bounds.midY)
+        var indicatorViewPoint = CGPoint(x: point.x-8, y: point.y)
+        var labelCenter = CGPoint(x: (bounds.width+textItem.label.bounds.width*0.5+15)*0.5, y: bounds.midY)
+        if isLeftOrRightOrientation() { //如果是水平刷新
+            point = CGPoint(x: bounds.midX, y: bounds.midY-bounds.width*0.5)
+            indicatorViewPoint = CGPoint(x: point.x, y: point.y)
+            labelCenter = CGPoint(x: bounds.midX, y: bounds.midY)
+        }
         UIView.performWithoutAnimation {
-            accessoryView.arrowLayer.position = point
-            accessoryView.indicatorView.center = CGPoint(x: point.x-8, y: point.y)
+            accessoryView.arrowLayer().position = point
+            accessoryView.indicatorView.center = indicatorViewPoint
             textItem.label.center = labelCenter
         }
     }

@@ -249,11 +249,7 @@ class RefreshView: UIView {
     }
 }
 
-struct RefreshConfig {
-    static let animationDuration:TimeInterval = 0.3   /// 默认动画时间
-    static let height:CGFloat = 44                     /// 默认刷新控件高度
-    static let color:UIColor = UIColor.black           /// 默认字体颜色
-    static let font:UIFont = UIFont.systemFont(ofSize:14)/// 默认字体大小
+struct VerticalHintText {
     static let headerNomalText:String = "下拉即可刷新"   /// 头部默认状态提示文字
     static let headerPullingText:String = "松手即可刷新" ///头部拖拽状态提示文字
     static let headerRefreshText:String = "刷新中..."   ///头部刷新状态提示文字
@@ -261,4 +257,21 @@ struct RefreshConfig {
     static let footerPullingText:String = "松手加载更多" ///尾部拖拽状态提示文字
     static let footerRefreshText:String = "加载中..."   ///尾部刷新状态提示文字
     static let footerNomoreDataText:String = "———— 别再拉了，再拉我也长不高 ————"   ///尾部刷新状态提示文字
+}
+
+struct HorizontalHintText {
+    static let headerNomalText:String = "右边拉即可刷新"   /// 头部默认状态提示文字
+    static let headerPullingText:String = "松手即可刷新" ///头部拖拽状态提示文字
+    static let headerRefreshText:String = "刷新中..."   ///头部刷新状态提示文字
+    static let footerNomalText:String = "左拉加载更多"   /// 尾部默认状态提示文字
+    static let footerPullingText:String = "松手加载更多" ///尾部拖拽状态提示文字
+    static let footerRefreshText:String = "加载中..."   ///尾部刷新状态提示文字
+    static let footerNomoreDataText:String = "— 别再拉了，再拉我也变不长 —"   ///尾部刷新状态提示文字
+}
+
+struct RefreshConfig {
+    static let animationDuration:TimeInterval = 0.3   /// 默认动画时间
+    static let height:CGFloat = 44                     /// 默认刷新控件高度
+    static let color:UIColor = UIColor.black           /// 默认字体颜色
+    static let font:UIFont = UIFont.systemFont(ofSize:14)/// 默认字体大小
 }

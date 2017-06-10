@@ -55,8 +55,8 @@ final class AccessoryView { // 不允许子类继承
         return indicatorView
     }()
     
-    /// 箭头控件
-    lazy var arrowLayer:CAShapeLayer =  {
+    /// 垂直箭头控件
+    lazy var arrowLayerV:CAShapeLayer =  {
         let bezierPath = UIBezierPath()
         bezierPath.move(to: CGPoint(x: 0, y: 8))
         bezierPath.addLine(to: CGPoint(x: 0, y: -8))
@@ -73,6 +73,28 @@ final class AccessoryView { // 不允许子类继承
         return shapeLayer
     }()
     
+    /// 水平箭头控件
+    lazy var arrowLayerH:CAShapeLayer =  {
+        let bezierPath = UIBezierPath()
+        bezierPath.move(to: CGPoint(x: 8, y: 0))
+        bezierPath.addLine(to: CGPoint(x: -8, y: 0))
+        bezierPath.move(to: CGPoint(x: 8, y: 0))
+        bezierPath.addLine(to: CGPoint(x: 2, y: 6))
+        bezierPath.move(to: CGPoint(x: 8, y: 0))
+        bezierPath.addLine(to: CGPoint(x: 2, y: -6))
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.lineCap = kCALineCapRound
+        shapeLayer.path = bezierPath.cgPath
+        shapeLayer.strokeColor = RefreshConfig.color.cgColor
+        shapeLayer.lineWidth = 2
+        return shapeLayer
+    }()
+    
+    func arrowLayer() -> CAShapeLayer {
+        return isLeftOrRightOrientation ? arrowLayerH : arrowLayerV
+    }
+    
     /// 初始化方法
     /// - Parameter color: 初始颜色
     init(color:UIColor){
@@ -82,7 +104,7 @@ final class AccessoryView { // 不允许子类继承
     /// 更新当前的控件状态
     /// - Parameter isRefreshing: 是否正在刷新
     func updateRefreshState(isRefreshing:Bool){
-        arrowLayer.isHidden = isRefreshing
+        arrowLayer().isHidden = isRefreshing
         isRefreshing ? indicatorView.startAnimating() : indicatorView.stopAnimating()
     }
 
@@ -93,15 +115,15 @@ final class AccessoryView { // 不允许子类继承
     func updatePullProgress(progress:CGFloat,isFooter:Bool = false){
         if self.isLeftOrRightOrientation {
             if isFooter {
-                arrowLayer.transform = progress == 1 ? CATransform3DIdentity : CATransform3DMakeRotation(CGFloat.pi, 1, 0, 0)
+                arrowLayer().transform = progress == 1 ? CATransform3DIdentity : CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
             }else{
-                arrowLayer.transform = progress == 1 ? CATransform3DMakeRotation(CGFloat.pi, 1, 0, 0) : CATransform3DIdentity
+                arrowLayer().transform = progress == 1 ? CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1) : CATransform3DIdentity
             }
         }else{
             if isFooter {
-                arrowLayer.transform = progress == 1 ? CATransform3DIdentity : CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
+                arrowLayer().transform = progress == 1 ? CATransform3DIdentity : CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
             }else{
-                arrowLayer.transform = progress == 1 ? CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1) : CATransform3DIdentity
+                arrowLayer().transform = progress == 1 ? CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1) : CATransform3DIdentity
             }
         }
         

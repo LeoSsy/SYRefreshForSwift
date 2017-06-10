@@ -245,10 +245,6 @@ class RefreshView: UIView {
             }
         }
     }
-    
-    deinit {
-        print("deinit ===\(self)")
-    }
 }
 
 struct VerticalHintText {

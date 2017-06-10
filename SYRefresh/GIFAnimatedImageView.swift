@@ -168,10 +168,4 @@ open class GIFAnimatedImageView : UIImageView {
             isAnimated = false
         }
     }
-    open override func removeFromSuperview() {
-        super.removeFromSuperview()
-    }
-    deinit {
-        print("deinit ===\(self)")
-    }
 }

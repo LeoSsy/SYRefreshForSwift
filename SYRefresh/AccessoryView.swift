@@ -88,6 +88,7 @@ final class AccessoryView { // 不允许子类继承
         return shapeLayer
     }()
     
+
     func arrowLayer() -> CAShapeLayer {
         return isLeftOrRightOrientation ? arrowLayerH : arrowLayerV
     }

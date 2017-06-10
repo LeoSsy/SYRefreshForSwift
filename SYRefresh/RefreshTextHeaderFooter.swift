@@ -71,8 +71,4 @@ class RefreshTextHeaderFooter: RefreshView {
         }
     }
 
-    deinit {
-        print("deinit ===\(self)")
-    }
-
 }

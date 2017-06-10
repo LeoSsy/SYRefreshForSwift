@@ -14,7 +14,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         scrollview.sy_header = RefreshTextHeaderFooter(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, orientation: .top, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.scrollview.sy_header?.endRefreshing()

@@ -19,7 +19,7 @@ class TestHorizontalCollectionViewController: UICollectionViewController {
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-        let data = try! Data(contentsOf: Bundle.main.url(forResource: "giphy.gif", withExtension: nil)!)
+        let data = try! Data(contentsOf: Bundle.main.url(forResource: "demo-small.gif", withExtension: nil)!)
         collectionView?.sy_header = RefreshViewGifHeaderFooter(data: data, orientation: .left, height: 40,contentMode:.scaleAspectFit,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.collectionView?.sy_header?.endRefreshing()

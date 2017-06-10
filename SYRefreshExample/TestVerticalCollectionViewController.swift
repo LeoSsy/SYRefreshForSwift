@@ -19,13 +19,13 @@ class TestVerticalCollectionViewController: UICollectionViewController {
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         let data = try! Data(contentsOf: Bundle.main.url(forResource: "demo-big.gif", withExtension: nil)!)
-        collectionView?.sy_header = RefreshViewGifHeaderFooter(data: data, orientation: .top, height: 150,contentMode:.scaleAspectFill,completion: { [weak self] in
+        collectionView?.sy_header = RefreshViewGifHeaderFooter(data: data, orientation: .top, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.collectionView?.sy_header?.endRefreshing()
             }
         })
         
-        collectionView?.sy_footer = RefreshViewGifHeaderFooter(data: data, orientation: .bottom, height: 150,contentMode:.scaleAspectFill,completion: { [weak self] in
+        collectionView?.sy_footer = RefreshViewGifHeaderFooter(data: data, orientation: .bottom, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.collectionView?.sy_footer?.endRefreshing()
             }

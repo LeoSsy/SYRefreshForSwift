@@ -63,12 +63,5 @@ class RefreshViewGifHeaderFooter: RefreshView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func removeFromSuperview() {
-        super.removeFromSuperview()
-    }
-    deinit {
-        print("deinit ===\(self)")
-    }
 
 }

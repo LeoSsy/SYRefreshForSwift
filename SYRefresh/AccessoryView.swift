@@ -4,17 +4,16 @@
 //
 //  Created by shusy on 2017/6/8.
 //  Copyright © 2017年 SYRefresh. All rights reserved.
-//
+//  代码地址: https://github.com/shushaoyong/SYRefreshForSwift
 
 import UIKit
 
 final class TextItem  {
-    
-    private let normalText:String
-    private let pullingText:String
-    private let refreshingText:String
-    private let font:UIFont
-    private let color:UIColor
+    private let normalText:String //默认状态提示文字
+    private let pullingText:String //拖拽到临界点松开即可刷新状态提示文字
+    private let refreshingText:String //刷新状态提示文字
+    private let font:UIFont //提示文字字体
+    private let color:UIColor//提示文字颜色
     let label = UILabel()
     init(normalText:String,pullingText:String,refreshingText:String,font:UIFont,color:UIColor){
         self.normalText = normalText
@@ -40,11 +39,9 @@ final class TextItem  {
        label.text = progress == 1 ? self.pullingText : self.normalText
        label.sizeToFit()
     }
-    
 }
 
 final class AccessoryView { // 不允许子类继承
-    
     /// 视图颜色
     private let color :UIColor
     public  var isLeftOrRightOrientation:Bool = false //是否是左右刷新控件 通过外界设置

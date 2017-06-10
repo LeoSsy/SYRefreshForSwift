@@ -4,12 +4,19 @@
 //
 //  Created by shusy on 2017/6/9.
 //  Copyright © 2017年 SYRefresh. All rights reserved.
-//
+//  代码地址: https://github.com/shushaoyong/SYRefreshForSwift
 
 import UIKit
 
 class RefreshViewGifHeaderFooter: RefreshView {
     public var imageView  =  GIFAnimatedImageView(frame: .zero)
+    /// 创建一个GIF刷新控件
+    /// - Parameters:
+    ///   - data:  gif数据
+    ///   - orientation: 刷新控件的方向
+    ///   - height: 刷新控件的高度
+    ///   - contentMode: gif图片显示模式
+    ///   - completion: 开始刷新之后回调
     init(data:Data?,orientation:RefreshViewOrientation,height:CGFloat,contentMode:UIViewContentMode,completion:@escaping ()->Void){
         if data != nil {
             imageView.animatedImage = GIFAnimatedImage(data: data!)

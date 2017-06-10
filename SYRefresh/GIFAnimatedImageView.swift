@@ -4,11 +4,12 @@
 //
 //  Created by shusy on 2017/6/10.
 //  Copyright © 2017年 SYRefresh. All rights reserved.
-//
+//  代码地址: https://github.com/shushaoyong/SYRefreshForSwift
 
 import UIKit
 import ImageIO
 
+// MARK GifProxy
 private class GifProxy : NSObject  {
     private  weak var target : GIFAnimatedImageView?
     init(target:GIFAnimatedImageView){

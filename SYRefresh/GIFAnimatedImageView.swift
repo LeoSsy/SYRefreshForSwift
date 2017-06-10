@@ -45,7 +45,6 @@ public protocol AnimatedImage {
 
 // MARK GIFAnimatedImage
 public class GIFAnimatedImage : NSObject , AnimatedImage {
-    
     fileprivate typealias imageInfo = (image:UIImage,duration:TimeInterval)
     fileprivate var images : [imageInfo]
     public var size: CGSize = .zero
@@ -113,7 +112,7 @@ public class GIFAnimatedImage : NSObject , AnimatedImage {
 open class GIFAnimatedImageView : UIImageView {
     var isAnimated = false //是否正动画
     var lastTimestamp:TimeInterval = 0.0 //上一次的时间
-    var animatedImage : GIFAnimatedImage? { //图片对下 存储图片相关信息
+    var animatedImage : GIFAnimatedImage? { //图片对象 存储图片相关信息
         didSet{
             image = animatedImage?[0]
         }
@@ -137,6 +136,7 @@ open class GIFAnimatedImageView : UIImageView {
     }
     lazy var displayLink : CADisplayLink = { //定时器
         let displayLink  = CADisplayLink(target: GifProxy(target: self), selector: #selector(refresFrames))
+//        let displayLink  = CADisplayLink(target: self, selector: #selector(refresFrames))
         displayLink.add(to:.main, forMode:.commonModes)
         displayLink.isPaused = true
         return displayLink
@@ -167,7 +167,9 @@ open class GIFAnimatedImageView : UIImageView {
             isAnimated = false
         }
     }
-    
+    open override func removeFromSuperview() {
+        super.removeFromSuperview()
+    }
     deinit {
         print("deinit ===\(self)")
     }

@@ -39,6 +39,10 @@ class TestVerticalGifTableViewController: UITableViewController {
         cell.textLabel?.text = "indepath==\(indexPath.row)"
         return cell
     }
+    
+    deinit {
+        print("deinit ===\(self)")
+    }
 
 
 }

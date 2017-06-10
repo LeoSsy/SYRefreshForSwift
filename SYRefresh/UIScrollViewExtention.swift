@@ -15,7 +15,7 @@ extension UIScrollView {
     
     var sy_header:RefreshView?{
         set{
-            objc_setAssociatedObject(self, &headerKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &headerKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
             newValue.map{ //http://www.jianshu.com/p/449cfe1b8fbb
                 insertSubview($0, at: 0)
             }
@@ -27,7 +27,7 @@ extension UIScrollView {
     
     var sy_footer:RefreshView?{
         set{
-            objc_setAssociatedObject(self, &footerKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &footerKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
             newValue.map{
                 insertSubview($0, at: 0)
             }
@@ -36,5 +36,6 @@ extension UIScrollView {
             return objc_getAssociatedObject(self, &footerKey) as? RefreshView
         }
     }
+    
 }
 

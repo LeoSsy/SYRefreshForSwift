@@ -48,9 +48,17 @@ class RefreshTextHeaderFooter: RefreshView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        var point = CGPoint(x: (bounds.width - textItem.label.bounds.width*0.5-15)*0.5, y: bounds.midY)
+        
+        var contentW = bounds.width
+        if  superview?.superview != nil {
+            if (superview?.isKind(of: UIScrollView.self))! {
+                contentW = (superview?.superview?.bounds.width)!
+            }
+        }
+        var point = CGPoint(x: (contentW - textItem.label.bounds.width*0.65-8)*0.5, y: bounds.midY)
         var indicatorViewPoint = CGPoint(x: point.x-8, y: point.y)
-        var labelCenter = CGPoint(x: (bounds.width+textItem.label.bounds.width*0.5+15)*0.5, y: bounds.midY)
+        var labelCenter = CGPoint(x: (contentW+textItem.label.bounds.width*0.5+8)*0.5, y: bounds.midY)
+        
         if isLeftOrRightOrientation() { //如果是水平刷新
             point = CGPoint(x: bounds.midX, y: bounds.midY-bounds.width*0.5)
             indicatorViewPoint = CGPoint(x: point.x, y: point.y)
@@ -61,6 +69,10 @@ class RefreshTextHeaderFooter: RefreshView {
             accessoryView.indicatorView.center = indicatorViewPoint
             textItem.label.center = labelCenter
         }
+    }
+
+    deinit {
+        print("deinit ===\(self)")
     }
 
 }

@@ -113,19 +113,10 @@ final class AccessoryView { // 不允许子类继承
     ///   - progress: 拖拽比例
     ///   - isFooter: 是否是尾部控件
     func updatePullProgress(progress:CGFloat,isFooter:Bool = false){
-        if self.isLeftOrRightOrientation {
-            if isFooter {
-                arrowLayer().transform = progress == 1 ? CATransform3DIdentity : CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
-            }else{
-                arrowLayer().transform = progress == 1 ? CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1) : CATransform3DIdentity
-            }
+        if isFooter {
+            arrowLayer().transform = progress == 1 ? CATransform3DIdentity : CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
         }else{
-            if isFooter {
-                arrowLayer().transform = progress == 1 ? CATransform3DIdentity : CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
-            }else{
-                arrowLayer().transform = progress == 1 ? CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1) : CATransform3DIdentity
-            }
+            arrowLayer().transform = progress == 1 ? CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1) : CATransform3DIdentity
         }
-        
     }
 }

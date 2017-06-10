@@ -21,8 +21,6 @@ enum RefreshViewOrientation {
 }
 
 class RefreshView: UIView {
-    /**刷新控件的高度*/
-    public var sy_height:CGFloat = 0
     /**是否添加到尾部*/
     public var isFooter:Bool = false
     /**保存当前刷新控件方向*/
@@ -58,11 +56,11 @@ class RefreshView: UIView {
         if orientaton == .bottom || orientaton == .right { isFooter = true }
         self.completionCallBack = completion
         self.isFooter = isFooter
-        self.sy_height = height
         self.orientation = orientaton
         super.init(frame: .zero)
         updatePullProgress(progress: pullProgress)
         self.isHidden = true
+        self.bounds.size.height = height
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -88,12 +86,12 @@ class RefreshView: UIView {
         if newSuperview == nil || newSuperview?.isKind(of: UIScrollView.self) == false {return}
         scrollview = newSuperview as? UIScrollView
         if isLeftOrRightOrientation() {
-            self.frame = CGRect(x: 0, y: 0, width: sy_height, height: newSuperview!.bounds.height)
+            self.frame = CGRect(x: 0, y: 0, width: bounds.height, height: newSuperview!.bounds.height)
             if isFooter == false {
                 self.frame.origin.x = -bounds.width
             }
         }else{
-            self.frame = CGRect(x: 0, y: 0, width: newSuperview!.bounds.width, height: sy_height)
+            self.frame = CGRect(x: 0, y: 0, width: newSuperview!.bounds.width, height: bounds.height)
             if isFooter == false {
                 self.frame.origin.y = -bounds.height
             }
@@ -246,6 +244,10 @@ class RefreshView: UIView {
                 self.isHidden = true
             }
         }
+    }
+    
+    deinit {
+        print("deinit ===\(self)")
     }
 }
 

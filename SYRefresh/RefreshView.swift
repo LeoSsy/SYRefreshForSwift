@@ -30,6 +30,7 @@ class RefreshView: UIView {
     /**是否正在刷新*/
     var isRefreshing:Bool = false{
         didSet{
+            if checkContentSizeValid() { return }
             updateRefreshState(isRefreshing: isRefreshing)
         }
     }
@@ -37,6 +38,7 @@ class RefreshView: UIView {
     private  var pullProgress:CGFloat = 0 {
         didSet{
             if isRefreshing { return }
+            if checkContentSizeValid() { return }
             updatePullProgress(progress: pullProgress)
         }
     }
@@ -160,13 +162,41 @@ class RefreshView: UIView {
         }
     }
     
+    
+    /// 校验contentsize是否有效果
+    func checkContentSizeValid()->Bool{
+        if isFooter == false { return false }
+        guard let scrollview = scrollview else { return false} //作用：在下面使用scrollview的时候不用解包
+        if isLeftOrRightOrientation() {
+            //当内容不满一个屏幕的时候就隐藏底部的刷新控件
+            if (scrollview.contentSize.width < scrollview.bounds.width) {
+                scrollview.sy_footer?.isHidden = true
+                return true
+            }else{
+                scrollview.sy_footer?.isHidden = false
+                return false
+            }
+        }else{
+            //当内容不满一个屏幕的时候就隐藏底部的刷新控件
+            if (scrollview.contentSize.height < scrollview.bounds.height) {
+                scrollview.sy_footer?.isHidden = true
+                return true
+            }else{
+                scrollview.sy_footer?.isHidden = false
+                return false
+            }
+        }
+    }
+    
     /// contentSize 改变之后调用此方法
     private func contentSizeChange(){
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
         if isLeftOrRightOrientation() {
+            if checkContentSizeValid() { return }
             if self.bounds.minX ==  scrollview.contentSize.width{return}
             self.frame.origin.x  = scrollview.contentSize.width
         }else{
+            if checkContentSizeValid() { return }
             if self.frame.origin.y ==  scrollview.contentSize.height{return}
             self.frame.origin.y  = scrollview.contentSize.height
         }
@@ -186,6 +216,7 @@ class RefreshView: UIView {
     /// 开始刷新
     func beginRefreshing(){
         if isRefreshing {return}
+        if checkContentSizeValid() { return }
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
         isRefreshing = true
         pullProgress = 1

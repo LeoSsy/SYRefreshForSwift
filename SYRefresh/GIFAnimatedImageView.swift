@@ -137,7 +137,6 @@ open class GIFAnimatedImageView : UIImageView {
     }
     lazy var displayLink : CADisplayLink = { //定时器
         let displayLink  = CADisplayLink(target: GifProxy(target: self), selector: #selector(refresFrames))
-//        let displayLink  = CADisplayLink(target: self, selector: #selector(refresFrames))
         displayLink.add(to:.main, forMode:.commonModes)
         displayLink.isPaused = true
         return displayLink
@@ -168,4 +167,5 @@ open class GIFAnimatedImageView : UIImageView {
             isAnimated = false
         }
     }
+    
 }

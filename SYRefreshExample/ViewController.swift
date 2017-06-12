@@ -25,15 +25,12 @@ class ViewController: UIViewController {
                 self?.scrollview.sy_footer?.endRefreshing()
             }
         })
-
+        
         let contentView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 700))
         contentView.backgroundColor = UIColor.gray
         self.scrollview.addSubview(contentView)
         self.scrollview.contentSize = CGSize(width: 0, height: contentView.bounds.maxY)
     }
-    
-    deinit {
-        print("deinit ===\(self)")
-    }
+
 }
 

@@ -7,6 +7,7 @@
 //  代码地址: https://github.com/shushaoyong/SYRefreshForSwift
 
 import UIKit
+
 class RefreshViewGifTextHeaderFooter: RefreshView {
     private var textItem:TextItem //文本视图
     public var imageView  =  GIFAnimatedImageView(frame: .zero)
@@ -67,3 +68,4 @@ class RefreshViewGifTextHeaderFooter: RefreshView {
     }
 
 }
+ 

@@ -27,8 +27,8 @@ class TestTableViewController: UITableViewController {
         tableView.sy_footer = RefreshTextHeaderFooter(normalText: VerticalHintText.footerNomalText, pullingText: VerticalHintText.footerPullingText, refreshingText: VerticalHintText.footerRefreshText, orientation: .bottom, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.tableView.sy_footer?.endRefreshing()
-//                self?.count += 10
-//                self?.tableView.reloadData()
+                self?.count += 10
+                self?.tableView.reloadData()
             }
         })
         tableView.sy_footer?.footerAutoRefreshProgress = 0.3

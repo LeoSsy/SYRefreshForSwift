@@ -8,6 +8,7 @@
 
 import UIKit
 
+ 
 class RefreshViewGifHeaderFooter: RefreshView {
     public var imageView  =  GIFAnimatedImageView(frame: .zero)
     /// 创建一个GIF刷新控件
@@ -65,3 +66,4 @@ class RefreshViewGifHeaderFooter: RefreshView {
     }
 
 }
+ 

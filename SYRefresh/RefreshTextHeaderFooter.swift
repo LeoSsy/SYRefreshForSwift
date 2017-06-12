@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class RefreshTextHeaderFooter: RefreshView {
     
     private var accessoryView:AccessoryView //辅助试图

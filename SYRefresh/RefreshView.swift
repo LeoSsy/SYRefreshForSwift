@@ -23,6 +23,8 @@ enum RefreshViewOrientation {
 class RefreshView: UIView {
     /**是否添加到尾部*/
     public var isFooter:Bool = false
+    /**设置尾部自动刷新 比例，当用户拖拽到百分之几的时候开始自动加载更多数据 取值：0.0-1.0 默认值1.0代表100%，也就是刷新控件完全显示的时候开始刷新*/
+    public var footerAutoRefreshProgress:CGFloat = 1.0
     /**保存当前刷新控件方向*/
     public var orientation:RefreshViewOrientation
     /**UIScrollView控件*/
@@ -98,6 +100,7 @@ class RefreshView: UIView {
             }
         }
         panGestureRecognizer = scrollview?.panGestureRecognizer
+        removeObserver()
         addObserver()
     }
 
@@ -112,10 +115,10 @@ class RefreshView: UIView {
     
     /// 移除监听scrollview的状态
     func removeObserver(){
-        scrollview?.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
-        scrollview?.removeObserver(self, forKeyPath: #keyPath(UIPanGestureRecognizer.state))
+        superview?.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
+        superview?.removeObserver(self, forKeyPath: #keyPath(UIPanGestureRecognizer.state))
         if isFooter {
-            scrollview?.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentSize))
+            superview?.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentSize))
         }
     }
     
@@ -156,12 +159,35 @@ class RefreshView: UIView {
                     pullProgress = min(1,max(0,-(scrollview.contentOffset.y + scrollview.contentInset.top)/self.bounds.height))
                 }
             }
-            if isHidden {
-                self.isHidden = false
-            }
+            if isHidden { self.isHidden = false }
+            footerAutoRefresh()
         }
     }
     
+    /// 开启尾部自动刷新
+    func footerAutoRefresh(){
+        if isFooter == false {  return }
+        guard let scrollview = scrollview else { return }
+        if checkContentSizeValid() == false {
+            if isLeftOrRightOrientation() {//水平方向自动刷新
+                //开启自动刷新
+                if footerAutoRefreshProgress >= 0.0 && footerAutoRefreshProgress <= 1.0{
+                    if (scrollview.contentOffset.x>=(scrollview.contentSize.width-scrollview.bounds.width-scrollview.contentInset.right-bounds.height)*footerAutoRefreshProgress) {
+                        beginRefreshing()
+                        return;
+                    }
+                }
+            }else{ //垂直方向自动刷新
+                //开启自动刷新
+                if footerAutoRefreshProgress >= 0.0 && footerAutoRefreshProgress <= 1.0{
+                    if (scrollview.contentOffset.y>=(scrollview.contentSize.height-scrollview.bounds.height-scrollview.contentInset.bottom-bounds.height)*footerAutoRefreshProgress) {
+                        beginRefreshing()
+                        return;
+                    }
+                }
+            }
+        }
+    }
     
     /// 校验contentsize是否有效果
     func checkContentSizeValid()->Bool{

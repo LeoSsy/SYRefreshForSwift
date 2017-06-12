@@ -10,6 +10,8 @@ import UIKit
 
 class TestVerticalGifTableViewController: UITableViewController {
 
+    var count  = 15
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
@@ -18,19 +20,23 @@ class TestVerticalGifTableViewController: UITableViewController {
         tableView.sy_header = RefreshViewGifHeaderFooter(data: data, orientation: .top, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.tableView.sy_header?.endRefreshing()
+                self?.count = 15
+                self?.tableView.reloadData()
             }
         })
         
         tableView.sy_footer = RefreshViewGifHeaderFooter(data: data, orientation: .bottom, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.tableView.sy_footer?.endRefreshing()
+                self?.count += 15
+                self?.tableView.reloadData()
             }
         })
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 20
+        return count
     }
 
     

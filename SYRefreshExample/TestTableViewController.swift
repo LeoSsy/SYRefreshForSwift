@@ -10,6 +10,7 @@ import UIKit
 
 class TestTableViewController: UITableViewController {
 
+    var count  = 10
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,19 +19,24 @@ class TestTableViewController: UITableViewController {
         tableView.sy_header = RefreshTextHeaderFooter(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, orientation: .top, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.tableView.sy_header?.endRefreshing()
+                self?.count = 10
+                self?.tableView.reloadData()
             }
         })
         
         tableView.sy_footer = RefreshTextHeaderFooter(normalText: VerticalHintText.footerNomalText, pullingText: VerticalHintText.footerPullingText, refreshingText: VerticalHintText.footerRefreshText, orientation: .bottom, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.tableView.sy_footer?.endRefreshing()
+//                self?.count += 10
+//                self?.tableView.reloadData()
             }
         })
+        tableView.sy_footer?.footerAutoRefreshProgress = 0.3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 20
+        return count
     }
     
     

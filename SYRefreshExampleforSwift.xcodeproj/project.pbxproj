@@ -22,6 +22,9 @@
 		2A1CD8271EEBBA7E00EA5146 /* demo-big.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2A1CD8261EEBBA7E00EA5146 /* demo-big.gif */; };
 		2A1CD8281EEBBA7E00EA5146 /* demo-big.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2A1CD8261EEBBA7E00EA5146 /* demo-big.gif */; };
 		2A1CD8291EEBBA7E00EA5146 /* demo-big.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2A1CD8261EEBBA7E00EA5146 /* demo-big.gif */; };
+		2A1CD82B1EEE6EAA00EA5146 /* GifImagesHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD82A1EEE6EAA00EA5146 /* GifImagesHeaderFooter.swift */; };
+		2A1CD82C1EEE6EAA00EA5146 /* GifImagesHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD82A1EEE6EAA00EA5146 /* GifImagesHeaderFooter.swift */; };
+		2A1CD82D1EEE6EAA00EA5146 /* GifImagesHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD82A1EEE6EAA00EA5146 /* GifImagesHeaderFooter.swift */; };
 		2A5A66961EE8EFEB00521D32 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66951EE8EFEB00521D32 /* AppDelegate.swift */; };
 		2A5A66981EE8EFEB00521D32 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66971EE8EFEB00521D32 /* ViewController.swift */; };
 		2A5A669B1EE8EFEB00521D32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A66991EE8EFEB00521D32 /* Main.storyboard */; };
@@ -32,21 +35,21 @@
 		2A5A66C51EE8F26E00521D32 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C41EE8F26E00521D32 /* RefreshView.swift */; };
 		2A5A66C61EE8F26E00521D32 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C41EE8F26E00521D32 /* RefreshView.swift */; };
 		2A5A66C71EE8F26E00521D32 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C41EE8F26E00521D32 /* RefreshView.swift */; };
-		2A5A66C91EE8F98500521D32 /* UIScrollViewExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C81EE8F98500521D32 /* UIScrollViewExtention.swift */; };
-		2A5A66CA1EE8F98500521D32 /* UIScrollViewExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C81EE8F98500521D32 /* UIScrollViewExtention.swift */; };
-		2A5A66CB1EE8F98500521D32 /* UIScrollViewExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C81EE8F98500521D32 /* UIScrollViewExtention.swift */; };
-		2A684FD01EE942AB00E14989 /* RefreshTextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FCF1EE942AB00E14989 /* RefreshTextHeaderFooter.swift */; };
-		2A684FD11EE942AB00E14989 /* RefreshTextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FCF1EE942AB00E14989 /* RefreshTextHeaderFooter.swift */; };
-		2A684FD21EE942AB00E14989 /* RefreshTextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FCF1EE942AB00E14989 /* RefreshTextHeaderFooter.swift */; };
+		2A5A66C91EE8F98500521D32 /* UIScrollView+SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C81EE8F98500521D32 /* UIScrollView+SYRefresh.swift */; };
+		2A5A66CA1EE8F98500521D32 /* UIScrollView+SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C81EE8F98500521D32 /* UIScrollView+SYRefresh.swift */; };
+		2A5A66CB1EE8F98500521D32 /* UIScrollView+SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C81EE8F98500521D32 /* UIScrollView+SYRefresh.swift */; };
+		2A684FD01EE942AB00E14989 /* TextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FCF1EE942AB00E14989 /* TextHeaderFooter.swift */; };
+		2A684FD11EE942AB00E14989 /* TextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FCF1EE942AB00E14989 /* TextHeaderFooter.swift */; };
+		2A684FD21EE942AB00E14989 /* TextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FCF1EE942AB00E14989 /* TextHeaderFooter.swift */; };
 		2A684FD41EE94AFF00E14989 /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FD31EE94AFF00E14989 /* TestTableViewController.swift */; };
 		2A684FD51EE94AFF00E14989 /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FD31EE94AFF00E14989 /* TestTableViewController.swift */; };
 		2A684FD61EE94AFF00E14989 /* TestTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FD31EE94AFF00E14989 /* TestTableViewController.swift */; };
 		2A684FD81EE94B8300E14989 /* AccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FD71EE94B8300E14989 /* AccessoryView.swift */; };
 		2A684FD91EE94B8300E14989 /* AccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FD71EE94B8300E14989 /* AccessoryView.swift */; };
 		2A684FDA1EE94B8300E14989 /* AccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FD71EE94B8300E14989 /* AccessoryView.swift */; };
-		2A684FE01EEA413200E14989 /* RefreshViewGifHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FDF1EEA413200E14989 /* RefreshViewGifHeaderFooter.swift */; };
-		2A684FE11EEA413200E14989 /* RefreshViewGifHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FDF1EEA413200E14989 /* RefreshViewGifHeaderFooter.swift */; };
-		2A684FE21EEA413200E14989 /* RefreshViewGifHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FDF1EEA413200E14989 /* RefreshViewGifHeaderFooter.swift */; };
+		2A684FE01EEA413200E14989 /* GifHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FDF1EEA413200E14989 /* GifHeaderFooter.swift */; };
+		2A684FE11EEA413200E14989 /* GifHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FDF1EEA413200E14989 /* GifHeaderFooter.swift */; };
+		2A684FE21EEA413200E14989 /* GifHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FDF1EEA413200E14989 /* GifHeaderFooter.swift */; };
 		2A684FE41EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FE31EEA69F500E14989 /* TestVerticalGifTableViewController.swift */; };
 		2A684FE51EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FE31EEA69F500E14989 /* TestVerticalGifTableViewController.swift */; };
 		2A684FE61EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FE31EEA69F500E14989 /* TestVerticalGifTableViewController.swift */; };
@@ -56,9 +59,9 @@
 		2A684FF01EEA8C4A00E14989 /* TestHorizontalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FEF1EEA8C4A00E14989 /* TestHorizontalCollectionViewController.swift */; };
 		2A684FF11EEA8C4A00E14989 /* TestHorizontalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FEF1EEA8C4A00E14989 /* TestHorizontalCollectionViewController.swift */; };
 		2A684FF21EEA8C4A00E14989 /* TestHorizontalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FEF1EEA8C4A00E14989 /* TestHorizontalCollectionViewController.swift */; };
-		2A684FFC1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FFB1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift */; };
-		2A684FFD1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FFB1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift */; };
-		2A684FFE1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FFB1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift */; };
+		2A684FFC1EEAA05400E14989 /* GifTextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FFB1EEAA05400E14989 /* GifTextHeaderFooter.swift */; };
+		2A684FFD1EEAA05400E14989 /* GifTextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FFB1EEAA05400E14989 /* GifTextHeaderFooter.swift */; };
+		2A684FFE1EEAA05400E14989 /* GifTextHeaderFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FFB1EEAA05400E14989 /* GifTextHeaderFooter.swift */; };
 		2A6850001EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FFF1EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift */; };
 		2A6850011EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FFF1EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift */; };
 		2A6850021EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A684FFF1EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift */; };
@@ -90,6 +93,7 @@
 		2A1CD8121EEBB52300EA5146 /* demo-small.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "demo-small.gif"; sourceTree = "<group>"; };
 		2A1CD8161EEBB5A800EA5146 /* other.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = other.gif; sourceTree = "<group>"; };
 		2A1CD8261EEBBA7E00EA5146 /* demo-big.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "demo-big.gif"; sourceTree = "<group>"; };
+		2A1CD82A1EEE6EAA00EA5146 /* GifImagesHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifImagesHeaderFooter.swift; sourceTree = "<group>"; };
 		2A5A66921EE8EFEB00521D32 /* SYRefreshExampleforSwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SYRefreshExampleforSwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A5A66951EE8EFEB00521D32 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2A5A66971EE8EFEB00521D32 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,15 +108,15 @@
 		2A5A66B51EE8EFEB00521D32 /* SYRefreshExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYRefreshExampleUITests.swift; sourceTree = "<group>"; };
 		2A5A66B71EE8EFEB00521D32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A5A66C41EE8F26E00521D32 /* RefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshView.swift; sourceTree = "<group>"; };
-		2A5A66C81EE8F98500521D32 /* UIScrollViewExtention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScrollViewExtention.swift; sourceTree = "<group>"; };
-		2A684FCF1EE942AB00E14989 /* RefreshTextHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshTextHeaderFooter.swift; sourceTree = "<group>"; };
+		2A5A66C81EE8F98500521D32 /* UIScrollView+SYRefresh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+SYRefresh.swift"; sourceTree = "<group>"; };
+		2A684FCF1EE942AB00E14989 /* TextHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextHeaderFooter.swift; sourceTree = "<group>"; };
 		2A684FD31EE94AFF00E14989 /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
 		2A684FD71EE94B8300E14989 /* AccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryView.swift; sourceTree = "<group>"; };
-		2A684FDF1EEA413200E14989 /* RefreshViewGifHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshViewGifHeaderFooter.swift; sourceTree = "<group>"; };
+		2A684FDF1EEA413200E14989 /* GifHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifHeaderFooter.swift; sourceTree = "<group>"; };
 		2A684FE31EEA69F500E14989 /* TestVerticalGifTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVerticalGifTableViewController.swift; sourceTree = "<group>"; };
 		2A684FEB1EEA821C00E14989 /* TestVerticalCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVerticalCollectionViewController.swift; sourceTree = "<group>"; };
 		2A684FEF1EEA8C4A00E14989 /* TestHorizontalCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHorizontalCollectionViewController.swift; sourceTree = "<group>"; };
-		2A684FFB1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshViewGifTextHeaderFooter.swift; sourceTree = "<group>"; };
+		2A684FFB1EEAA05400E14989 /* GifTextHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifTextHeaderFooter.swift; sourceTree = "<group>"; };
 		2A684FFF1EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHorizontalGifCollectionViewController.swift; sourceTree = "<group>"; };
 		2A6850031EEAA2AF00E14989 /* TestVerticalGifCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVerticalGifCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,10 +213,11 @@
 			children = (
 				2A5A66C41EE8F26E00521D32 /* RefreshView.swift */,
 				2A1CD7FA1EEB866300EA5146 /* GIFAnimatedImageView.swift */,
-				2A684FCF1EE942AB00E14989 /* RefreshTextHeaderFooter.swift */,
-				2A684FDF1EEA413200E14989 /* RefreshViewGifHeaderFooter.swift */,
-				2A684FFB1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift */,
-				2A5A66C81EE8F98500521D32 /* UIScrollViewExtention.swift */,
+				2A684FCF1EE942AB00E14989 /* TextHeaderFooter.swift */,
+				2A684FDF1EEA413200E14989 /* GifHeaderFooter.swift */,
+				2A684FFB1EEAA05400E14989 /* GifTextHeaderFooter.swift */,
+				2A1CD82A1EEE6EAA00EA5146 /* GifImagesHeaderFooter.swift */,
+				2A5A66C81EE8F98500521D32 /* UIScrollView+SYRefresh.swift */,
 				2A684FD71EE94B8300E14989 /* AccessoryView.swift */,
 			);
 			path = SYRefresh;
@@ -364,15 +369,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A684FFC1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift in Sources */,
-				2A684FD01EE942AB00E14989 /* RefreshTextHeaderFooter.swift in Sources */,
+				2A684FFC1EEAA05400E14989 /* GifTextHeaderFooter.swift in Sources */,
+				2A1CD82B1EEE6EAA00EA5146 /* GifImagesHeaderFooter.swift in Sources */,
+				2A684FD01EE942AB00E14989 /* TextHeaderFooter.swift in Sources */,
 				2A5A66981EE8EFEB00521D32 /* ViewController.swift in Sources */,
 				2A6850001EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift in Sources */,
-				2A5A66C91EE8F98500521D32 /* UIScrollViewExtention.swift in Sources */,
+				2A5A66C91EE8F98500521D32 /* UIScrollView+SYRefresh.swift in Sources */,
 				2A1CD7F71EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */,
 				2A684FD81EE94B8300E14989 /* AccessoryView.swift in Sources */,
 				2A684FE41EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */,
-				2A684FE01EEA413200E14989 /* RefreshViewGifHeaderFooter.swift in Sources */,
+				2A684FE01EEA413200E14989 /* GifHeaderFooter.swift in Sources */,
 				2A5A66C51EE8F26E00521D32 /* RefreshView.swift in Sources */,
 				2A5A66961EE8EFEB00521D32 /* AppDelegate.swift in Sources */,
 				2A684FEC1EEA821C00E14989 /* TestVerticalCollectionViewController.swift in Sources */,
@@ -387,21 +393,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A5A66CA1EE8F98500521D32 /* UIScrollViewExtention.swift in Sources */,
+				2A5A66CA1EE8F98500521D32 /* UIScrollView+SYRefresh.swift in Sources */,
 				2A6850011EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift in Sources */,
 				2A684FE51EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */,
 				2A1CD7F81EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */,
 				2A1CD7FC1EEB866300EA5146 /* GIFAnimatedImageView.swift in Sources */,
 				2A5A66C61EE8F26E00521D32 /* RefreshView.swift in Sources */,
-				2A684FE11EEA413200E14989 /* RefreshViewGifHeaderFooter.swift in Sources */,
+				2A684FE11EEA413200E14989 /* GifHeaderFooter.swift in Sources */,
 				2A5A66AB1EE8EFEB00521D32 /* SYRefreshExampleTests.swift in Sources */,
 				2A6850051EEAA2AF00E14989 /* TestVerticalGifCollectionViewController.swift in Sources */,
 				2A684FED1EEA821C00E14989 /* TestVerticalCollectionViewController.swift in Sources */,
+				2A1CD82C1EEE6EAA00EA5146 /* GifImagesHeaderFooter.swift in Sources */,
 				2A684FF11EEA8C4A00E14989 /* TestHorizontalCollectionViewController.swift in Sources */,
 				2A684FD91EE94B8300E14989 /* AccessoryView.swift in Sources */,
 				2A684FD51EE94AFF00E14989 /* TestTableViewController.swift in Sources */,
-				2A684FD11EE942AB00E14989 /* RefreshTextHeaderFooter.swift in Sources */,
-				2A684FFD1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift in Sources */,
+				2A684FD11EE942AB00E14989 /* TextHeaderFooter.swift in Sources */,
+				2A684FFD1EEAA05400E14989 /* GifTextHeaderFooter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,21 +416,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A5A66CB1EE8F98500521D32 /* UIScrollViewExtention.swift in Sources */,
+				2A5A66CB1EE8F98500521D32 /* UIScrollView+SYRefresh.swift in Sources */,
 				2A6850021EEAA29C00E14989 /* TestHorizontalGifCollectionViewController.swift in Sources */,
 				2A684FE61EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */,
 				2A1CD7F91EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */,
 				2A1CD7FD1EEB866300EA5146 /* GIFAnimatedImageView.swift in Sources */,
 				2A5A66C71EE8F26E00521D32 /* RefreshView.swift in Sources */,
-				2A684FE21EEA413200E14989 /* RefreshViewGifHeaderFooter.swift in Sources */,
+				2A684FE21EEA413200E14989 /* GifHeaderFooter.swift in Sources */,
 				2A5A66B61EE8EFEB00521D32 /* SYRefreshExampleUITests.swift in Sources */,
 				2A6850061EEAA2AF00E14989 /* TestVerticalGifCollectionViewController.swift in Sources */,
 				2A684FEE1EEA821C00E14989 /* TestVerticalCollectionViewController.swift in Sources */,
+				2A1CD82D1EEE6EAA00EA5146 /* GifImagesHeaderFooter.swift in Sources */,
 				2A684FF21EEA8C4A00E14989 /* TestHorizontalCollectionViewController.swift in Sources */,
 				2A684FDA1EE94B8300E14989 /* AccessoryView.swift in Sources */,
 				2A684FD61EE94AFF00E14989 /* TestTableViewController.swift in Sources */,
-				2A684FD21EE942AB00E14989 /* RefreshTextHeaderFooter.swift in Sources */,
-				2A684FFE1EEAA05400E14989 /* RefreshViewGifTextHeaderFooter.swift in Sources */,
+				2A684FD21EE942AB00E14989 /* TextHeaderFooter.swift in Sources */,
+				2A684FFE1EEAA05400E14989 /* GifTextHeaderFooter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

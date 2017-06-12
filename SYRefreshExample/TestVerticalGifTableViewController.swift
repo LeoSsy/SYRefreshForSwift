@@ -17,7 +17,7 @@ class TestVerticalGifTableViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         
         let data = try! Data(contentsOf: Bundle.main.url(forResource: "other.gif", withExtension: nil)!)
-        tableView.sy_header = RefreshViewGifHeaderFooter(data: data, orientation: .top, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
+        tableView.sy_header = GifHeaderFooter(data: data, orientation: .top, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.tableView.sy_header?.endRefreshing()
                 self?.count = 15
@@ -25,7 +25,7 @@ class TestVerticalGifTableViewController: UITableViewController {
             }
         })
         
-        tableView.sy_footer = RefreshViewGifHeaderFooter(data: data, orientation: .bottom, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
+        tableView.sy_footer = GifHeaderFooter(data: data, orientation: .bottom, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.tableView.sy_footer?.endRefreshing()
                 self?.count += 15

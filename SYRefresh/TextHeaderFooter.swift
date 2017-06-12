@@ -8,9 +8,7 @@
 
 import UIKit
 
-
-class RefreshTextHeaderFooter: RefreshView {
-    
+class TextHeaderFooter: RefreshView {
     private var accessoryView:AccessoryView //辅助试图
     private var textItem:TextItem //文本视图
     /// 创建一个刷新控件

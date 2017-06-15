@@ -8,6 +8,33 @@
 
 import UIKit
 
+struct VerticalHintText {
+    static let headerNomalText:String = "下拉即可刷新"   /// 头部默认状态提示文字
+    static let headerPullingText:String = "松手即可刷新" ///头部拖拽状态提示文字
+    static let headerRefreshText:String = "刷新中..."   ///头部刷新状态提示文字
+    static let footerNomalText:String = "上拉加载更多"   /// 尾部默认状态提示文字
+    static let footerPullingText:String = "松手加载更多" ///尾部拖拽状态提示文字
+    static let footerRefreshText:String = "加载中..."   ///尾部刷新状态提示文字
+    static let footerNomoreDataText:String = "———— 别再拉了，再拉我也长不高 ————"   ///尾部刷新状态提示文字
+}
+
+struct HorizontalHintText {
+    static let headerNomalText:String = "右边拉即可刷新"   /// 头部默认状态提示文字
+    static let headerPullingText:String = "松手即可刷新" ///头部拖拽状态提示文字
+    static let headerRefreshText:String = "刷新中..."   ///头部刷新状态提示文字
+    static let footerNomalText:String = "左拉加载更多"   /// 尾部默认状态提示文字
+    static let footerPullingText:String = "松手加载更多" ///尾部拖拽状态提示文字
+    static let footerRefreshText:String = "加载中..."   ///尾部刷新状态提示文字
+    static let footerNomoreDataText:String = "— 别再拉了，再拉我也变不长 —"   ///尾部刷新状态提示文字
+}
+
+struct RefreshConfig {
+    static let animationDuration:TimeInterval = 0.3   /// 默认动画时间
+    static let height:CGFloat = 44                     /// 默认刷新控件高度
+    static let color:UIColor = UIColor.black           /// 默认字体颜色
+    static let font:UIFont = UIFont.systemFont(ofSize:14)/// 默认字体大小
+}
+
 final class TextItem  {
     private let normalText:String //默认状态提示文字
     private let pullingText:String //拖拽到临界点松开即可刷新状态提示文字
@@ -42,11 +69,10 @@ final class TextItem  {
 }
 
 final class AccessoryView { // 不允许子类继承
-    /// 视图颜色
-    private let color :UIColor
+    
+    private let color :UIColor /// 视图颜色
     public  var isLeftOrRightOrientation:Bool = false //是否是左右刷新控件 通过外界设置
-    /// 菊花控件
-    lazy var indicatorView:UIActivityIndicatorView = {
+    lazy var indicatorView:UIActivityIndicatorView = {/// 菊花控件
         let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         indicatorView.hidesWhenStopped = true
         return indicatorView
@@ -88,7 +114,8 @@ final class AccessoryView { // 不允许子类继承
         return shapeLayer
     }()
     
-
+    /// 返回当前正在显示的箭头控件
+    /// - Returns: CAShapeLayer
     func arrowLayer() -> CAShapeLayer {
         return isLeftOrRightOrientation ? arrowLayerH : arrowLayerV
     }

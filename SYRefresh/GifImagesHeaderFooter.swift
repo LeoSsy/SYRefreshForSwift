@@ -9,6 +9,7 @@
 import UIKit
 
 class GifImagesHeaderFooter: RefreshView {
+    
     private let imageView  = UIImageView(frame: .zero)
     var images =  Dictionary<SYRefreshViewState, Array<UIImage>>()
     var durations =  Dictionary<SYRefreshViewState, Double >()
@@ -74,7 +75,6 @@ class GifImagesHeaderFooter: RefreshView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         var imageSize:CGSize = CGSize.zero
         if self.images.count > 0 {
             imageSize = (self.images[.stateIdle]?.first?.size)!

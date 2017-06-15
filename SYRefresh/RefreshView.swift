@@ -17,18 +17,15 @@ enum SYRefreshViewState {
 }
 
 /// 刷新控件的方向
-/// - top:    上边
-/// - left:   左边
-/// - bottom: 下边
-/// - right:  右边
 enum RefreshViewOrientation {
-    case top
-    case left
-    case bottom
-    case right
+    case top // 上边
+    case left// 左边
+    case bottom//下边
+    case right//右边
 }
 
 class RefreshView: UIView {
+    
     /**是否添加到尾部*/
     public var isFooter:Bool = false
     /**设置尾部自动刷新 比例，当用户拖拽到百分之几的时候开始自动加载更多数据 取值：0.0-1.0 默认值1.0代表100%，也就是刷新控件完全显示的时候开始刷新*/
@@ -220,7 +217,7 @@ class RefreshView: UIView {
         }
     }
     
-    /// 设置刷新控件的状态
+    /// 设置刷新控件的状态 交给子类重写
     /// - Parameter state: 状态
     open func setState(state:SYRefreshViewState){}
     
@@ -229,7 +226,7 @@ class RefreshView: UIView {
         return orientation == .left || orientation == .right
     }
     
-//===========================私有方法==================================
+//========================================================私有方法===============================================================
     /// contentOffset 改变之后调用此方法
     private func contentOffsetChange(){
         if isRefreshing { return}
@@ -251,7 +248,7 @@ class RefreshView: UIView {
                     //设置刷新控件状态
                     let pullingOffsetX = -scrollview.contentInset.left - bounds.width
                     let offsetX = scrollview.contentOffset.x
-                    if (self.state == .stateIdle && offsetX<pullingOffsetX) { //负数 往下拉
+                    if (self.state == .stateIdle && offsetX<pullingOffsetX) { //负数 往左拉
                         self.setState(state: .pulling)
                     }else if(self.state == .pulling&&offsetX>pullingOffsetX){
                         self.setState(state: .stateIdle)
@@ -316,7 +313,7 @@ class RefreshView: UIView {
         guard let scrollview = scrollview else { return false} //作用：在下面使用scrollview的时候不用解包
         if isLeftOrRightOrientation() {
             //当内容不满一个屏幕的时候就隐藏底部的刷新控件
-            if (scrollview.contentSize.width < scrollview.bounds.width) {
+            if (scrollview.contentSize.width < scrollview.bounds.width-(scrollview.contentInset.left+scrollview.contentInset.right)) {
                 scrollview.sy_footer?.isHidden = true
                 return true
             }else{
@@ -325,7 +322,7 @@ class RefreshView: UIView {
             }
         }else{
             //当内容不满一个屏幕的时候就隐藏底部的刷新控件
-            if (scrollview.contentSize.height < scrollview.bounds.height) {
+            if (scrollview.contentSize.height < scrollview.bounds.height-(scrollview.contentInset.top+scrollview.contentInset.bottom)) {
                 scrollview.sy_footer?.isHidden = true
                 return true
             }else{
@@ -338,18 +335,17 @@ class RefreshView: UIView {
     /// contentSize 改变之后调用此方法
     private func contentSizeChange(){
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
+        if checkContentSizeValid() { return }
         if isLeftOrRightOrientation() {
-            if checkContentSizeValid() { return }
             if self.bounds.minX ==  scrollview.contentSize.width{return}
             self.frame.origin.x = scrollview.contentSize.width
         }else{
-            if checkContentSizeValid() { return }
             if self.frame.origin.y ==  scrollview.contentSize.height{return}
             self.frame.origin.y = scrollview.contentSize.height
         }
     }
     
-    /// 将要结束拖拽的时候调用此方法
+    /// 结束拖拽的时候调用此方法
     private func scrollviewEndDraging(){
         if isRefreshing || pullProgress < 1 {return}  //如果正在刷新 或者 用户没有拖拽到临界点 就不要刷新
         beginRefreshing()
@@ -358,31 +354,4 @@ class RefreshView: UIView {
     deinit {
         removeObserver()
     }
-}
-
-struct VerticalHintText {
-    static let headerNomalText:String = "下拉即可刷新"   /// 头部默认状态提示文字
-    static let headerPullingText:String = "松手即可刷新" ///头部拖拽状态提示文字
-    static let headerRefreshText:String = "刷新中..."   ///头部刷新状态提示文字
-    static let footerNomalText:String = "上拉加载更多"   /// 尾部默认状态提示文字
-    static let footerPullingText:String = "松手加载更多" ///尾部拖拽状态提示文字
-    static let footerRefreshText:String = "加载中..."   ///尾部刷新状态提示文字
-    static let footerNomoreDataText:String = "———— 别再拉了，再拉我也长不高 ————"   ///尾部刷新状态提示文字
-}
-
-struct HorizontalHintText {
-    static let headerNomalText:String = "右边拉即可刷新"   /// 头部默认状态提示文字
-    static let headerPullingText:String = "松手即可刷新" ///头部拖拽状态提示文字
-    static let headerRefreshText:String = "刷新中..."   ///头部刷新状态提示文字
-    static let footerNomalText:String = "左拉加载更多"   /// 尾部默认状态提示文字
-    static let footerPullingText:String = "松手加载更多" ///尾部拖拽状态提示文字
-    static let footerRefreshText:String = "加载中..."   ///尾部刷新状态提示文字
-    static let footerNomoreDataText:String = "— 别再拉了，再拉我也变不长 —"   ///尾部刷新状态提示文字
-}
-
-struct RefreshConfig {
-    static let animationDuration:TimeInterval = 0.3   /// 默认动画时间
-    static let height:CGFloat = 44                     /// 默认刷新控件高度
-    static let color:UIColor = UIColor.black           /// 默认字体颜色
-    static let font:UIFont = UIFont.systemFont(ofSize:14)/// 默认字体大小
 }

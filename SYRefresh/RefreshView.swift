@@ -80,7 +80,7 @@ class RefreshView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-   
+
     /// 更新刷新状态 此方法交给子类重写
     /// - Parameter isRefresh: 是否正在刷新
     open func updateRefreshState(isRefreshing:Bool){
@@ -99,6 +99,7 @@ class RefreshView: UIView {
         removeObserver()
     }
     
+    /// 被添加到父控件上之后调用
     override func didMoveToSuperview() {
         panGestureRecognizer = scrollview?.panGestureRecognizer
         addObserver()

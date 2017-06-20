@@ -35,7 +35,7 @@ struct RefreshConfig {
     static let font:UIFont = UIFont.systemFont(ofSize:14)/// 默认字体大小
 }
 
-final class TextItem  {
+final class TextItem {
     private let normalText:String //默认状态提示文字
     private let pullingText:String //拖拽到临界点松开即可刷新状态提示文字
     private let refreshingText:String //刷新状态提示文字
@@ -50,6 +50,7 @@ final class TextItem  {
         self.color = color
         self.label.font = font
         self.label.textColor = color
+        self.label.text = normalText
     }
     
     /// 根据状态更新当前的控件提示文字
@@ -66,6 +67,7 @@ final class TextItem  {
        label.text = progress == 1 ? self.pullingText : self.normalText
        label.sizeToFit()
     }
+    
 }
 
 final class AccessoryView { // 不允许子类继承

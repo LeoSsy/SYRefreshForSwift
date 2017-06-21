@@ -21,11 +21,11 @@ struct VerticalHintText {
 struct HorizontalHintText {
     static let headerNomalText:String = "右边拉即可刷新"   /// 头部默认状态提示文字
     static let headerPullingText:String = "松手即可刷新" ///头部拖拽状态提示文字
-    static let headerRefreshText:String = "刷新中..."   ///头部刷新状态提示文字
+    static let headerRefreshText:String = "刷新中"   ///头部刷新状态提示文字
     static let footerNomalText:String = "左拉加载更多"   /// 尾部默认状态提示文字
     static let footerPullingText:String = "松手加载更多" ///尾部拖拽状态提示文字
-    static let footerRefreshText:String = "加载中..."   ///尾部刷新状态提示文字
-    static let footerNomoreDataText:String = "— 别再拉了，再拉我也变不长 —"   ///尾部刷新状态提示文字
+    static let footerRefreshText:String = "加载中"   ///尾部刷新状态提示文字
+    static let footerNomoreDataText:String = "没有更多数据"   ///尾部刷新状态提示文字
 }
 
 struct RefreshConfig {
@@ -51,6 +51,7 @@ final class TextItem {
         self.label.font = font
         self.label.textColor = color
         self.label.text = normalText
+        self.label.numberOfLines = 0
     }
     
     /// 根据状态更新当前的控件提示文字

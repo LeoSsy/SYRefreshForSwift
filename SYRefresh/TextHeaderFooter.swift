@@ -59,9 +59,18 @@ class TextHeaderFooter: RefreshView {
         var labelCenter = CGPoint(x: (contentW+textItem.label.bounds.width*0.5+8)*0.5, y: bounds.midY)
         
         if isLeftOrRightOrientation() { //如果是水平刷新
-            point = CGPoint(x: bounds.midX, y: bounds.midY-bounds.width*0.5)
-            indicatorViewPoint = CGPoint(x: point.x, y: point.y)
-            labelCenter = CGPoint(x: bounds.midX, y: bounds.midY)
+            textItem.label.frame.size.width = textItem.label.font.pointSize
+            textItem.label.frame.size.height = bounds.height*0.5
+            if self.superview!.frame.origin.x <= 0.0 {
+                labelCenter = CGPoint(x: bounds.midX-textItem.label.font.pointSize, y: bounds.midY)
+                point = CGPoint(x: bounds.midX+textItem.label.font.pointSize, y: bounds.midY)
+                indicatorViewPoint = CGPoint(x: point.x, y: point.y)
+            }else{
+                point = CGPoint(x: bounds.midX-textItem.label.font.pointSize, y: bounds.midY)
+                labelCenter = CGPoint(x: bounds.midX+textItem.label.font.pointSize, y: bounds.midY)
+                indicatorViewPoint = CGPoint(x: point.x, y: point.y)
+            }
+         
         }
         UIView.performWithoutAnimation {
             accessoryView.arrowLayer().position = point

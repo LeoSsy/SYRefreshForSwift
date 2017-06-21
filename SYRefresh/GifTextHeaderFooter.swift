@@ -54,7 +54,9 @@ class GifTextHeaderFooter: RefreshView {
             if isLeftOrRightOrientation() { //如果是水平刷新
                 imageView.frame = CGRect(x: 0, y: 0, width:bounds.width-margin, height: bounds.width-margin)
                 imageView.center = CGPoint(x: bounds.midX, y: bounds.midY-bounds.width*0.5)
-                textItem.label.center = CGPoint(x: bounds.midX, y: bounds.midY+15)
+                textItem.label.frame.size.width = textItem.label.font.pointSize
+                textItem.label.frame.size.height = bounds.height*0.6
+                textItem.label.center = CGPoint(x: bounds.midX, y: bounds.midY+bounds.width*0.5)
             }else{
                 self.imageView.frame = CGRect(x: 0, y: 0, width:bounds.height-margin, height: bounds.height-margin)
                 imageView.center = CGPoint(x: (bounds.width - textItem.label.bounds.width - 8) * 0.5, y: bounds.midY)

@@ -12,18 +12,18 @@ import CoreGraphics
 
 class CoreTextHeaderFooter: RefreshView {
     fileprivate var textItem:TextItem //文本视图
-    fileprivate lazy var pathLayer:CAShapeLayer = { //创建文字形状
+    fileprivate lazy var textPathLayer:CAShapeLayer = { //创建文字形状
         let path = self.textPath()
         path.move(to: CGPoint.zero)
-        let shapplayer = CAShapeLayer()
-        shapplayer.bounds = path.cgPath.boundingBoxOfPath
-        shapplayer.path = path.cgPath
-        shapplayer.isGeometryFlipped = true
-        shapplayer.strokeColor = self.textItem.label.textColor.cgColor
-        shapplayer.fillColor = nil
-        shapplayer.lineWidth = 1
-        shapplayer.strokeEnd = 0.0
-        return shapplayer
+        let textPathLayer = CAShapeLayer()
+        textPathLayer.bounds = path.cgPath.boundingBoxOfPath
+        textPathLayer.path = path.cgPath
+        textPathLayer.isGeometryFlipped = true
+        textPathLayer.strokeColor = self.textItem.label.textColor.cgColor
+        textPathLayer.fillColor = UIColor.clear.cgColor
+        textPathLayer.lineWidth = 1
+        textPathLayer.strokeEnd = 0.0
+        return textPathLayer
     }()
     fileprivate lazy var gradientLayer:CAGradientLayer = {//创建渐变图层
         let gradientLayer = CAGradientLayer()
@@ -56,7 +56,7 @@ class CoreTextHeaderFooter: RefreshView {
         super.init(orientaton: orientation, height: height, completion: completion)
         addSubview(textItem.label)
         textItem.label.isHidden = true
-        self.layer.addSublayer(pathLayer)
+        self.layer.addSublayer(textPathLayer)
         self.layer.addSublayer(gradientLayer)
     }
     
@@ -67,11 +67,11 @@ class CoreTextHeaderFooter: RefreshView {
     override func updateRefreshState(isRefreshing: Bool) {
         textItem.updateRefreshState(isRefreshing: isRefreshing)
         if isRefreshing {
-            self.pathLayer.removeFromSuperlayer()
+            self.textPathLayer.removeFromSuperlayer()
             textItem.label.isHidden = false
             startAnimation()
         }else{
-            self.layer.addSublayer(self.pathLayer)
+            self.layer.addSublayer(self.textPathLayer)
             textItem.label.isHidden = true
             self.gradientLayer.speed = 0
 
@@ -80,16 +80,15 @@ class CoreTextHeaderFooter: RefreshView {
     
     override func updatePullProgress(progress: CGFloat) {
         if ((progress < 1 && progress > 0)){
-            self.pathLayer.strokeEnd = (progress - 0.5) * 2;
+            self.textPathLayer.strokeEnd = (progress - 0.5) * 2;
         }else if(progress >= 1){
-            self.pathLayer.strokeEnd = 1;
+            self.textPathLayer.strokeEnd = 1;
         }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        self.pathLayer.position = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+8)
+        self.textPathLayer.position = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+8)
         self.textItem.label.center = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+8)
         self.gradientLayer.frame = self.textItem.label.frame
     }

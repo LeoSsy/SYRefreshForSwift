@@ -27,15 +27,15 @@ enum RefreshViewOrientation {
 class RefreshView: UIView {
     
     /**是否添加到尾部*/
-    public var isFooter:Bool = false
+    open var isFooter:Bool = false
     /**设置尾部自动刷新 比例，当用户拖拽到百分之几的时候开始自动加载更多数据 取值：0.0-1.0 默认值1.0代表100%，也就是刷新控件完全显示的时候开始刷新*/
-    public var footerAutoRefreshProgress:CGFloat = 1.0
+    open var footerAutoRefreshProgress:CGFloat = 1.0
     /**保存当前刷新控件方向*/
-    public var orientation:RefreshViewOrientation
+    open var orientation:RefreshViewOrientation
     /**保存当前刷新控件的状态*/
-    var state : SYRefreshViewState = .stateIdle
+    open var state : SYRefreshViewState = .stateIdle
     /**UIScrollView控件*/
-    private weak var scrollview:UIScrollView?{
+    open weak var scrollview:UIScrollView?{
         return superview as? UIScrollView
     }
     /**是否正在刷新*/

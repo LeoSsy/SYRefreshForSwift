@@ -26,6 +26,7 @@ class GifTextHeaderFooter: RefreshView {
             imageView.bounds.size.height = height
         }
         super.init(orientaton: orientation, height: height, completion: completion)
+        if self.isLeftOrRightOrientation() { textItem.label.numberOfLines = 0 }
         addSubview(imageView)
         addSubview(self.textItem.label)
         imageView.contentMode = contentMode
@@ -34,6 +35,7 @@ class GifTextHeaderFooter: RefreshView {
     override func updateRefreshState(isRefreshing: Bool) {
         isRefreshing ? imageView.startAnimating() : imageView.stopAnimating()
         textItem.updateRefreshState(isRefreshing: isRefreshing)
+        self.setNeedsLayout()
     }
     
     override func updatePullProgress(progress: CGFloat) {
@@ -50,13 +52,14 @@ class GifTextHeaderFooter: RefreshView {
     override func layoutSubviews() {
         super.layoutSubviews()
         let margin:CGFloat = 2.0
+        if isRefreshing { return }
         UIView.performWithoutAnimation {
             if isLeftOrRightOrientation() { //如果是水平刷新
                 imageView.frame = CGRect(x: 0, y: 0, width:bounds.width-margin, height: bounds.width-margin)
                 imageView.center = CGPoint(x: bounds.midX, y: bounds.midY-bounds.width*0.5)
                 textItem.label.frame.size.width = textItem.label.font.pointSize
-                textItem.label.frame.size.height = bounds.height*0.6
-                textItem.label.center = CGPoint(x: bounds.midX, y: bounds.midY+bounds.width*0.5)
+                textItem.label.frame.size.height = (textItem.label.text?.textItemHeight(width: textItem.label.font.pointSize, fontSize: textItem.label.font.pointSize))!
+                textItem.label.center = CGPoint(x: bounds.midX, y: bounds.midY+bounds.width*0.5+5)
             }else{
                 self.imageView.frame = CGRect(x: 0, y: 0, width:bounds.height-margin, height: bounds.height-margin)
                 imageView.center = CGPoint(x: (bounds.width - textItem.label.bounds.width - 8) * 0.5, y: bounds.midY)
@@ -69,5 +72,20 @@ class GifTextHeaderFooter: RefreshView {
         fatalError("init(coder:) has not been implemented")
     }
 
+}
+
+extension String {
+    /// 计算文本的高度
+    /// - Parameters:
+    ///   - width: 显示的最大宽度
+    ///   - fontSize: 字体
+    /// - Returns: 高度
+    func textItemHeight(width:CGFloat,fontSize:CGFloat)->CGFloat{
+        let font:UIFont! = UIFont.systemFont(ofSize: fontSize)
+        let attributes = NSDictionary(object: font, forKey: NSFontAttributeName as NSCopying)
+        let option = NSStringDrawingOptions.usesLineFragmentOrigin
+        let rect:CGRect = self.boundingRect(with: CGSize(width:width, height:CGFloat(MAXFLOAT)), options: option, attributes: attributes as? [String : Any], context: nil)
+        return rect.size.height
+    }
 }
  

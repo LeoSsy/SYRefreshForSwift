@@ -51,7 +51,6 @@ final class TextItem {
         self.label.font = font
         self.label.textColor = color
         self.label.text = normalText
-        self.label.numberOfLines = 0
     }
     
     /// 根据状态更新当前的控件提示文字

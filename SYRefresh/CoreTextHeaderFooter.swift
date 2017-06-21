@@ -10,6 +10,7 @@ import UIKit
 import CoreText
 import CoreGraphics
 
+//======================== 目前不支持水平方向的文字动画 后期加上
 class CoreTextHeaderFooter: RefreshView {
     fileprivate var textItem:TextItem //文本视图
     fileprivate lazy var textPathLayer:CAShapeLayer = { //创建文字形状
@@ -54,6 +55,7 @@ class CoreTextHeaderFooter: RefreshView {
     init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,completion:@escaping ()->Void){
         self.textItem = textItem
         super.init(orientaton: orientation, height: height, completion: completion)
+        if isLeftOrRightOrientation() { textItem.label.numberOfLines = 0 }
         addSubview(textItem.label)
         textItem.label.isHidden = true
         self.layer.addSublayer(textPathLayer)
@@ -74,7 +76,6 @@ class CoreTextHeaderFooter: RefreshView {
             self.layer.addSublayer(self.textPathLayer)
             textItem.label.isHidden = true
             self.gradientLayer.speed = 0
-
         }
     }
     
@@ -88,10 +89,12 @@ class CoreTextHeaderFooter: RefreshView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.textPathLayer.position = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+8)
-        self.textItem.label.center = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+8)
-        self.gradientLayer.frame = self.textItem.label.frame
+        let margin:CGFloat = isFooter ? -8 : 8
+            self.textPathLayer.position = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+margin)
+            self.textItem.label.center = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+margin)
+            self.gradientLayer.frame = self.textItem.label.frame
     }
+    
 }
 
 extension CoreTextHeaderFooter {

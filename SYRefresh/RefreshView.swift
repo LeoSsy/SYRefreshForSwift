@@ -26,7 +26,7 @@ enum RefreshViewOrientation {
 
 class RefreshView: UIView {
     
-    /**是否添加到尾部*/
+    /**是否是尾部控件*/
     open var isFooter:Bool = false
     /**设置尾部自动刷新 比例，当用户拖拽到百分之几的时候开始自动加载更多数据 取值：0.0-1.0 默认值1.0代表100%，也就是刷新控件完全显示的时候开始刷新*/
     open var footerAutoRefreshProgress:CGFloat = 1.0
@@ -92,6 +92,9 @@ class RefreshView: UIView {
     open func updatePullProgress(progress:CGFloat){
         fatalError("updatePullProgress(progress:) has not been implemented")
     }
+    
+    /// 没有更多数据提示文字 此方法交给子类重写
+    open func noMoreData(text:String,color:UIColor){}
     
     /// 将要添加到父控件的时候调用此方法 系统调用
     /// - Parameter newSuperview: 将要添加到的父控件

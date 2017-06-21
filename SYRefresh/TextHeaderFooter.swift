@@ -11,6 +11,7 @@ import UIKit
 class TextHeaderFooter: RefreshView {
     private var accessoryView:AccessoryView //辅助试图
     private var textItem:TextItem //文本视图
+    private var isNoMoreData:Bool = false //是否没有更多数据
     /// 创建一个刷新控件
     /// - Parameters:
     ///   - normalText: 默认状态提示文字
@@ -25,6 +26,7 @@ class TextHeaderFooter: RefreshView {
         self.accessoryView = AccessoryView(color: color)
         self.textItem = TextItem(normalText: normalText, pullingText: pullingText, refreshingText: refreshingText, font: font, color: color)
         super.init(orientaton: orientation, height: height, completion: completion)
+        if self.isLeftOrRightOrientation() { textItem.label.numberOfLines = 0 }
         self.accessoryView.isLeftOrRightOrientation = self.isLeftOrRightOrientation() //传递刷新的方向
         layer.addSublayer(accessoryView.arrowLayer())
         addSubview(accessoryView.indicatorView)
@@ -36,14 +38,27 @@ class TextHeaderFooter: RefreshView {
     }
     
     override func updateRefreshState(isRefreshing: Bool) {
+        if isNoMoreData { return }
         accessoryView.updateRefreshState(isRefreshing: isRefreshing)
         textItem.updateRefreshState(isRefreshing: isRefreshing)
     }
     
     override func updatePullProgress(progress: CGFloat) {
+        if isNoMoreData { return }
         accessoryView.updatePullProgress(progress: progress, isFooter: isFooter)
         textItem.updatePullProgress(progress: progress)
     }
+    
+    override func noMoreData(text:String,color:UIColor){
+        if isFooter {
+            isNoMoreData = true
+            self.textItem.label.text = text
+            self.textItem.label.textColor = color
+            self.accessoryView.arrowLayer().isHidden = true
+            self.accessoryView.indicatorView.isHidden = true
+        }
+    }
+
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -57,20 +72,18 @@ class TextHeaderFooter: RefreshView {
         var point = CGPoint(x: (contentW - textItem.label.bounds.width*0.65-8)*0.5, y: bounds.midY)
         var indicatorViewPoint = CGPoint(x: point.x-8, y: point.y)
         var labelCenter = CGPoint(x: (contentW+textItem.label.bounds.width*0.5+8)*0.5, y: bounds.midY)
-        
         if isLeftOrRightOrientation() { //如果是水平刷新
             textItem.label.frame.size.width = textItem.label.font.pointSize
             textItem.label.frame.size.height = bounds.height*0.5
-            if self.superview!.frame.origin.x <= 0.0 {
-                labelCenter = CGPoint(x: bounds.midX-textItem.label.font.pointSize, y: bounds.midY)
-                point = CGPoint(x: bounds.midX+textItem.label.font.pointSize, y: bounds.midY)
+            if (self.scrollview?.contentOffset.x)! <= CGFloat(0.0) {
+                labelCenter = CGPoint(x: bounds.midX-textItem.label.font.pointSize-5, y: bounds.midY)
+                point = CGPoint(x: bounds.midX+textItem.label.font.pointSize+5, y: bounds.midY)
                 indicatorViewPoint = CGPoint(x: point.x, y: point.y)
             }else{
-                point = CGPoint(x: bounds.midX-textItem.label.font.pointSize, y: bounds.midY)
-                labelCenter = CGPoint(x: bounds.midX+textItem.label.font.pointSize, y: bounds.midY)
+                point = CGPoint(x: bounds.midX-textItem.label.font.pointSize-5, y: bounds.midY)
+                labelCenter = CGPoint(x: bounds.midX+textItem.label.font.pointSize+5, y: bounds.midY)
                 indicatorViewPoint = CGPoint(x: point.x, y: point.y)
             }
-         
         }
         UIView.performWithoutAnimation {
             accessoryView.arrowLayer().position = point

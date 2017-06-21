@@ -26,8 +26,12 @@ class TestTableViewController: UITableViewController {
         
         tableView.sy_footer = TextHeaderFooter(normalText: VerticalHintText.footerNomalText, pullingText: VerticalHintText.footerPullingText, refreshingText: VerticalHintText.footerRefreshText, orientation: .bottom, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self?.tableView.sy_footer?.endRefreshing()
-                self?.count += 10
+                if (self?.count)! >= 50 {
+                    self?.tableView.sy_footer?.noMoreData(text: "别再拉了，已经到底了", color: UIColor.red)
+                }else{
+                    self?.count += 10
+                    self?.tableView.sy_footer?.endRefreshing()
+                }
                 self?.tableView.reloadData()
             }
         })

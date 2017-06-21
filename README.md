@@ -1,11 +1,10 @@
 # SYRefresh
-一款简洁易用的刷新控件
+
+ 首先感谢你的支持，SYRefresh 是一款简洁易用的刷新控件，支持scrolview,Tableview,collectionview刷新功能，具备灵活的扩展功能。
 
 示例程序：
 
 ![MacDown Screenshot](./demoExample.gif)
-
-此次更新了刷新控件的创建方式为传入指定方向设置指定方向的刷新控件，删除原来创建的方法
 
 [oc版本地址点击进入](https://github.com/shushaoyong/SYRefresh)
 
@@ -113,5 +112,32 @@ GIF图片加文字刷新控件使用方法：
         footer.setRefreshState(state: .refreshing, images: refreshingImages)
         collectionView?.sy_footer = footer
 
+文字绘制动画：
+
+        let textItem = TextItem(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, font: UIFont.systemFont(ofSize: 18), color: UIColor.black)
+
+            tableView.sy_header = CoreTextHeaderFooter(textItem: textItem, orientation: .top, height: 44,completion: { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self?.tableView.sy_header?.endRefreshing()
+            self?.count = 15
+            self?.tableView.reloadData()
+            }
+        })
+
+        let textItem1 = TextItem(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, font: UIFont.systemFont(ofSize: 18), color: UIColor.black)
+
+        tableView.sy_footer = CoreTextHeaderFooter(textItem: textItem1, orientation: .bottom, height: 44,completion: { [weak self] in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                self?.tableView.sy_footer?.endRefreshing()
+                self?.count += 15
+                self?.tableView.reloadData()
+                }
+        })
+
 UICollectionView的使用方法同上，如果UICollectionView需要支持水平刷新功能，请设置布局的方向为水平方向即可！
- 更多功能敬请期待！ 此控件会持续的更新和完善
+
+目前还不会支持cocopods，因为它还在起步阶段，等到它功能完善得到大家的认可的时候，我会放到cocopods仓库
+
+如果你在使用中遇到了什么问题，可以直接在讨论区提出，我会及时的解决。
+
+更多功能敬请期待！ 

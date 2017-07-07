@@ -10,24 +10,24 @@ import UIKit
 
 class TestTableViewController: UITableViewController {
 
-    var count  = 10
+    var count  = 30
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         tableView.tableFooterView = UIView()
-        tableView.sy_header = TextHeaderFooter(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, orientation: .top, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
+        tableView.sy_header = TextHeaderFooter(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText,nomoreDataText:nil, orientation: .top, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.tableView.sy_header?.endRefreshing()
-                self?.count = 10
+                self?.count = 30
                 self?.tableView.reloadData()
             }
         })
         
-        tableView.sy_footer = TextHeaderFooter(normalText: VerticalHintText.footerNomalText, pullingText: VerticalHintText.footerPullingText, refreshingText: VerticalHintText.footerRefreshText, orientation: .bottom, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
+        tableView.sy_footer = TextHeaderFooter(normalText: VerticalHintText.footerNomalText, pullingText: VerticalHintText.footerPullingText, refreshingText: VerticalHintText.footerRefreshText, nomoreDataText:"没有更多数据了",orientation: .bottom, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 if (self?.count)! >= 50 {
-                    self?.tableView.sy_footer?.noMoreData(text: "别再拉了，已经到底了", color: UIColor.red)
+                    self?.tableView.sy_footer?.noMoreData()
                 }else{
                     self?.count += 10
                     self?.tableView.sy_footer?.endRefreshing()
@@ -35,7 +35,6 @@ class TestTableViewController: UITableViewController {
                 self?.tableView.reloadData()
             }
         })
-        tableView.sy_footer?.footerAutoRefreshProgress = 0.3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

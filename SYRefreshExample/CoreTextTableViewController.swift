@@ -17,7 +17,7 @@ class CoreTextTableViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         
         
-        let textItem = TextItem(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, font: UIFont.systemFont(ofSize: 18), color: UIColor.black)
+        let textItem = TextItem(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, nomoreDataText: nil, font: UIFont.systemFont(ofSize: 18), color: UIColor.black)
 
         tableView.sy_header = CoreTextHeaderFooter(textItem: textItem, orientation: .top, height: 44,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
@@ -27,7 +27,7 @@ class CoreTextTableViewController: UITableViewController {
             }
         })
         
-        let textItem1 = TextItem(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, font: UIFont.systemFont(ofSize: 18), color: UIColor.black)
+        let textItem1 = TextItem(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, nomoreDataText:"没有更多数据",font: UIFont.systemFont(ofSize: 18), color: UIColor.black)
 
         tableView.sy_footer = CoreTextHeaderFooter(textItem: textItem1, orientation: .bottom, height: 44,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {

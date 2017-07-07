@@ -39,18 +39,32 @@ final class TextItem {
     private let normalText:String //默认状态提示文字
     private let pullingText:String //拖拽到临界点松开即可刷新状态提示文字
     private let refreshingText:String //刷新状态提示文字
+    private let nomoreDataText:String? //没有更多数据状态提示文字
     private let font:UIFont //提示文字字体
     private let color:UIColor//提示文字颜色
     let label = UILabel()
-    init(normalText:String,pullingText:String,refreshingText:String,font:UIFont,color:UIColor){
+    init(normalText:String,pullingText:String,refreshingText:String,nomoreDataText:String?,font:UIFont,color:UIColor){
         self.normalText = normalText
         self.pullingText = pullingText
         self.refreshingText = refreshingText
+        self.nomoreDataText = nomoreDataText
         self.font = font
         self.color = color
         self.label.font = font
         self.label.textColor = color
         self.label.text = normalText
+    }
+    
+    /// 没有更多数据提示文字
+    func noMoreData(){
+        self.label.text = self.nomoreDataText
+        self.label.sizeToFit()
+    }
+    
+    /// 重置更多数据提示文字
+    func resentMoreData(){
+        self.label.text = self.normalText
+        self.label.sizeToFit()
     }
     
     /// 根据状态更新当前的控件提示文字
@@ -67,7 +81,6 @@ final class TextItem {
        label.text = progress == 1 ? self.pullingText : self.normalText
        label.sizeToFit()
     }
-    
 }
 
 final class AccessoryView { // 不允许子类继承
@@ -79,6 +92,7 @@ final class AccessoryView { // 不允许子类继承
         indicatorView.hidesWhenStopped = true
         return indicatorView
     }()
+    open var isNoMoreData:Bool = false //是否没有更多数据
     
     /// 垂直箭头控件
     lazy var arrowLayerV:CAShapeLayer =  {
@@ -131,6 +145,7 @@ final class AccessoryView { // 不允许子类继承
     /// 更新当前的控件状态
     /// - Parameter isRefreshing: 是否正在刷新
     func updateRefreshState(isRefreshing:Bool){
+        if isNoMoreData == false { indicatorView.isHidden = false }
         arrowLayer().isHidden = isRefreshing
         isRefreshing ? indicatorView.startAnimating() : indicatorView.stopAnimating()
     }

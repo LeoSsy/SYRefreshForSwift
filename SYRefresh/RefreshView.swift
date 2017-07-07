@@ -38,6 +38,7 @@ class RefreshView: UIView {
     open weak var scrollview:UIScrollView?{
         return superview as? UIScrollView
     }
+    open var isNoMoreData:Bool = false //是否没有更多数据
     /**是否正在刷新*/
     var isRefreshing:Bool = false
     {
@@ -46,6 +47,7 @@ class RefreshView: UIView {
             updateRefreshState(isRefreshing: isRefreshing)
         }
     }
+    open var oldInsetBottom:CGFloat = 0 //记录原始的底部的间距
     /**当前的拖拽比例*/
     private  var pullProgress:CGFloat = 0 {
         didSet{
@@ -92,9 +94,6 @@ class RefreshView: UIView {
     open func updatePullProgress(progress:CGFloat){
         fatalError("updatePullProgress(progress:) has not been implemented")
     }
-    
-    /// 没有更多数据提示文字 此方法交给子类重写
-    open func noMoreData(text:String,color:UIColor){}
     
     /// 将要添加到父控件的时候调用此方法 系统调用
     /// - Parameter newSuperview: 将要添加到的父控件
@@ -159,6 +158,10 @@ class RefreshView: UIView {
     
     /// 开始刷新
     func beginRefreshing(){
+        if isNoMoreData {
+            isRefreshing = false
+            return
+        }
         if isRefreshing {return}
         if checkContentSizeValid() { return }
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
@@ -168,7 +171,12 @@ class RefreshView: UIView {
         if isLeftOrRightOrientation() {
             UIView.animate(withDuration: RefreshConfig.animationDuration, animations: {
                 if self.isFooter {
-                    scrollview.contentInset.right += self.bounds.width
+                    if self.oldInsetBottom <= 0 {
+                        scrollview.contentInset.right += self.bounds.width
+                        self.oldInsetBottom = scrollview.contentInset.right
+                    }else{
+                        scrollview.contentInset.right = self.oldInsetBottom
+                    }
                 }else{
                     scrollview.contentOffset.y = self.bounds.width + scrollview.contentInset.left
                     scrollview.contentInset.left += self.bounds.width
@@ -179,7 +187,12 @@ class RefreshView: UIView {
         }else{
             UIView.animate(withDuration: RefreshConfig.animationDuration, animations: {
                 if self.isFooter {
-                    scrollview.contentInset.bottom += self.bounds.height
+                    if self.oldInsetBottom <= 0 {
+                        scrollview.contentInset.bottom += self.bounds.height
+                        self.oldInsetBottom = scrollview.contentInset.bottom
+                    }else{
+                        scrollview.contentInset.bottom = self.oldInsetBottom
+                    }
                 }else{
                     scrollview.contentOffset.y = -self.bounds.height - scrollview.contentInset.top
                     scrollview.contentInset.top += self.bounds.height
@@ -220,6 +233,9 @@ class RefreshView: UIView {
             }
         }
     }
+    
+    /// 没有更多数据提示文字 此方法交给子类重写
+    open func noMoreData(){}
     
     /// 设置刷新控件的状态 交给子类重写
     /// - Parameter state: 状态
@@ -282,7 +298,10 @@ class RefreshView: UIView {
                 }
             }
             if isHidden { self.isHidden = false }
-            footerAutoRefresh()
+            //设置了拖拽比例 再 进行自动刷新
+            if self.footerAutoRefreshProgress > 0.0 {
+                footerAutoRefresh()
+            }
         }
     }
     
@@ -313,6 +332,7 @@ class RefreshView: UIView {
     
     /// 校验contentsize是否有效果
     private func checkContentSizeValid()->Bool{
+        if isNoMoreData { return false }
         if isFooter == false { return false }
         guard let scrollview = scrollview else { return false} //作用：在下面使用scrollview的时候不用解包
         if isLeftOrRightOrientation() {
@@ -338,6 +358,7 @@ class RefreshView: UIView {
 
     /// contentSize 改变之后调用此方法
     private func contentSizeChange(){
+        if  isFooter && pullProgress < 1.0  { isNoMoreData = false }
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
         if checkContentSizeValid() { return }
         if isLeftOrRightOrientation() {
@@ -351,6 +372,7 @@ class RefreshView: UIView {
     
     /// 结束拖拽的时候调用此方法
     private func scrollviewEndDraging(){
+        if isNoMoreData { return }
         if isRefreshing || pullProgress < 1 {return}  //如果正在刷新 或者 用户没有拖拽到临界点 就不要刷新
         beginRefreshing()
     }

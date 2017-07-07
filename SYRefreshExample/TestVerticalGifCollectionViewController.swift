@@ -19,14 +19,14 @@ class TestVerticalGifCollectionViewController: UICollectionViewController {
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
         let data = try! Data(contentsOf: Bundle.main.url(forResource: "demo-small.gif", withExtension: nil)!)
-        let textItem = TextItem(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, font: UIFont.systemFont(ofSize: 13), color: UIColor.black)
+        let textItem = TextItem(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, nomoreDataText: nil, font: UIFont.systemFont(ofSize: 13), color: UIColor.black)
         collectionView?.sy_header = GifTextHeaderFooter(data: data,textItem:textItem, orientation: .top, height: 60,contentMode:.scaleAspectFit,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 self?.collectionView?.sy_header?.endRefreshing()
             }
         })
         
-        let textItem2 = TextItem(normalText: VerticalHintText.footerNomalText, pullingText: VerticalHintText.footerPullingText, refreshingText: VerticalHintText.footerRefreshText, font: UIFont.systemFont(ofSize: 13), color: UIColor.black)
+        let textItem2 = TextItem(normalText: VerticalHintText.footerNomalText, pullingText: VerticalHintText.footerPullingText, refreshingText: VerticalHintText.footerRefreshText, nomoreDataText:nil ,font: UIFont.systemFont(ofSize: 13), color: UIColor.black)
 
         collectionView?.sy_footer = GifTextHeaderFooter(data: data,textItem:textItem2, orientation: .bottom, height: 60,contentMode:.scaleAspectFit,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {

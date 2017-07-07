@@ -11,7 +11,6 @@ import UIKit
 class TextHeaderFooter: RefreshView {
     private var accessoryView:AccessoryView //辅助试图
     private var textItem:TextItem //文本视图
-    private var isNoMoreData:Bool = false //是否没有更多数据
     /// 创建一个刷新控件
     /// - Parameters:
     ///   - normalText: 默认状态提示文字
@@ -22,9 +21,9 @@ class TextHeaderFooter: RefreshView {
     ///   - font:   提示文字字体
     ///   - color:  提示文字颜色
     ///   - completion: 开始刷新之后回调
-    init(normalText:String,pullingText:String,refreshingText:String,orientation:RefreshViewOrientation,height:CGFloat,font:UIFont,color:UIColor,completion: @escaping ()->Void){
+    init(normalText:String,pullingText:String,refreshingText:String,nomoreDataText:String?,orientation:RefreshViewOrientation,height:CGFloat,font:UIFont,color:UIColor,completion: @escaping ()->Void){
         self.accessoryView = AccessoryView(color: color)
-        self.textItem = TextItem(normalText: normalText, pullingText: pullingText, refreshingText: refreshingText, font: font, color: color)
+        self.textItem = TextItem(normalText: normalText, pullingText: pullingText, refreshingText: refreshingText,nomoreDataText:nomoreDataText , font: font, color: color)
         super.init(orientaton: orientation, height: height, completion: completion)
         if self.isLeftOrRightOrientation() { textItem.label.numberOfLines = 0 }
         self.accessoryView.isLeftOrRightOrientation = self.isLeftOrRightOrientation() //传递刷新的方向
@@ -38,27 +37,44 @@ class TextHeaderFooter: RefreshView {
     }
     
     override func updateRefreshState(isRefreshing: Bool) {
-        if isNoMoreData { return }
-        accessoryView.updateRefreshState(isRefreshing: isRefreshing)
-        textItem.updateRefreshState(isRefreshing: isRefreshing)
+        if  isFooter == true && isNoMoreData == true {
+            self.accessoryView.arrowLayer().isHidden = true
+            self.accessoryView.indicatorView.isHidden = true
+            self.textItem.noMoreData()
+        }else{
+            resentNomoreData()
+            accessoryView.isNoMoreData = isNoMoreData
+            accessoryView.updateRefreshState(isRefreshing: isRefreshing)
+            textItem.updateRefreshState(isRefreshing: isRefreshing)
+        }
     }
     
     override func updatePullProgress(progress: CGFloat) {
-        if isNoMoreData { return }
-        accessoryView.updatePullProgress(progress: progress, isFooter: isFooter)
-        textItem.updatePullProgress(progress: progress)
-    }
-    
-    override func noMoreData(text:String,color:UIColor){
-        if isFooter {
-            isNoMoreData = true
-            self.textItem.label.text = text
-            self.textItem.label.textColor = color
+        if  isFooter == true && isNoMoreData == true {
             self.accessoryView.arrowLayer().isHidden = true
             self.accessoryView.indicatorView.isHidden = true
+            self.textItem.noMoreData()
+        }else{
+            resentNomoreData()
+            accessoryView.updatePullProgress(progress: progress, isFooter: isFooter)
+            textItem.updatePullProgress(progress: progress)
         }
     }
 
+    override func noMoreData(){
+        isNoMoreData = true
+        isRefreshing = false
+        textItem.noMoreData()
+        accessoryView.arrowLayer().isHidden = true
+        accessoryView.indicatorView.isHidden = true
+        self.setNeedsLayout()
+    }
+    
+    func resentNomoreData(){
+        textItem.resentMoreData()
+        accessoryView.arrowLayer().isHidden = false
+        self.setNeedsLayout()
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -68,6 +84,13 @@ class TextHeaderFooter: RefreshView {
             if (superview?.isKind(of: UIScrollView.self))! {
                 contentW = (superview?.superview?.bounds.width)!
             }
+        }
+        
+        if isNoMoreData {
+            UIView.performWithoutAnimation {
+                textItem.label.frame.origin.x = (contentW-textItem.label.bounds.width)*0.5
+            }
+            return
         }
         var point = CGPoint(x: (contentW - textItem.label.bounds.width*0.65-8)*0.5, y: bounds.midY)
         var indicatorViewPoint = CGPoint(x: point.x-8, y: point.y)

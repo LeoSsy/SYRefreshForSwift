@@ -8,6 +8,31 @@
 
 import UIKit
 
+extension UIView {
+    
+    ///获取当前View的所在的控制器
+    func currentViewController() -> UIViewController! {
+        return self.findControllerWithClass(UIViewController.self)
+    }
+    
+    ///获取当前View的所在的导航控制器
+    func currentNvagationController() -> UINavigationController! {
+        return self.findControllerWithClass(UINavigationController.self)
+    }
+    
+    ///原理根据事件响应者链条
+    func findControllerWithClass<T>(_ clzz: AnyClass) -> T? {
+        var responder = self.next
+        while(responder != nil) {
+            if (responder!.isKind(of: clzz)) {
+                return responder as? T
+            }
+            responder = responder?.next
+        }
+        return nil
+    }
+}
+
 struct VerticalHintText {
     static let headerNomalText:String = "下拉即可刷新"   /// 头部默认状态提示文字
     static let headerPullingText:String = "松手即可刷新" ///头部拖拽状态提示文字

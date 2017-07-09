@@ -117,6 +117,13 @@ class RefreshView: UIView {
                 self.frame.origin.y = -bounds.height
             }
         }
+        //获取当前显示的控制器
+        let currentVc = self.currentViewController()
+        if (currentVc?.automaticallyAdjustsScrollViewInsets == false) { //如果用户设置了不要自定调整内边距我们就自己处理导航栏问题
+            if currentVc?.parent is UINavigationController {
+                self.scrollview?.contentInset.top = 64 //添加一个导航栏的高度
+            }
+        }
     }
 
     /// 监听scrollview的状态
@@ -144,6 +151,7 @@ class RefreshView: UIView {
     ///   - change: 被监听的值
     ///   - context: 上下文
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if self.window == nil { return }
         guard let scrollview = scrollview else { return }
         if keyPath == #keyPath(UIScrollView.contentOffset)  {
             contentOffsetChange()
@@ -167,6 +175,7 @@ class RefreshView: UIView {
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
         isRefreshing = true
         pullProgress = 1
+        self.isHidden = false
         self.setState(state: .refreshing)
         if isLeftOrRightOrientation() {
             UIView.animate(withDuration: RefreshConfig.animationDuration, animations: {

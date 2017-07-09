@@ -35,6 +35,8 @@ class TestTableViewController: UITableViewController {
                 self?.tableView.reloadData()
             }
         })
+        
+        tableView.sy_header?.beginRefreshing()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

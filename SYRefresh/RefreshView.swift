@@ -61,7 +61,7 @@ class RefreshView: UIView {
     
     /**开始刷新后的回调*/
     private let completionCallBack:()->Void
-
+    
     /// 初始化方法
     /// - Parameters:
     ///   - orientaton: 控件的方向
@@ -82,13 +82,13 @@ class RefreshView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     /// 更新刷新状态 此方法交给子类重写
     /// - Parameter isRefresh: 是否正在刷新
     open func updateRefreshState(isRefreshing:Bool){
         fatalError("updateRefreshState(isRefreshing:) has not been implemented")
     }
-
+    
     /// 拖拽比例 此方法交给子类重写
     /// - Parameter progress: 拖拽比例
     open func updatePullProgress(progress:CGFloat){
@@ -117,7 +117,7 @@ class RefreshView: UIView {
                 self.frame.origin.y = -bounds.height
             }
         }
-        //获取当前显示的控制器
+        
         let currentVc = self.currentViewController()
         if (currentVc?.automaticallyAdjustsScrollViewInsets == false) { //如果用户设置了不要自定调整内边距我们就自己处理导航栏问题
             if currentVc?.parent is UINavigationController {
@@ -125,7 +125,7 @@ class RefreshView: UIView {
             }
         }
     }
-
+    
     /// 监听scrollview的状态
     func addObserver(){
         scrollview?.addObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset), options: .new, context: nil)
@@ -151,7 +151,6 @@ class RefreshView: UIView {
     ///   - change: 被监听的值
     ///   - context: 上下文
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if self.window == nil { return }
         guard let scrollview = scrollview else { return }
         if keyPath == #keyPath(UIScrollView.contentOffset)  {
             contentOffsetChange()
@@ -255,7 +254,7 @@ class RefreshView: UIView {
         return orientation == .left || orientation == .right
     }
     
-//========================================================私有方法===============================================================
+    //========================================================私有方法===============================================================
     /// contentOffset 改变之后调用此方法
     private func contentOffsetChange(){
         if isRefreshing { return}
@@ -315,7 +314,7 @@ class RefreshView: UIView {
     }
     
     /// 开启尾部自动刷新
-   private func footerAutoRefresh(){
+    private func footerAutoRefresh(){
         if isFooter == false {  return }
         guard let scrollview = scrollview else { return }
         if checkContentSizeValid() == false {
@@ -341,9 +340,11 @@ class RefreshView: UIView {
     
     /// 校验contentsize是否有效果
     private func checkContentSizeValid()->Bool{
-        if isNoMoreData { return false }
-        if isFooter == false { return false }
         guard let scrollview = scrollview else { return false} //作用：在下面使用scrollview的时候不用解包
+        if isFooter && isNoMoreData {
+            return false
+        }
+        if isFooter == false { return false }
         if isLeftOrRightOrientation() {
             //当内容不满一个屏幕的时候就隐藏底部的刷新控件
             if (scrollview.contentSize.width < scrollview.bounds.width-(scrollview.contentInset.left+scrollview.contentInset.right)) {
@@ -364,11 +365,11 @@ class RefreshView: UIView {
             }
         }
     }
-
+    
     /// contentSize 改变之后调用此方法
     private func contentSizeChange(){
-        if  isFooter && pullProgress < 1.0  { isNoMoreData = false }
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
+        if  isFooter && scrollview.isDragging  { isNoMoreData = false } //如果正在拖拽 重置没有更多数据状态
         if checkContentSizeValid() { return }
         if isLeftOrRightOrientation() {
             if self.bounds.minX ==  scrollview.contentSize.width{return}

@@ -10,16 +10,17 @@ import UIKit
 
 class TestTableViewController: UITableViewController {
 
-    var count  = 30
+    var count  = 15
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         tableView.tableFooterView = UIView()
+        tableView.contentInset = UIEdgeInsetsMake(60, 0, 100, 0)
         tableView.sy_header = TextHeaderFooter(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText,nomoreDataText:nil, orientation: .top, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.tableView.sy_header?.endRefreshing()
-                self?.count = 30
+                self?.count = 15
                 self?.tableView.reloadData()
             }
         })
@@ -29,7 +30,7 @@ class TestTableViewController: UITableViewController {
                 if (self?.count)! >= 50 {
                     self?.tableView.sy_footer?.noMoreData()
                 }else{
-                    self?.count += 10
+                    self?.count += 0
                     self?.tableView.sy_footer?.endRefreshing()
                 }
                 self?.tableView.reloadData()

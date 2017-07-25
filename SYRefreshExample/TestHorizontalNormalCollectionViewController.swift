@@ -18,7 +18,6 @@ class TestHorizontalNormalCollectionViewController: UICollectionViewController {
         
         // Register cell classes
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
         collectionView?.sy_header = TextHeaderFooter(normalText: HorizontalHintText.headerNomalText, pullingText: HorizontalHintText.headerPullingText, refreshingText: HorizontalHintText.headerRefreshText,nomoreDataText:nil
             , orientation: .left, height: 60, font: UIFont.systemFont(ofSize: 8), color: UIColor.black, completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -37,7 +36,7 @@ class TestHorizontalNormalCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 100
+        return 1000
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

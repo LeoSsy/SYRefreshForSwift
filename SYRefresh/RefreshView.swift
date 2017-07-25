@@ -152,10 +152,12 @@ class RefreshView: UIView {
     ///   - context: 上下文
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard let scrollview = scrollview else { return }
+        if keyPath == #keyPath(UIScrollView.contentSize){
+            contentSizeChange()
+        }
+        if self.window == nil  {return}
         if keyPath == #keyPath(UIScrollView.contentOffset)  {
             contentOffsetChange()
-        }else if keyPath == #keyPath(UIScrollView.contentSize){
-            contentSizeChange()
         }else if keyPath == #keyPath(UIPanGestureRecognizer.state){
             if case .ended =  scrollview.panGestureRecognizer.state {
                 scrollviewEndDraging()
@@ -254,7 +256,7 @@ class RefreshView: UIView {
         return orientation == .left || orientation == .right
     }
     
-    //========================================================私有方法===============================================================
+    //===========================私有方法=========================
     /// contentOffset 改变之后调用此方法
     private func contentOffsetChange(){
         if isRefreshing { return}
@@ -305,9 +307,23 @@ class RefreshView: UIView {
                     }
                 }
             }
-            if isHidden { self.isHidden = false }
+            
+            //控制控件的隐藏和显示
+            if isFooter == false  {
+                if scrollview.contentOffset.y < -(scrollview.contentInset.top) {
+                    if isHidden { self.isHidden = false }
+                }else if(scrollview.contentOffset.y >= 0){
+                    if isHidden { self.isHidden = false }
+                }
+            }else{
+                if scrollview.contentOffset.y <= 0 {
+                    if isHidden { self.isHidden = false }
+                }else if(scrollview.contentOffset.y >= scrollview.contentInset.bottom ){
+                    if isHidden { self.isHidden = false }
+                }
+            }
             //设置了拖拽比例 再 进行自动刷新
-            if self.footerAutoRefreshProgress > 0.0 {
+            if self.footerAutoRefreshProgress > 0.5 {
                 footerAutoRefresh()
             }
         }
@@ -320,7 +336,7 @@ class RefreshView: UIView {
         if checkContentSizeValid() == false {
             if isLeftOrRightOrientation() {//水平方向自动刷新
                 //开启自动刷新
-                if footerAutoRefreshProgress >= 0.0 && footerAutoRefreshProgress < 1.0{
+                if footerAutoRefreshProgress >= 0.5 && footerAutoRefreshProgress < 1.0{
                     if (scrollview.contentOffset.x>=(scrollview.contentSize.width-scrollview.bounds.width-scrollview.contentInset.right-bounds.height)*footerAutoRefreshProgress) {
                         beginRefreshing()
                         return;
@@ -328,7 +344,7 @@ class RefreshView: UIView {
                 }
             }else{ //垂直方向自动刷新
                 //开启自动刷新
-                if footerAutoRefreshProgress >= 0.0 && footerAutoRefreshProgress < 1.0{
+                if footerAutoRefreshProgress >= 0.5 && footerAutoRefreshProgress < 1.0{
                     if (scrollview.contentOffset.y>=(scrollview.contentSize.height-scrollview.bounds.height-scrollview.contentInset.bottom-bounds.height)*footerAutoRefreshProgress) {
                         beginRefreshing()
                         return;
@@ -351,7 +367,7 @@ class RefreshView: UIView {
                 scrollview.sy_footer?.isHidden = true
                 return true
             }else{
-                scrollview.sy_footer?.isHidden = false
+//                scrollview.sy_footer?.isHidden = false
                 return false
             }
         }else{
@@ -360,7 +376,7 @@ class RefreshView: UIView {
                 scrollview.sy_footer?.isHidden = true
                 return true
             }else{
-                scrollview.sy_footer?.isHidden = false
+//                scrollview.sy_footer?.isHidden = false
                 return false
             }
         }

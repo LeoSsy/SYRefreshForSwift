@@ -37,82 +37,80 @@ class TextHeaderFooter: RefreshView {
     }
     
     override func updateRefreshState(isRefreshing: Bool) {
-        if  isFooter == true && isNoMoreData == true {
-            self.accessoryView.arrowLayer().isHidden = true
-            self.accessoryView.indicatorView.isHidden = true
-            self.textItem.noMoreData()
-        }else{
-            resentNomoreData()
-            accessoryView.isNoMoreData = isNoMoreData
-            accessoryView.updateRefreshState(isRefreshing: isRefreshing)
-            textItem.updateRefreshState(isRefreshing: isRefreshing)
-        }
+            guard let scrollview = self.scrollview else { return }
+            if (isFooter == false  && scrollview.contentInset.bottom > 0 ) || (isFooter == false  && scrollview.contentInset.right > 0)  {
+                resentNoMoreData()
+            }
+            if  isNoMoreData == false {
+                accessoryView.isNoMoreData = isNoMoreData
+                accessoryView.updateRefreshState(isRefreshing: isRefreshing)
+                textItem.updateRefreshState(isRefreshing: isRefreshing)
+          }
     }
     
     override func updatePullProgress(progress: CGFloat) {
-        if  isFooter == true && isNoMoreData == true {
-            self.accessoryView.arrowLayer().isHidden = true
-            self.accessoryView.indicatorView.isHidden = true
-            self.textItem.noMoreData()
-        }else{
-            resentNomoreData()
-            accessoryView.updatePullProgress(progress: progress, isFooter: isFooter)
-            textItem.updatePullProgress(progress: progress)
+        if  isNoMoreData == false {
+            if accessoryView.arrowLayer().isHidden == true {
+                accessoryView.arrowLayer().isHidden = false
+            }
+             accessoryView.updatePullProgress(progress: progress, isFooter: isFooter)
+             textItem.updatePullProgress(progress: progress)
         }
     }
-
+    
     override func noMoreData(){
-        isNoMoreData = true
-        isRefreshing = false
+        super.noMoreData()
         textItem.noMoreData()
         accessoryView.arrowLayer().isHidden = true
         accessoryView.indicatorView.isHidden = true
         self.setNeedsLayout()
     }
     
-    func resentNomoreData(){
+    override  func resentNoMoreData() {
         textItem.resentMoreData()
         accessoryView.arrowLayer().isHidden = false
+        accessoryView.indicatorView.isHidden = false
         self.setNeedsLayout()
+        super.resentNoMoreData()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        guard let scrollview = self.scrollview else { return }
         var contentW = bounds.width
         if  superview?.superview != nil {
-            if (superview?.isKind(of: UIScrollView.self))! {
-                contentW = (superview?.superview?.bounds.width)!
-            }
+            if (superview?.isKind(of: UIScrollView.self))! { contentW = (superview?.superview?.bounds.width)! }
         }
-        
+        //全部加载完成只需要显示文本即可
         if isNoMoreData {
             UIView.performWithoutAnimation {
                 textItem.label.frame.origin.x = (contentW-textItem.label.bounds.width)*0.5
             }
             return
         }
+        //普通状态下
         var point = CGPoint(x: (contentW - textItem.label.bounds.width*0.65-8)*0.5, y: bounds.midY)
         var indicatorViewPoint = CGPoint(x: point.x-8, y: point.y)
         var labelCenter = CGPoint(x: (contentW+textItem.label.bounds.width*0.5+8)*0.5, y: bounds.midY)
         if isLeftOrRightOrientation() { //如果是水平刷新
             textItem.label.frame.size.width = textItem.label.font.pointSize
-            textItem.label.frame.size.height = bounds.height*0.5
+            textItem.label.frame.size.height = scrollview.bounds.height*0.5
             if (self.scrollview?.contentOffset.x)! <= CGFloat(0.0) {
-                labelCenter = CGPoint(x: bounds.midX-textItem.label.font.pointSize-5, y: bounds.midY)
-                point = CGPoint(x: bounds.midX+textItem.label.font.pointSize+5, y: bounds.midY)
+                labelCenter = CGPoint(x: bounds.midX-textItem.label.font.pointSize+5, y: scrollview.bounds.midY)
+                point = CGPoint(x: bounds.midX+textItem.label.font.pointSize+5, y: scrollview.bounds.midY)
                 indicatorViewPoint = CGPoint(x: point.x, y: point.y)
             }else{
-                point = CGPoint(x: bounds.midX-textItem.label.font.pointSize-5, y: bounds.midY)
-                labelCenter = CGPoint(x: bounds.midX+textItem.label.font.pointSize+5, y: bounds.midY)
+                point = CGPoint(x: bounds.midX-textItem.label.font.pointSize-5, y: scrollview.bounds.midY)
+                labelCenter = CGPoint(x: bounds.midX+textItem.label.font.pointSize+5, y: scrollview.bounds.midY)
                 indicatorViewPoint = CGPoint(x: point.x, y: point.y)
             }
         }
+        //去除动画效果
         UIView.performWithoutAnimation {
             accessoryView.arrowLayer().position = point
             accessoryView.indicatorView.center = indicatorViewPoint
             textItem.label.center = labelCenter
         }
     }
-
+    
 }

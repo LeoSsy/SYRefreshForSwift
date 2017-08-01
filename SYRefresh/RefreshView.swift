@@ -38,20 +38,21 @@ class RefreshView: UIView {
     open weak var scrollview:UIScrollView?{
         return superview as? UIScrollView
     }
-    open var isNoMoreData:Bool = false //是否没有更多数据
+    open var isNoMoreData:Bool = false //是否没有更多数据 尾部控件需要此属性
+
     /**是否正在刷新*/
     var isRefreshing:Bool = false
     {
         didSet{
-            if checkContentSizeValid() { return }
+            if checkContentSizeValid() || isNoMoreData{ return }
             updateRefreshState(isRefreshing: isRefreshing)
         }
     }
-    open var oldInsetBottom:CGFloat = 0 //记录原始的底部的间距
+    open var oldFooterInsets:UIEdgeInsets = .zero //记录原始的footer的contentInsets
     /**当前的拖拽比例*/
     private  var pullProgress:CGFloat = 0 {
         didSet{
-            if isRefreshing { return }
+            if isRefreshing || isNoMoreData  { return }
             if checkContentSizeValid() { return }
             updatePullProgress(progress: pullProgress)
         }
@@ -95,6 +96,15 @@ class RefreshView: UIView {
         fatalError("updatePullProgress(progress:) has not been implemented")
     }
     
+    /// 设置刷新控件的状态 交给子类重写
+    /// - Parameter state: 状态
+    open func setState(state:SYRefreshViewState){self.state = state}
+    
+    /// 返回是否是左右刷新方向
+    open func isLeftOrRightOrientation()->Bool{
+        return orientation == .left || orientation == .right
+    }
+    
     /// 将要添加到父控件的时候调用此方法 系统调用
     /// - Parameter newSuperview: 将要添加到的父控件
     override func willMove(toSuperview newSuperview: UIView?) {
@@ -117,7 +127,6 @@ class RefreshView: UIView {
                 self.frame.origin.y = -bounds.height
             }
         }
-        
         let currentVc = self.currentViewController()
         if (currentVc?.automaticallyAdjustsScrollViewInsets == false) { //如果用户设置了不要自定调整内边距我们就自己处理导航栏问题
             if currentVc?.parent is UINavigationController {
@@ -152,12 +161,10 @@ class RefreshView: UIView {
     ///   - context: 上下文
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard let scrollview = scrollview else { return }
-        if keyPath == #keyPath(UIScrollView.contentSize){
-            contentSizeChange()
-        }
-        if self.window == nil  {return}
         if keyPath == #keyPath(UIScrollView.contentOffset)  {
             contentOffsetChange()
+        }else if keyPath == #keyPath(UIScrollView.contentSize){
+            contentSizeChange()
         }else if keyPath == #keyPath(UIPanGestureRecognizer.state){
             if case .ended =  scrollview.panGestureRecognizer.state {
                 scrollviewEndDraging()
@@ -165,12 +172,152 @@ class RefreshView: UIView {
         }
     }
     
+    //================================监听方法===============================
+    /// contentOffset 改变之后调用此方法
+    open func contentOffsetChange(){
+        guard let scrollview = scrollview else { return }
+        if isNoMoreData { return } //如果已经全部加载完毕 直接返回
+        if isRefreshing { return}
+        if scrollview.isDragging {
+            if isLeftOrRightOrientation() { //水平刷新
+                if isFooter {
+                    pullProgress = min(1,max(0,(scrollview.contentOffset.x+scrollview.bounds.width-scrollview.contentSize.width-scrollview.contentInset.right)/self.bounds.width)) //去除无效的值
+                    //设置刷新控件状态
+                    let pullingOffsetX = scrollview.contentSize.width - scrollview.bounds.width+bounds.width;
+                    let offsetX = scrollview.contentOffset.x
+                    if (self.state == .stateIdle && offsetX>pullingOffsetX) {
+                        self.setState(state: .pulling)
+                    }else if(self.state == .pulling&&offsetX<pullingOffsetX){
+                        self.setState(state: .stateIdle)
+                    }
+                }else{
+                    pullProgress = min(1,max(0,-(scrollview.contentOffset.x + scrollview.contentInset.right)/self.bounds.width))
+                    //设置刷新控件状态
+                    let pullingOffsetX = -scrollview.contentInset.left - bounds.width
+                    let offsetX = scrollview.contentOffset.x
+                    if (self.state == .stateIdle && offsetX<pullingOffsetX) { //负数 往左拉
+                        self.setState(state: .pulling)
+                    }else if(self.state == .pulling&&offsetX>pullingOffsetX){
+                        self.setState(state: .stateIdle)
+                    }
+                }
+            }else{
+                if isFooter {
+                    //设置刷新控件状态
+                    let pullingOffsetY = scrollview.contentSize.height - scrollview.bounds.height+bounds.height;
+                    let offsetY = scrollview.contentOffset.y
+                    if (self.state == .stateIdle && offsetY>pullingOffsetY) {
+                        self.setState(state: .pulling)
+                    }else if(self.state == .pulling&&offsetY<pullingOffsetY){
+                        self.setState(state: .stateIdle)
+                    }
+                    pullProgress = min(1,max(0,(scrollview.contentOffset.y+scrollview.bounds.height-scrollview.contentSize.height-scrollview.contentInset.bottom)/self.bounds.height)) //去除无效的值
+                }else{
+                    //设置刷新控件状态
+                    let pullingOffsetY = -scrollview.contentInset.top - bounds.height
+                    let offsetY = scrollview.contentOffset.y
+                    if (self.state == .stateIdle && offsetY<pullingOffsetY) { //负数 往下拉
+                        self.setState(state: .pulling)
+                    }else if(self.state == .pulling&&offsetY>pullingOffsetY){
+                        self.setState(state: .stateIdle)
+                    }
+                    pullProgress = min(1,max(0,-(scrollview.contentOffset.y + scrollview.contentInset.top)/self.bounds.height))
+                }
+            }
+            //控制控件的隐藏和显示
+            if isFooter == false  {
+                if scrollview.contentOffset.y < -(scrollview.contentInset.top) {
+                    if isHidden { self.isHidden = false }
+                }else if(scrollview.contentOffset.y >= 0){
+                    if isHidden { self.isHidden = false }
+                }
+            }else{
+                if scrollview.contentOffset.y <= 0 {
+                    if isHidden { self.isHidden = false }
+                }else if(scrollview.contentOffset.y >= scrollview.contentInset.bottom ){
+                    if isHidden { self.isHidden = false }
+                }
+            }            //设置了拖拽比例 再 进行自动刷新
+            if self.footerAutoRefreshProgress > 0.5 {
+                footerAutoRefresh()
+            }
+        }
+    }
+    
+    /// 开启尾部自动刷新
+    private func footerAutoRefresh(){
+        if isFooter == false {  return }
+        guard let scrollview = scrollview else { return }
+        if checkContentSizeValid() == false {
+            if isLeftOrRightOrientation() {//水平方向自动刷新
+                //开启自动刷新
+                if footerAutoRefreshProgress >= 0.5 && footerAutoRefreshProgress < 1.0{
+                    if (scrollview.contentOffset.x>=(scrollview.contentSize.width-scrollview.bounds.width-scrollview.contentInset.right-bounds.height)*footerAutoRefreshProgress) {
+                        beginRefreshing()
+                        return;
+                    }
+                }
+            }else{ //垂直方向自动刷新
+                //开启自动刷新
+                if footerAutoRefreshProgress >= 0.5 && footerAutoRefreshProgress < 1.0{
+                    if (scrollview.contentOffset.y>=(scrollview.contentSize.height-scrollview.bounds.height-scrollview.contentInset.bottom-bounds.height)*footerAutoRefreshProgress) {
+                        beginRefreshing()
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    
+    /// 校验contentsize是否有效果
+    private func checkContentSizeValid()->Bool{
+        guard let scrollview = scrollview else { return false} //作用：在下面使用scrollview的时候不用解包
+        if isFooter == false { return false }
+        if isNoMoreData { return false }
+        if isLeftOrRightOrientation() {
+            //当内容不满一个屏幕的时候就隐藏底部的刷新控件
+            if (scrollview.contentSize.width < scrollview.bounds.width-(scrollview.contentInset.left+scrollview.contentInset.right)) {
+                scrollview.sy_footer?.isHidden = true
+                return true
+            }else{
+                scrollview.sy_footer?.isHidden = false
+                return false
+            }
+        }else{
+            //当内容不满一个屏幕的时候就隐藏底部的刷新控件
+            if (scrollview.contentSize.height < scrollview.bounds.height-(scrollview.contentInset.top+scrollview.contentInset.bottom)) {
+                scrollview.sy_footer?.isHidden = true
+                return true
+            }else{
+                scrollview.sy_footer?.isHidden = false
+                return false
+            }
+        }
+    }
+    
+    /// contentSize 改变之后调用此方法
+    open func contentSizeChange(){
+        guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
+        if isFooter && scrollview.isDragging { isNoMoreData = false }
+        if checkContentSizeValid() { return }
+        if isLeftOrRightOrientation() {
+            if self.bounds.minX ==  scrollview.contentSize.width{return}
+            self.frame.origin.x = scrollview.contentSize.width
+        }else{
+            if self.frame.origin.y ==  scrollview.contentSize.height{return}
+            self.frame.origin.y = scrollview.contentSize.height
+        }
+    }
+    
+    /// 结束拖拽的时候调用此方法
+    private func scrollviewEndDraging(){
+        if isNoMoreData { return }
+        if isRefreshing || pullProgress < 1 {return}  //如果正在刷新 或者 用户没有拖拽到临界点 就不要刷新
+        beginRefreshing()
+    }
+    
     /// 开始刷新
     func beginRefreshing(){
-        if isNoMoreData {
-            isRefreshing = false
-            return
-        }
         if isRefreshing {return}
         if checkContentSizeValid() { return }
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
@@ -181,11 +328,11 @@ class RefreshView: UIView {
         if isLeftOrRightOrientation() {
             UIView.animate(withDuration: RefreshConfig.animationDuration, animations: {
                 if self.isFooter {
-                    if self.oldInsetBottom <= 0 {
+                    if self.oldFooterInsets.bottom <= 0 {
                         scrollview.contentInset.right += self.bounds.width
-                        self.oldInsetBottom = scrollview.contentInset.right
+                        self.oldFooterInsets = scrollview.contentInset
                     }else{
-                        scrollview.contentInset.right = self.oldInsetBottom
+                        scrollview.contentInset.right = self.oldFooterInsets.right
                     }
                 }else{
                     scrollview.contentOffset.y = self.bounds.width + scrollview.contentInset.left
@@ -197,11 +344,11 @@ class RefreshView: UIView {
         }else{
             UIView.animate(withDuration: RefreshConfig.animationDuration, animations: {
                 if self.isFooter {
-                    if self.oldInsetBottom <= 0 {
+                    if self.oldFooterInsets.bottom <= 0 {
                         scrollview.contentInset.bottom += self.bounds.height
-                        self.oldInsetBottom = scrollview.contentInset.bottom
+                        self.oldFooterInsets = scrollview.contentInset
                     }else{
-                        scrollview.contentInset.bottom = self.oldInsetBottom
+                        scrollview.contentInset = self.oldFooterInsets
                     }
                 }else{
                     scrollview.contentOffset.y = -self.bounds.height - scrollview.contentInset.top
@@ -244,165 +391,52 @@ class RefreshView: UIView {
         }
     }
     
-    /// 没有更多数据提示文字 此方法交给子类重写
-    open func noMoreData(){}
-    
-    /// 设置刷新控件的状态 交给子类重写
-    /// - Parameter state: 状态
-    open func setState(state:SYRefreshViewState){}
-    
-    /// 返回是否是左右刷新方向
-    open func isLeftOrRightOrientation()->Bool{
-        return orientation == .left || orientation == .right
-    }
-    
-    //===========================私有方法=========================
-    /// contentOffset 改变之后调用此方法
-    private func contentOffsetChange(){
-        if isRefreshing { return}
-        guard let scrollview = scrollview else { return }
-        if scrollview.isDragging {
-            if isLeftOrRightOrientation() { //水平刷新
-                if isFooter {
-                    pullProgress = min(1,max(0,(scrollview.contentOffset.x+scrollview.bounds.width-scrollview.contentSize.width-scrollview.contentInset.right)/self.bounds.width)) //去除无效的值
-                    //设置刷新控件状态
-                    let pullingOffsetX = scrollview.contentSize.width - scrollview.bounds.width+bounds.width;
-                    let offsetX = scrollview.contentOffset.x
-                    if (self.state == .stateIdle && offsetX>pullingOffsetX) {
-                        self.setState(state: .pulling)
-                    }else if(self.state == .pulling&&offsetX<pullingOffsetX){
-                        self.setState(state: .stateIdle)
-                    }
-                }else{
-                    pullProgress = min(1,max(0,-(scrollview.contentOffset.x + scrollview.contentInset.right)/self.bounds.width))
-                    //设置刷新控件状态
-                    let pullingOffsetX = -scrollview.contentInset.left - bounds.width
-                    let offsetX = scrollview.contentOffset.x
-                    if (self.state == .stateIdle && offsetX<pullingOffsetX) { //负数 往左拉
-                        self.setState(state: .pulling)
-                    }else if(self.state == .pulling&&offsetX>pullingOffsetX){
-                        self.setState(state: .stateIdle)
-                    }
-                }
-            }else{
-                if isFooter {
-                    pullProgress = min(1,max(0,(scrollview.contentOffset.y+scrollview.bounds.height-scrollview.contentSize.height-scrollview.contentInset.bottom)/self.bounds.height)) //去除无效的值
-                    //设置刷新控件状态
-                    let pullingOffsetY = scrollview.contentSize.height - scrollview.bounds.height+bounds.height;
-                    let offsetY = scrollview.contentOffset.y
-                    if (self.state == .stateIdle && offsetY>pullingOffsetY) {
-                        self.setState(state: .pulling)
-                    }else if(self.state == .pulling&&offsetY<pullingOffsetY){
-                        self.setState(state: .stateIdle)
-                    }
-                }else{
-                    pullProgress = min(1,max(0,-(scrollview.contentOffset.y + scrollview.contentInset.top)/self.bounds.height))
-                    //设置刷新控件状态
-                    let pullingOffsetY = -scrollview.contentInset.top - bounds.height
-                    let offsetY = scrollview.contentOffset.y
-                    if (self.state == .stateIdle && offsetY<pullingOffsetY) { //负数 往下拉
-                        self.setState(state: .pulling)
-                    }else if(self.state == .pulling&&offsetY>pullingOffsetY){
-                        self.setState(state: .stateIdle)
-                    }
-                }
-            }
-            
-            //控制控件的隐藏和显示
-            if isFooter == false  {
-                if scrollview.contentOffset.y < -(scrollview.contentInset.top) {
-                    if isHidden { self.isHidden = false }
-                }else if(scrollview.contentOffset.y >= 0){
-                    if isHidden { self.isHidden = false }
-                }
-            }else{
-                if scrollview.contentOffset.y <= 0 {
-                    if isHidden { self.isHidden = false }
-                }else if(scrollview.contentOffset.y >= scrollview.contentInset.bottom ){
-                    if isHidden { self.isHidden = false }
-                }
-            }
-            //设置了拖拽比例 再 进行自动刷新
-            if self.footerAutoRefreshProgress > 0.5 {
-                footerAutoRefresh()
-            }
-        }
-    }
-    
-    /// 开启尾部自动刷新
-    private func footerAutoRefresh(){
-        if isFooter == false {  return }
-        guard let scrollview = scrollview else { return }
-        if checkContentSizeValid() == false {
-            if isLeftOrRightOrientation() {//水平方向自动刷新
-                //开启自动刷新
-                if footerAutoRefreshProgress >= 0.5 && footerAutoRefreshProgress < 1.0{
-                    if (scrollview.contentOffset.x>=(scrollview.contentSize.width-scrollview.bounds.width-scrollview.contentInset.right-bounds.height)*footerAutoRefreshProgress) {
-                        beginRefreshing()
-                        return;
-                    }
-                }
-            }else{ //垂直方向自动刷新
-                //开启自动刷新
-                if footerAutoRefreshProgress >= 0.5 && footerAutoRefreshProgress < 1.0{
-                    if (scrollview.contentOffset.y>=(scrollview.contentSize.height-scrollview.bounds.height-scrollview.contentInset.bottom-bounds.height)*footerAutoRefreshProgress) {
-                        beginRefreshing()
-                        return;
-                    }
-                }
-            }
-        }
-    }
-    
-    /// 校验contentsize是否有效果
-    private func checkContentSizeValid()->Bool{
-        guard let scrollview = scrollview else { return false} //作用：在下面使用scrollview的时候不用解包
-        if isFooter && isNoMoreData {
-            return false
-        }
-        if isFooter == false { return false }
-        if isLeftOrRightOrientation() {
-            //当内容不满一个屏幕的时候就隐藏底部的刷新控件
-            if (scrollview.contentSize.width < scrollview.bounds.width-(scrollview.contentInset.left+scrollview.contentInset.right)) {
-                scrollview.sy_footer?.isHidden = true
-                return true
-            }else{
-//                scrollview.sy_footer?.isHidden = false
-                return false
-            }
-        }else{
-            //当内容不满一个屏幕的时候就隐藏底部的刷新控件
-            if (scrollview.contentSize.height < scrollview.bounds.height-(scrollview.contentInset.top+scrollview.contentInset.bottom)) {
-                scrollview.sy_footer?.isHidden = true
-                return true
-            }else{
-//                scrollview.sy_footer?.isHidden = false
-                return false
-            }
-        }
-    }
-    
-    /// contentSize 改变之后调用此方法
-    private func contentSizeChange(){
+    /// 没有更多数据提示文字 子类重写该方法
+    open func noMoreData(){
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
-        if  isFooter && scrollview.isDragging  { isNoMoreData = false } //如果正在拖拽 重置没有更多数据状态
-        if checkContentSizeValid() { return }
+        isNoMoreData = true
+        isRefreshing = false
+        self.isHidden = false
+        self.state = .noMoreData
         if isLeftOrRightOrientation() {
-            if self.bounds.minX ==  scrollview.contentSize.width{return}
-            self.frame.origin.x = scrollview.contentSize.width
+            UIView.animate(withDuration: RefreshConfig.animationDuration, animations: {
+                if self.isFooter {
+                    if self.oldFooterInsets.right <= 0 {
+                        scrollview.contentInset.right += self.bounds.width
+                        self.oldFooterInsets = scrollview.contentInset
+                    }else{
+                        scrollview.contentInset.right = self.oldFooterInsets.right
+                    }
+                }
+            }) { (true) in }
         }else{
-            if self.frame.origin.y ==  scrollview.contentSize.height{return}
-            self.frame.origin.y = scrollview.contentSize.height
+            UIView.animate(withDuration: RefreshConfig.animationDuration, animations: {
+                if self.isFooter {
+                    if self.oldFooterInsets.bottom <= 0 {
+                        scrollview.contentInset.bottom += self.bounds.height
+                        self.oldFooterInsets = scrollview.contentInset
+                    }else{
+                        scrollview.contentInset = self.oldFooterInsets
+                    }
+                }
+            }) { (true) in }
         }
     }
     
-    /// 结束拖拽的时候调用此方法
-    private func scrollviewEndDraging(){
-        if isNoMoreData { return }
-        if isRefreshing || pullProgress < 1 {return}  //如果正在刷新 或者 用户没有拖拽到临界点 就不要刷新
-        beginRefreshing()
+    /// 重置刷新控件的状态
+    open func resentNoMoreData(){
+        guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
+            if isLeftOrRightOrientation() {
+                UIView.animate(withDuration: RefreshConfig.animationDuration, animations: {
+                        scrollview.contentInset.right -= self.bounds.width
+                }) { (true) in }
+            }else{
+                UIView.animate(withDuration: RefreshConfig.animationDuration, animations: {
+                        scrollview.contentInset.bottom -= self.bounds.height
+                }) { (true) in }
+            }
     }
-    
+
     deinit {
         removeObserver()
     }

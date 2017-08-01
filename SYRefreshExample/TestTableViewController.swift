@@ -16,7 +16,7 @@ class TestTableViewController: UITableViewController {
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         tableView.tableFooterView = UIView()
-        tableView.contentInset = UIEdgeInsetsMake(60, 0, 100, 0)
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         tableView.sy_header = TextHeaderFooter(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText,nomoreDataText:nil, orientation: .top, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self?.tableView.sy_header?.endRefreshing()
@@ -27,10 +27,10 @@ class TestTableViewController: UITableViewController {
         
         tableView.sy_footer = TextHeaderFooter(normalText: VerticalHintText.footerNomalText, pullingText: VerticalHintText.footerPullingText, refreshingText: VerticalHintText.footerRefreshText, nomoreDataText:"没有更多数据了",orientation: .bottom, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                if (self?.count)! >= 50 {
+                if (self?.count)! >= 30 {
                     self?.tableView.sy_footer?.noMoreData()
                 }else{
-                    self?.count += 0
+                    self?.count += 20
                     self?.tableView.sy_footer?.endRefreshing()
                 }
                 self?.tableView.reloadData()

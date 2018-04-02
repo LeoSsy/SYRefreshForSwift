@@ -21,17 +21,36 @@ class TextHeaderFooter: RefreshView {
     ///   - font:   提示文字字体
     ///   - color:  提示文字颜色
     ///   - completion: 开始刷新之后回调
-    init(normalText:String,pullingText:String,refreshingText:String,nomoreDataText:String?,orientation:RefreshViewOrientation,height:CGFloat,font:UIFont,color:UIColor,completion: @escaping ()->Void){
+init(normalText:String,pullingText:String,refreshingText:String,nomoreDataText:String?,orientation:RefreshViewOrientation,height:CGFloat,font:UIFont,color:UIColor,completion: @escaping ()->Void){
         self.accessoryView = AccessoryView(color: color)
         self.textItem = TextItem(normalText: normalText, pullingText: pullingText, refreshingText: refreshingText,nomoreDataText:nomoreDataText , font: font, color: color)
         super.init(orientaton: orientation, height: height, completion: completion)
-        if self.isLeftOrRightOrientation() { textItem.label.numberOfLines = 0 }
-        self.accessoryView.isLeftOrRightOrientation = self.isLeftOrRightOrientation() //传递刷新的方向
+        if self.isHorizontalOrientation() { textItem.label.numberOfLines = 0 }
+        self.accessoryView.isHorizontalOrientation = self.isHorizontalOrientation() //传递刷新的方向
         layer.addSublayer(accessoryView.arrowLayer())
         addSubview(accessoryView.indicatorView)
         addSubview(textItem.label)
     }
     
+    /// 创建一个刷新控件
+    /// - Parameters:
+    ///   - textItem: 各状态提示文字及样式
+    ///   - orientation: 刷新控件的方向
+    ///   - height: 刷新控件的高度
+    ///   - font:   提示文字字体
+    ///   - color:  提示文字颜色
+    ///   - completion: 开始刷新之后回调
+init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UIFont,color:UIColor,completion: @escaping ()->Void){
+        self.accessoryView = AccessoryView(color: color)
+        self.textItem = textItem
+        super.init(orientaton: orientation, height: height, completion: completion)
+        if self.isHorizontalOrientation() { textItem.label.numberOfLines = 0 }
+        self.accessoryView.isHorizontalOrientation = self.isHorizontalOrientation() //传递刷新的方向
+        layer.addSublayer(accessoryView.arrowLayer())
+        addSubview(accessoryView.indicatorView)
+        addSubview(textItem.label)
+    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -50,7 +69,7 @@ class TextHeaderFooter: RefreshView {
     
     override func updatePullProgress(progress: CGFloat) {
         if  isNoMoreData == false {
-            if accessoryView.arrowLayer().isHidden == true {
+            if accessoryView.arrowLayer().isHidden {
                 accessoryView.arrowLayer().isHidden = false
             }
              accessoryView.updatePullProgress(progress: progress, isFooter: isFooter)
@@ -90,9 +109,9 @@ class TextHeaderFooter: RefreshView {
         }
         //普通状态下
         var point = CGPoint(x: (contentW - textItem.label.bounds.width*0.65-8)*0.5, y: bounds.midY)
-        var indicatorViewPoint = CGPoint(x: point.x-8, y: point.y)
+        var indicatorViewPoint = CGPoint(x: point.x-10, y: point.y)
         var labelCenter = CGPoint(x: (contentW+textItem.label.bounds.width*0.5+8)*0.5, y: bounds.midY)
-        if isLeftOrRightOrientation() { //如果是水平刷新
+        if isHorizontalOrientation() { //如果是水平刷新
             textItem.label.frame.size.width = textItem.label.font.pointSize
             textItem.label.frame.size.height = scrollview.bounds.height*0.5
             if (self.scrollview?.contentOffset.x)! <= CGFloat(0.0) {

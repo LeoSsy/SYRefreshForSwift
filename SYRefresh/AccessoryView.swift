@@ -111,7 +111,7 @@ final class TextItem {
 final class AccessoryView { // 不允许子类继承
     
     private let color :UIColor /// 视图颜色
-    public  var isLeftOrRightOrientation:Bool = false //是否是左右刷新控件 通过外界设置
+    public  var isHorizontalOrientation:Bool = false //是否是左右刷新控件 通过外界设置
     lazy var indicatorView:UIActivityIndicatorView = {/// 菊花控件
         let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
         indicatorView.hidesWhenStopped = true
@@ -158,7 +158,7 @@ final class AccessoryView { // 不允许子类继承
     /// 返回当前正在显示的箭头控件
     /// - Returns: CAShapeLayer
     func arrowLayer() -> CAShapeLayer {
-        return isLeftOrRightOrientation ? arrowLayerH : arrowLayerV
+        return isHorizontalOrientation ? arrowLayerH : arrowLayerV
     }
     
     /// 初始化方法

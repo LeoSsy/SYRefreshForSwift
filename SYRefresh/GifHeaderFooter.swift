@@ -9,7 +9,7 @@
 import UIKit
 
 class GifHeaderFooter: RefreshView {
-    public var imageView  =  GIFAnimatedImageView(frame: .zero)
+    public var imageView  =  GifAnimatedImageView(frame: .zero)
     /// 创建一个GIF刷新控件
     /// - Parameters:
     ///   - data:  gif数据
@@ -21,10 +21,12 @@ class GifHeaderFooter: RefreshView {
         if data != nil {
             imageView.animatedImage = GIFAnimatedImage(data: data!)
             imageView.bounds.size.height = height
+            
         }
         super.init(orientaton: orientation, height: height, completion: completion)
         addSubview(imageView)
         imageView.contentMode = contentMode
+        imageView.clipsToBounds = true
     }
     
     override func updateRefreshState(isRefreshing: Bool) {

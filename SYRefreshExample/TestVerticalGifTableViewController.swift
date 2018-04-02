@@ -10,7 +10,7 @@ import UIKit
 
 class TestVerticalGifTableViewController: UITableViewController {
 
-    var count  = 15
+    var count  = 35
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,12 +20,13 @@ class TestVerticalGifTableViewController: UITableViewController {
         tableView.sy_header = GifHeaderFooter(data: data, orientation: .top, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.tableView.sy_header?.endRefreshing()
-                self?.count = 15
+                self?.count = 35
                 self?.tableView.reloadData()
             }
         })
         
-        tableView.sy_footer = GifHeaderFooter(data: data, orientation: .bottom, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
+        let data1 = try! Data(contentsOf: Bundle.main.url(forResource: "other.gif", withExtension: nil)!)
+        tableView.sy_footer = GifHeaderFooter(data: data1, orientation: .bottom, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.tableView.sy_footer?.endRefreshing()
                 self?.count += 15

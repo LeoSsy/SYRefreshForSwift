@@ -55,7 +55,7 @@ class CoreTextHeaderFooter: RefreshView {
     init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,completion:@escaping ()->Void){
         self.textItem = textItem
         super.init(orientaton: orientation, height: height, completion: completion)
-        if isLeftOrRightOrientation() { textItem.label.numberOfLines = 0 }
+        if isHorizontalOrientation() { textItem.label.numberOfLines = 0 }
         addSubview(textItem.label)
         textItem.label.isHidden = true
         self.layer.addSublayer(textPathLayer)

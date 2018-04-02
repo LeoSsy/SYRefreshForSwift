@@ -10,7 +10,7 @@ import UIKit
 
 class GifTextHeaderFooter: RefreshView {
     private var textItem:TextItem //文本视图
-    public var imageView  =  GIFAnimatedImageView(frame: .zero)
+    public var imageView  =  GifAnimatedImageView(frame: .zero)
     /// 创建一个GIF刷新控件
     /// - Parameters:
     ///   - data:  gif数据
@@ -19,25 +19,33 @@ class GifTextHeaderFooter: RefreshView {
     ///   - height: 刷新控件的高度
     ///   - contentMode: gif图片显示模式
     ///   - completion: 开始刷新之后回调
-    init(data:Data?,textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,contentMode:UIViewContentMode,completion:@escaping ()->Void){
+init(data:Data?,textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,contentMode:UIViewContentMode,completion:@escaping ()->Void){
         self.textItem = textItem
         if data != nil {
             imageView.animatedImage = GIFAnimatedImage(data: data!)
             imageView.bounds.size.height = height
         }
         super.init(orientaton: orientation, height: height, completion: completion)
-        if self.isLeftOrRightOrientation() { textItem.label.numberOfLines = 0 }
+        if self.isHorizontalOrientation() { textItem.label.numberOfLines = 0 }
         addSubview(imageView)
         addSubview(self.textItem.label)
         imageView.contentMode = contentMode
     }
     
+    
+    /// 更新控件状态
+    ///
+    /// - Parameter isRefreshing: 是否正在刷新
     override func updateRefreshState(isRefreshing: Bool) {
         isRefreshing ? imageView.startAnimating() : imageView.stopAnimating()
         textItem.updateRefreshState(isRefreshing: isRefreshing)
         self.setNeedsLayout()
     }
     
+    
+    /// 更新拖动的比例
+    ///
+    /// - Parameter progress: 0 - 1
     override func updatePullProgress(progress: CGFloat) {
         textItem.updatePullProgress(progress: progress)
         if progress == 1 {
@@ -49,12 +57,13 @@ class GifTextHeaderFooter: RefreshView {
         }
     }
     
+    /// 布局控件位置
     override func layoutSubviews() {
         super.layoutSubviews()
         let margin:CGFloat = 2.0
         if isRefreshing { return }
         UIView.performWithoutAnimation {
-            if isLeftOrRightOrientation() { //如果是水平刷新
+            if isHorizontalOrientation() { //如果是水平刷新
                 imageView.frame = CGRect(x: 0, y: 0, width:bounds.width-margin, height: bounds.width-margin)
                 imageView.center = CGPoint(x: bounds.midX, y: bounds.midY-bounds.width*0.5)
                 textItem.label.frame.size.width = textItem.label.font.pointSize
@@ -65,7 +74,6 @@ class GifTextHeaderFooter: RefreshView {
                 imageView.center = CGPoint(x: (bounds.width - textItem.label.bounds.width - 8) * 0.5, y: bounds.midY)
                 textItem.label.center = CGPoint(x: (bounds.width + imageView.bounds.width + 8) * 0.5, y: bounds.midY+5)
             }
-           
         }
     }
     required init?(coder aDecoder: NSCoder) {

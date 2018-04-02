@@ -11,14 +11,14 @@ import ImageIO
 
 // MARK GifProxy
 private class GifProxy : NSObject  {
-    private  weak var target : GIFAnimatedImageView?
-    init(target:GIFAnimatedImageView){
+    private  weak var target : GifAnimatedImageView?
+    init(target:GifAnimatedImageView){
         self.target = target
         super.init()
     }
     
     class func proxy(target:AnyObject) -> GifProxy {
-        return GifProxy(target: target as! GIFAnimatedImageView)
+        return GifProxy(target: target as! GifAnimatedImageView)
     }
     
     override func forwardingTarget(for aSelector: Selector!) -> Any? {
@@ -68,7 +68,6 @@ public class GIFAnimatedImage : NSObject , AnimatedImage {
     }
     
     public init?(data:Data) {
-        
         //获取CGImageSource对象
         let source = CGImageSourceCreateWithData(data as CFData, nil)
         guard source != nil else {
@@ -76,41 +75,46 @@ public class GIFAnimatedImage : NSObject , AnimatedImage {
             size = .zero
             return nil
         }
-        //获取总帧数
-        let count = CGImageSourceGetCount(source!)
-        //获取每一帧对应的图片对象和时间间隔
-        images = (0..<count).map{ index ->imageInfo in
-            //获取对应帧的图片
-            let image = CGImageSourceCreateImageAtIndex(source!, index, nil)
-            guard image != nil else {
-                return (UIImage(),0)
-            }
-            //获取对应帧的时间间隔
-            let delayTime:TimeInterval = {
-                let info = CGImageSourceCopyPropertiesAtIndex(source!, index, nil)
-                // unsafeBitCast    http://swifter.tips/unsafe/
-                // Unmanaged.passUnretained  http://www.jianshu.com/p/62354aea4034
-                let gifInfo = unsafeBitCast(CFDictionaryGetValue(info, (Unmanaged.passUnretained(kCGImagePropertyGIFDictionary).toOpaque())), to: CFDictionary.self)
-                var delayTime =  unsafeBitCast(CFDictionaryGetValue(gifInfo, Unmanaged.passUnretained(kCGImagePropertyGIFUnclampedDelayTime).toOpaque()), to: NSNumber.self)
-                if delayTime.doubleValue < 0 {
-                    delayTime =  unsafeBitCast(CFDictionaryGetValue(gifInfo, Unmanaged.passUnretained(kCGImagePropertyGIFDelayTime).toOpaque()), to: NSNumber.self)
-                }
-                return delayTime.doubleValue
-            }()
-            return (UIImage(cgImage: image!),delayTime)
-        }
-        if let imageInfo = images.first {
-            size = imageInfo.image.size
-        }else{
-            size = CGSize(width: 0, height: 60)
-        }
+        images = []
         super.init()
-    }
+        //异步解析数据
+//        let globalQueue = DispatchQueue.global()
+//        globalQueue.async {
+            //获取总帧数
+            let count = CGImageSourceGetCount(source!)
+            //获取每一帧对应的图片对象和时间间隔
+            self.images = (0..<count).map{ index ->imageInfo in
+                //获取对应帧的图片
+                let image = CGImageSourceCreateImageAtIndex(source!, index, nil)
+                guard image != nil else {
+                    return (UIImage(),0)
+                }
+                //获取对应帧的时间间隔
+                let delayTime:TimeInterval = {
+                    let info = CGImageSourceCopyPropertiesAtIndex(source!, index, nil)
+                    // unsafeBitCast    http://swifter.tips/unsafe/
+                    // Unmanaged.passUnretained  http://www.jianshu.com/p/62354aea4034
+                    let gifInfo = unsafeBitCast(CFDictionaryGetValue(info, (Unmanaged.passUnretained(kCGImagePropertyGIFDictionary).toOpaque())), to: CFDictionary.self)
+                    var delayTime =  unsafeBitCast(CFDictionaryGetValue(gifInfo, Unmanaged.passUnretained(kCGImagePropertyGIFUnclampedDelayTime).toOpaque()), to: NSNumber.self)
+                    if delayTime.doubleValue < 0 {
+                        delayTime =  unsafeBitCast(CFDictionaryGetValue(gifInfo, Unmanaged.passUnretained(kCGImagePropertyGIFDelayTime).toOpaque()), to: NSNumber.self)
+                    }
+                    return delayTime.doubleValue
+                }()
+                return (UIImage(cgImage: image!),delayTime)
+            }
+            if let imageInfo = self.images.first {
+                self.size = imageInfo.image.size
+            }else{
+                self.size = CGSize(width: 0, height: 60)
+            }
+        }
+//    }
     
 }
 
 // MARK  GIFAnimatedImageView
-open class GIFAnimatedImageView : UIImageView {
+open class GifAnimatedImageView : UIImageView {
     var isAnimated = false //是否正动画
     var lastTimestamp:TimeInterval = 0.0 //上一次的时间
     var animatedImage : GIFAnimatedImage? { //图片对象 存储图片相关信息
@@ -128,14 +132,17 @@ open class GIFAnimatedImageView : UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var index = UInt(0){ //下标通过改变它的值 切换图片
+    /// 下标通过改变它的值 切换图片
+    var index = UInt(0){
         didSet{
             if index != oldValue {
                 image = animatedImage?[index]
             }
         }
     }
-    lazy var displayLink : CADisplayLink = { //定时器
+    
+    /// 定时器
+    lazy var displayLink : CADisplayLink = {
         let displayLink  = CADisplayLink(target: GifProxy(target: self), selector: #selector(refresFrames))
         displayLink.add(to:.main, forMode:.commonModes)
         displayLink.isPaused = true
@@ -154,6 +161,7 @@ open class GIFAnimatedImageView : UIImageView {
         }
     }
     
+    /// 开始动画
     override open func startAnimating() {
         if  !isAnimated {
             displayLink.isPaused = false
@@ -161,6 +169,7 @@ open class GIFAnimatedImageView : UIImageView {
         }
     }
     
+    /// 停止动画
     override open func stopAnimating() {
         if isAnimated {
             displayLink.isPaused = true

@@ -8,9 +8,8 @@
 
 import UIKit
 
-private var headerKey: Void?
-private var footerKey: Void?
-
+private var headerKey = "0x01"
+private var footerKey = "0x02"
 extension UIScrollView {
     
     var sy_header:RefreshView?{

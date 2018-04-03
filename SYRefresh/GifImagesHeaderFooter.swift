@@ -27,10 +27,22 @@ class GifImagesHeaderFooter: RefreshView {
         imageView.clipsToBounds = true
     }
     
+    /// 设置控件刷新状态
+    ///
+    /// - Parameters:
+    ///   - state: 状态值
+    ///   - images: 图片数组
     func setRefreshState(state:SYRefreshViewState = .stateIdle,images:Array<UIImage>){
          setRefreshState(state: state, images: images, duration: Double(images.count)*0.1)
     }
     
+    
+    /// 设置控件刷新状态
+    ///
+    /// - Parameters:
+    ///   - state: 状态值
+    ///   - images: 图片数组
+    ///   - duration: 动画时间
     func setRefreshState(state:SYRefreshViewState = .stateIdle,images:Array<UIImage>,duration:TimeInterval){
         self.images[state] = images
         self.durations[state] = duration
@@ -38,7 +50,8 @@ class GifImagesHeaderFooter: RefreshView {
     
     override func updateRefreshState(isRefreshing: Bool) {
     }
-    
+    /// 设置状态值
+    /// - Parameter state: 状态值
     override func setState(state: SYRefreshViewState) {
         if state == .pulling || state == .refreshing {
             let images = self.images[state];
@@ -59,6 +72,9 @@ class GifImagesHeaderFooter: RefreshView {
         }
     }
     
+    /// 更新拖动的比例
+    ///
+    /// - Parameter progress: 0 - 1
     override func updatePullProgress(progress: CGFloat) {
         if self.images.count == 0  { return }
         if self.durations.count == 0  { return }
@@ -72,7 +88,8 @@ class GifImagesHeaderFooter: RefreshView {
             imageView.image = images?[index];
         }
     }
-
+    
+    /// 布局控件位置
     override func layoutSubviews() {
         super.layoutSubviews()
         var imageSize:CGSize = CGSize.zero

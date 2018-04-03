@@ -9,8 +9,9 @@
 import UIKit
 
 class TextHeaderFooter: RefreshView {
-    private var accessoryView:AccessoryView //辅助试图
+    private var accessoryView:AccessoryView //箭头视图
     private var textItem:TextItem //文本视图
+    
     /// 创建一个刷新控件
     /// - Parameters:
     ///   - normalText: 默认状态提示文字
@@ -25,8 +26,8 @@ init(normalText:String,pullingText:String,refreshingText:String,nomoreDataText:S
         self.accessoryView = AccessoryView(color: color)
         self.textItem = TextItem(normalText: normalText, pullingText: pullingText, refreshingText: refreshingText,nomoreDataText:nomoreDataText , font: font, color: color)
         super.init(orientaton: orientation, height: height, completion: completion)
-        if self.isHorizontalOrientation() { textItem.label.numberOfLines = 0 }
-        self.accessoryView.isHorizontalOrientation = self.isHorizontalOrientation() //传递刷新的方向
+        if isHorizontalOrientation() { textItem.label.numberOfLines = 0 }
+        self.accessoryView.isHorizontalOrientation = isHorizontalOrientation() //传递刷新的方向
         layer.addSublayer(accessoryView.arrowLayer())
         addSubview(accessoryView.indicatorView)
         addSubview(textItem.label)
@@ -44,39 +45,43 @@ init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UI
         self.accessoryView = AccessoryView(color: color)
         self.textItem = textItem
         super.init(orientaton: orientation, height: height, completion: completion)
-        if self.isHorizontalOrientation() { textItem.label.numberOfLines = 0 }
-        self.accessoryView.isHorizontalOrientation = self.isHorizontalOrientation() //传递刷新的方向
+        if isHorizontalOrientation() { textItem.label.numberOfLines = 0 }
+        self.accessoryView.isHorizontalOrientation = isHorizontalOrientation() //传递刷新的方向
         layer.addSublayer(accessoryView.arrowLayer())
         addSubview(accessoryView.indicatorView)
         addSubview(textItem.label)
     }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
+    /// 当前的控件状态
+    /// - Parameter isRefreshing: 是否正在刷新中
     override func updateRefreshState(isRefreshing: Bool) {
-            guard let scrollview = self.scrollview else { return }
-            if (isFooter == false  && scrollview.contentInset.bottom > 0 ) || (isFooter == false  && scrollview.contentInset.right > 0)  {
-                resentNoMoreData()
-            }
-            if  isNoMoreData == false {
-                accessoryView.isNoMoreData = isNoMoreData
-                accessoryView.updateRefreshState(isRefreshing: isRefreshing)
-                textItem.updateRefreshState(isRefreshing: isRefreshing)
-          }
-    }
-    
-    override func updatePullProgress(progress: CGFloat) {
-        if  isNoMoreData == false {
-            if accessoryView.arrowLayer().isHidden {
-                accessoryView.arrowLayer().isHidden = false
-            }
-             accessoryView.updatePullProgress(progress: progress, isFooter: isFooter)
-             textItem.updatePullProgress(progress: progress)
+        guard let scrollview = self.scrollview else { return }
+        //重置控件状态
+        if (!isFooter && scrollview.contentInset.bottom > 0 ) ||
+            (!isFooter  && scrollview.contentInset.right > 0)  {
+            resentNoMoreData()
         }
+        //没有更多数据状态
+        if  !isNoMoreData {
+            accessoryView.isNoMoreData = isNoMoreData
+            accessoryView.updateRefreshState(isRefreshing: isRefreshing)
+            textItem.updateRefreshState(isRefreshing: isRefreshing)
+      }
+    }
+
+    /// 用户拖拽的比例 0 - 1
+    /// - Parameter progress: 当前拖拽值
+    override func updatePullProgress(progress: CGFloat) {
+     if  !isNoMoreData {
+        if accessoryView.arrowLayer().isHidden {
+            accessoryView.arrowLayer().isHidden = false
+        }
+         accessoryView.updatePullProgress(progress: progress, isFooter: isFooter)
+         textItem.updatePullProgress(progress: progress)
+     }
     }
     
+    /// 没有更多数据状态设置
     override func noMoreData(){
         super.noMoreData()
         textItem.noMoreData()
@@ -85,6 +90,7 @@ init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UI
         self.setNeedsLayout()
     }
     
+    /// 重置控件状态
     override  func resentNoMoreData() {
         textItem.resentMoreData()
         accessoryView.arrowLayer().isHidden = false
@@ -93,6 +99,7 @@ init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UI
         super.resentNoMoreData()
     }
     
+    /// 布局子控件
     override func layoutSubviews() {
         super.layoutSubviews()
         guard let scrollview = self.scrollview else { return }
@@ -132,4 +139,7 @@ init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UI
         }
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

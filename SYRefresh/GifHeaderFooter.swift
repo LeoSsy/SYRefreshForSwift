@@ -29,10 +29,14 @@ class GifHeaderFooter: RefreshView {
         imageView.clipsToBounds = true
     }
     
+    /// 当前的控件状态
+    /// - Parameter isRefreshing: 是否正在刷新中
     override func updateRefreshState(isRefreshing: Bool) {
         isRefreshing ? imageView.startAnimating() : imageView.stopAnimating()
     }
     
+    /// 用户拖拽的比例 0 - 1
+    /// - Parameter progress: 当前拖拽值
     override func updatePullProgress(progress: CGFloat) {
         if progress == 1 {
             imageView.startAnimating()
@@ -42,18 +46,21 @@ class GifHeaderFooter: RefreshView {
             imageView.index = UInt(Int(CGFloat(count - 1) * progress))
         }
     }
-    
+
+    /// 开始刷新
     override func beginRefreshing() {
         super.beginRefreshing()
         imageView.startAnimating()
     }
     
+    /// 结束刷新
     override func endRefreshing() {
         super.endRefreshing()
         imageView.stopAnimating()
         imageView.index = 0
     }
     
+    /// 布局子控件
     override func layoutSubviews() {
         super.layoutSubviews()
         UIView.performWithoutAnimation {

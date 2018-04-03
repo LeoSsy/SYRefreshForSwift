@@ -12,7 +12,7 @@ private let reuseIdentifier = "Cell"
 
 class TestHorizontalCollectionViewController: UICollectionViewController {
 
-    
+    var count = 40
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,14 +21,18 @@ class TestHorizontalCollectionViewController: UICollectionViewController {
         
         let data = try! Data(contentsOf: Bundle.main.url(forResource: "demo-small.gif", withExtension: nil)!)
         collectionView?.sy_header = GifHeaderFooter(data: data, orientation: .left, height: 40,contentMode:.scaleAspectFit,completion: { [weak self] in
+            self?.count = 40
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.collectionView?.sy_header?.endRefreshing()
+                self?.collectionView?.reloadData()
             }
         })
         
         collectionView?.sy_footer = GifHeaderFooter(data: data, orientation: .right, height: 40,contentMode:.scaleAspectFit,completion: { [weak self] in
+            self?.count += 5
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.collectionView?.sy_footer?.endRefreshing()
+                self?.collectionView?.reloadData()
             }
         })
         
@@ -37,7 +41,7 @@ class TestHorizontalCollectionViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 100
+        return self.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

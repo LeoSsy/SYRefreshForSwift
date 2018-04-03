@@ -66,6 +66,9 @@ class CoreTextHeaderFooter: RefreshView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// 更新控件状态
+    ///
+    /// - Parameter isRefreshing: 是否正在刷新
     override func updateRefreshState(isRefreshing: Bool) {
         textItem.updateRefreshState(isRefreshing: isRefreshing)
         if isRefreshing {
@@ -78,7 +81,9 @@ class CoreTextHeaderFooter: RefreshView {
             self.gradientLayer.speed = 0
         }
     }
-    
+    /// 更新拖动的比例
+    ///
+    /// - Parameter progress: 0 - 1
     override func updatePullProgress(progress: CGFloat) {
         if ((progress < 1 && progress > 0)){
             self.textPathLayer.strokeEnd = (progress - 0.5) * 2;
@@ -86,7 +91,7 @@ class CoreTextHeaderFooter: RefreshView {
             self.textPathLayer.strokeEnd = 1;
         }
     }
-    
+    /// 布局控件位置
     override func layoutSubviews() {
         super.layoutSubviews()
         let margin:CGFloat = isFooter ? -8 : 8
@@ -94,7 +99,6 @@ class CoreTextHeaderFooter: RefreshView {
             self.textItem.label.center = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+margin)
             self.gradientLayer.frame = self.textItem.label.frame
     }
-    
 }
 
 extension CoreTextHeaderFooter {

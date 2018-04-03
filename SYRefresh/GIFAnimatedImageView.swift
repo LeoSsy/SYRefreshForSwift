@@ -77,40 +77,35 @@ public class GIFAnimatedImage : NSObject , AnimatedImage {
         }
         images = []
         super.init()
-        //异步解析数据
-//        let globalQueue = DispatchQueue.global()
-//        globalQueue.async {
-            //获取总帧数
-            let count = CGImageSourceGetCount(source!)
-            //获取每一帧对应的图片对象和时间间隔
-            self.images = (0..<count).map{ index ->imageInfo in
-                //获取对应帧的图片
-                let image = CGImageSourceCreateImageAtIndex(source!, index, nil)
-                guard image != nil else {
-                    return (UIImage(),0)
+        //获取总帧数
+        let count = CGImageSourceGetCount(source!)
+        //获取每一帧对应的图片对象和时间间隔
+        self.images = (0..<count).map{ index ->imageInfo in
+            //获取对应帧的图片
+            let image = CGImageSourceCreateImageAtIndex(source!, index, nil)
+            guard image != nil else {
+                return (UIImage(),0)
+            }
+            //获取对应帧的时间间隔
+            let delayTime:TimeInterval = {
+                let info = CGImageSourceCopyPropertiesAtIndex(source!, index, nil)
+                // unsafeBitCast    http://swifter.tips/unsafe/
+                // Unmanaged.passUnretained  http://www.jianshu.com/p/62354aea4034
+                let gifInfo = unsafeBitCast(CFDictionaryGetValue(info, (Unmanaged.passUnretained(kCGImagePropertyGIFDictionary).toOpaque())), to: CFDictionary.self)
+                var delayTime =  unsafeBitCast(CFDictionaryGetValue(gifInfo, Unmanaged.passUnretained(kCGImagePropertyGIFUnclampedDelayTime).toOpaque()), to: NSNumber.self)
+                if delayTime.doubleValue < 0 {
+                    delayTime =  unsafeBitCast(CFDictionaryGetValue(gifInfo, Unmanaged.passUnretained(kCGImagePropertyGIFDelayTime).toOpaque()), to: NSNumber.self)
                 }
-                //获取对应帧的时间间隔
-                let delayTime:TimeInterval = {
-                    let info = CGImageSourceCopyPropertiesAtIndex(source!, index, nil)
-                    // unsafeBitCast    http://swifter.tips/unsafe/
-                    // Unmanaged.passUnretained  http://www.jianshu.com/p/62354aea4034
-                    let gifInfo = unsafeBitCast(CFDictionaryGetValue(info, (Unmanaged.passUnretained(kCGImagePropertyGIFDictionary).toOpaque())), to: CFDictionary.self)
-                    var delayTime =  unsafeBitCast(CFDictionaryGetValue(gifInfo, Unmanaged.passUnretained(kCGImagePropertyGIFUnclampedDelayTime).toOpaque()), to: NSNumber.self)
-                    if delayTime.doubleValue < 0 {
-                        delayTime =  unsafeBitCast(CFDictionaryGetValue(gifInfo, Unmanaged.passUnretained(kCGImagePropertyGIFDelayTime).toOpaque()), to: NSNumber.self)
-                    }
-                    return delayTime.doubleValue
-                }()
-                return (UIImage(cgImage: image!),delayTime)
-            }
-            if let imageInfo = self.images.first {
-                self.size = imageInfo.image.size
-            }else{
-                self.size = CGSize(width: 0, height: 60)
-            }
+                return delayTime.doubleValue
+            }()
+            return (UIImage(cgImage: image!),delayTime)
         }
-//    }
-    
+        if let imageInfo = self.images.first {
+            self.size = imageInfo.image.size
+        }else{
+            self.size = CGSize(width: 0, height: 60)
+        }
+    }
 }
 
 // MARK  GIFAnimatedImageView

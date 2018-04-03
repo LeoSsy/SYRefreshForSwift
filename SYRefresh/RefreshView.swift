@@ -37,7 +37,7 @@ class RefreshView: UIView {
     open weak var scrollview:UIScrollView?{
         return superview as? UIScrollView
     }
-    open var isNoMoreData:Bool = false //是否没有更多数据 尾部控件需要此属性
+    open var isNoMoreData:Bool = false //是否没有更多数据 
     
     /**是否正在刷新*/
     var isRefreshing:Bool = false
@@ -295,8 +295,7 @@ class RefreshView: UIView {
     /// 校验contentsize是否有效果
     private func checkContentSizeValid()->Bool{
         guard let scrollview = scrollview else { return false} //作用：在下面使用scrollview的时候不用解包
-        if isFooter == false { return false }
-        if isNoMoreData { return false }
+        if !isFooter || isNoMoreData { return false }
         if isHorizontalOrientation() {
             //当内容不满一个屏幕的时候就隐藏底部的刷新控件
             if (scrollview.contentSize.width < scrollview.bounds.width-(scrollview.contentInset.left+scrollview.contentInset.right)) {

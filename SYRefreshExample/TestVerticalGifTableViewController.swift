@@ -10,7 +10,7 @@ import UIKit
 
 class TestVerticalGifTableViewController: UITableViewController {
 
-    var count  = 35
+    var count  = 5
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,7 @@ class TestVerticalGifTableViewController: UITableViewController {
         tableView.sy_header = GifHeaderFooter(data: data, orientation: .top, height: 160,contentMode:.scaleAspectFill,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self?.tableView.sy_header?.endRefreshing()
-                self?.count = 35
+                self?.count = 5
                 self?.tableView.reloadData()
             }
         })
@@ -40,7 +40,6 @@ class TestVerticalGifTableViewController: UITableViewController {
         return count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         cell.textLabel?.text = "indepath==\(indexPath.row)"

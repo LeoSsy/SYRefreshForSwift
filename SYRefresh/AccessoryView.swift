@@ -109,7 +109,6 @@ final class TextItem {
 }
 
 final class AccessoryView { // 不允许子类继承
-    
     private let color :UIColor /// 视图颜色
     public  var isHorizontalOrientation:Bool = false //是否是左右刷新控件 通过外界设置
     lazy var indicatorView:UIActivityIndicatorView = {/// 菊花控件
@@ -118,7 +117,6 @@ final class AccessoryView { // 不允许子类继承
         return indicatorView
     }()
     open var isNoMoreData:Bool = false //是否没有更多数据
-    
     /// 垂直箭头控件
     lazy var arrowLayerV:CAShapeLayer =  {
         let bezierPath = UIBezierPath()

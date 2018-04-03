@@ -85,6 +85,8 @@ class CoreTextHeaderFooter: RefreshView {
     ///
     /// - Parameter progress: 0 - 1
     override func updatePullProgress(progress: CGFloat) {
+        self.textItem.updatePullProgress(progress: progress)
+        self.textPathLayer.path = self.textPath().cgPath
         if ((progress < 1 && progress > 0)){
             self.textPathLayer.strokeEnd = (progress - 0.5) * 2;
         }else if(progress >= 1){
@@ -94,10 +96,10 @@ class CoreTextHeaderFooter: RefreshView {
     /// 布局控件位置
     override func layoutSubviews() {
         super.layoutSubviews()
-        let margin:CGFloat = isFooter ? -8 : 8
+        let margin:CGFloat = isFooter ? -4 : 8
             self.textPathLayer.position = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+margin)
             self.textItem.label.center = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+margin)
-            self.gradientLayer.frame = self.textItem.label.frame
+            self.gradientLayer.frame =  self.textItem.label.frame
     }
 }
 

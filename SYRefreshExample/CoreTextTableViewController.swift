@@ -10,24 +10,24 @@ import UIKit
 
 class CoreTextTableViewController: UITableViewController {
 
-    var count  = 15
+    var count  = 50
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         
         
-        let textItem = TextItem(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, nomoreDataText: nil, font: UIFont.systemFont(ofSize: 18), color: UIColor.black)
+        let textItem = TextItem(normalText: "要减脂，找变啦", pullingText: "松开手减脂一触即达", refreshingText: "正在为您推荐减脂产品", nomoreDataText: nil, font: UIFont.systemFont(ofSize: 18), color: UIColor.green)
 
         tableView.sy_header = CoreTextHeaderFooter(textItem: textItem, orientation: .top, height: 44,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                 self?.tableView.sy_header?.endRefreshing()
-                self?.count = 15
+                self?.count = 50
                 self?.tableView.reloadData()
             }
         })
         
-        let textItem1 = TextItem(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, nomoreDataText:"没有更多数据",font: UIFont.systemFont(ofSize: 18), color: UIColor.black)
+        let textItem1 = TextItem(normalText: VerticalHintText.headerNomalText, pullingText: VerticalHintText.headerPullingText, refreshingText: VerticalHintText.headerRefreshText, nomoreDataText:"没有更多数据",font: UIFont.systemFont(ofSize: 18), color: UIColor.green)
 
         tableView.sy_footer = CoreTextHeaderFooter(textItem: textItem1, orientation: .bottom, height: 44,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {

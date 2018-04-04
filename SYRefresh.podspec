@@ -88,12 +88,9 @@ Pod::Spec.new do |s|
   #  For header files it will include any header in the folder.
   #  Not including the public_header_files will make all headers public.
   #
-
-  s.source_files  = "SYRefresh/*.{h,m}"
-  s.exclude_files = "SYRefresh/"
-
-  # s.public_header_files = "SYRefresh/**/*.h"
-
+    s.source_files = 'SYRefresh/**/*.{h,m}'
+   # s.exclude_files = "SYRefresh/"
+    s.public_header_files = 'SYRefresh/**/*.{h}'
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #

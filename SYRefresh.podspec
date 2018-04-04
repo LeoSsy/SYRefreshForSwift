@@ -7,7 +7,7 @@ s.authors      = { 'ssy' => '781739973@qq.com' }
 s.social_media_url = 'https://github.com/LeoVessel'
 s.homepage     = 'https://github.com/LeoVessel/SYRefreshForSwift.git'
 s.platform     = :ios, '8.0'
-s.ios.deployment_target = '9.0'
+s.ios.deployment_target = '8.0'
 s.source       = { :git => 'https://github.com/LeoVessel/SYRefreshForSwift.git', :tag => s.version.to_s }
 s.requires_arc = true
 s.source_files = 'SYRefresh/*.{h,m}'

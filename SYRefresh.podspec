@@ -10,7 +10,7 @@ s.platform     = :ios, '8.0'
 s.ios.deployment_target = '8.0'
 s.source       = { :git => 'https://github.com/LeoVessel/SYRefreshForSwift.git', :tag => s.version.to_s }
 s.requires_arc = true
-s.source_files = 'SYRefresh/*.{h,m}'
+s.source_files = 'SYRefresh/*.{swift}'
 end
 
 

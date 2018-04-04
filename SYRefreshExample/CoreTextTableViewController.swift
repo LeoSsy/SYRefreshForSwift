@@ -17,7 +17,7 @@ class CoreTextTableViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         
         
-        let textItem = TextItem(normalText: "要减脂，找变啦", pullingText: "松开手减脂一触即达", refreshingText: "正在为您推荐减脂产品", nomoreDataText: nil, font: UIFont.systemFont(ofSize: 18), color: UIColor.green)
+        let textItem = TextItem(normalText: "要减脂，找变啦", pullingText: "要减脂，找变啦", refreshingText: "正在为您推荐减脂产品", nomoreDataText: nil, font: UIFont.systemFont(ofSize: 18), color: UIColor.green)
 
         tableView.sy_header = CoreTextHeaderFooter(textItem: textItem, orientation: .top, height: 44,completion: { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {

@@ -32,6 +32,7 @@ class CoreTextHeaderFooter: RefreshView {
         gradientLayer.locations = [0,0.5,0.75]
         gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+        gradientLayer.isHidden = true
         
         let animation = CABasicAnimation(keyPath: "locations")
         animation.fromValue = [0,0,0.25]
@@ -96,10 +97,10 @@ class CoreTextHeaderFooter: RefreshView {
     /// 布局控件位置
     override func layoutSubviews() {
         super.layoutSubviews()
-        let margin:CGFloat = isFooter ? -4 : 8
-            self.textPathLayer.position = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+margin)
-            self.textItem.label.center = CGPoint(x: bounds.width * 0.5 , y: bounds.height * 0.5+margin)
-            self.gradientLayer.frame =  self.textItem.label.frame
+        let margin:CGFloat = isFooter ? -2 : 8
+            self.textPathLayer.position = CGPoint(x: bounds.width * 0.5 , y: bounds.height*0.5+margin)
+            self.textItem.label.frame = self.bounds
+            self.gradientLayer.frame = self.textItem.label.frame
     }
 }
 
@@ -135,6 +136,7 @@ extension CoreTextHeaderFooter {
     /// 开始动画
     fileprivate func startAnimation(){
         let pausedTime = self.gradientLayer.timeOffset
+        self.gradientLayer.isHidden = false
         self.gradientLayer.speed = 1.0;
         self.gradientLayer.beginTime = 0.0;
         let timeSincePause = self.gradientLayer.convertTime(CACurrentMediaTime(), from: nil)-pausedTime

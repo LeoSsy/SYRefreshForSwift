@@ -78,6 +78,7 @@ final class TextItem {
         self.label.font = font
         self.label.textColor = color
         self.label.text = normalText
+        self.label.textAlignment = .center
     }
     
     /// 没有更多数据提示文字

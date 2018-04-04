@@ -17,6 +17,5 @@
   # s.authors            = { "ssy" => "781739973@qq.com" }
   # s.social_media_url   = "http://twitter.com/ssy"
   s.source       = { :git => "https://github.com/LeoVessel/SYRefreshForSwift.git", :tag => "#{s.version}" }
-  s.source_files = 'SYRefresh/**/*.{h,m}'
-  s.public_header_files = 'SYRefresh/**/*.{h}'
+  s.source_files = 'SYRefresh/*.{h,m}'
 end

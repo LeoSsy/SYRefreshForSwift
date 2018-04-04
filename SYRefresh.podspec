@@ -19,5 +19,5 @@
   s.source       = { :git => "https://github.com/LeoVessel/SYRefreshForSwift.git", :tag => "#{s.version}" }
   s.source_files = 'SYRefreshForSwift/**/*.{h,m}'
   # s.exclude_files = "SYRefreshForSwift/"
-  s.public_header_files = 'SYRefreshForSwift/**/*.{h}'
+  s.public_header_files='SYRefreshForSwift/**/*.{h}'
 end

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 s.name         = 'SYRefresh'
 s.summary      = 'Powerful text framework for iOS to Refresh.'
-s.version      = '1.0.0'
+s.version      = '1.0.1'
 s.license      = { :type => 'MIT', :file => 'LICENSE' }
 s.authors      = { 'ssy' => '781739973@qq.com' }
 s.social_media_url = 'https://github.com/LeoVessel'

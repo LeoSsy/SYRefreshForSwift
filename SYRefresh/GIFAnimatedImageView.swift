@@ -29,7 +29,7 @@ private class GifProxy : NSObject  {
         return NSObject.instanceMethod(for:#selector(refresFrames))
     }
     
-    func refresFrames(){
+    @objc func refresFrames(){
         target?.refresFrames()
     }
 }
@@ -145,7 +145,7 @@ open class GifAnimatedImageView : UIImageView {
     }()
     
     /// 更新当前显示的图片
-    func refresFrames(){
+    @objc func refresFrames(){
         if  animatedImage != nil {
             let currentD = animatedImage?.frameDurationForImage(index: index)
             let dlt = displayLink.timestamp - lastTimestamp

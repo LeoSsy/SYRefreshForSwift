@@ -90,9 +90,9 @@ extension String {
     /// - Returns: 高度
     func textItemHeight(width:CGFloat,fontSize:CGFloat)->CGFloat{
         let font:UIFont! = UIFont.systemFont(ofSize: fontSize)
-        let attributes = NSDictionary(object: font, forKey: NSFontAttributeName as NSCopying)
+        let attributes = NSDictionary(object: font, forKey: NSAttributedStringKey.font as NSCopying)
         let option = NSStringDrawingOptions.usesLineFragmentOrigin
-        let rect:CGRect = self.boundingRect(with: CGSize(width:width, height:CGFloat(MAXFLOAT)), options: option, attributes: attributes as? [String : Any], context: nil)
+        let rect:CGRect = self.boundingRect(with: CGSize(width:width, height:CGFloat(MAXFLOAT)), options: option, attributes: attributes as? [NSAttributedStringKey : Any], context: nil)
         return rect.size.height
     }
 }

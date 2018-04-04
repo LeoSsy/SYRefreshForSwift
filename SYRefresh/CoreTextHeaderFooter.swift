@@ -111,7 +111,8 @@ extension CoreTextHeaderFooter {
     fileprivate func textPath()->UIBezierPath{
         let font:UIFont = self.textItem.label.font
         let ctFont = CTFontCreateWithName(font.fontName as CFString, font.pointSize, nil) //创建一个font的引用
-        let attributedStr = NSAttributedString(string: self.textItem.label.text!, attributes: [kCTFontAttributeName as String : ctFont]) //创建富文本
+        
+        let attributedStr = NSAttributedString(string: self.textItem.label.text!, attributes: [NSAttributedStringKey.font : ctFont]) //创建富文本
         let letters = CGMutablePath() //创建排版
         let line = CTLineCreateWithAttributedString(attributedStr) //为富文本创建CTLine对象 一个CTLine表示一行
         let runs = CTLineGetGlyphRuns(line) //根据line对象创建字形数组 数组里面每个元素都是CTRun对象 一个CTRun表示一行里连在一起相同属性的文字

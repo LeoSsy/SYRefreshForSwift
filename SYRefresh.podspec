@@ -90,9 +90,9 @@ Pod::Spec.new do |s|
   #
 
   s.source_files  = "SYRefresh/*.{h,m}"
-  s.exclude_files = "Classes/Exclude"
+  s.exclude_files = "SYRefresh/"
 
-  # s.public_header_files = "Classes/**/*.h"
+  # s.public_header_files = "SYRefresh/**/*.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

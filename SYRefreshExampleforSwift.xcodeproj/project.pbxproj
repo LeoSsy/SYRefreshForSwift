@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0478C1A02075A58E003735F8 /* SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C19F2075A58E003735F8 /* SYRefresh.swift */; };
-		0478C1A12075A58E003735F8 /* SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C19F2075A58E003735F8 /* SYRefresh.swift */; };
-		0478C1A22075A58E003735F8 /* SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0478C19F2075A58E003735F8 /* SYRefresh.swift */; };
 		2A1CD7F71EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD7F61EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift */; };
 		2A1CD7F81EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD7F61EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift */; };
 		2A1CD7F91EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A1CD7F61EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift */; };
@@ -100,7 +97,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0478C19F2075A58E003735F8 /* SYRefresh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYRefresh.swift; sourceTree = "<group>"; };
 		2A1CD7F61EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHorizontalNormalCollectionViewController.swift; sourceTree = "<group>"; };
 		2A1CD7FA1EEB866300EA5146 /* GifAnimatedImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifAnimatedImageView.swift; sourceTree = "<group>"; };
 		2A1CD8121EEBB52300EA5146 /* demo-small.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "demo-small.gif"; sourceTree = "<group>"; };
@@ -229,7 +225,6 @@
 		2A5A66C31EE8F00900521D32 /* SYRefresh */ = {
 			isa = PBXGroup;
 			children = (
-				0478C19F2075A58E003735F8 /* SYRefresh.swift */,
 				2A5A66C41EE8F26E00521D32 /* RefreshView.swift */,
 				2A1CD7FA1EEB866300EA5146 /* GifAnimatedImageView.swift */,
 				2A684FCF1EE942AB00E14989 /* TextHeaderFooter.swift */,
@@ -400,7 +395,6 @@
 				2A1CD7F71EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */,
 				2A684FD81EE94B8300E14989 /* AccessoryView.swift in Sources */,
 				2A684FE41EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */,
-				0478C1A02075A58E003735F8 /* SYRefresh.swift in Sources */,
 				2A684FE01EEA413200E14989 /* GifHeaderFooter.swift in Sources */,
 				2A5A66C51EE8F26E00521D32 /* RefreshView.swift in Sources */,
 				2A5A66961EE8EFEB00521D32 /* AppDelegate.swift in Sources */,
@@ -422,7 +416,6 @@
 				2A684FE51EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */,
 				2A1CD7F81EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */,
 				2A1CD8301EEE79A300EA5146 /* TestGifImagesCollectionViewController.swift in Sources */,
-				0478C1A12075A58E003735F8 /* SYRefresh.swift in Sources */,
 				2A3797CF1EF3B13F00E63D6C /* CoreTextHeaderFooter.swift in Sources */,
 				2A1CD7FC1EEB866300EA5146 /* GifAnimatedImageView.swift in Sources */,
 				2A5A66C61EE8F26E00521D32 /* RefreshView.swift in Sources */,
@@ -449,7 +442,6 @@
 				2A684FE61EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */,
 				2A1CD7F91EEB794700EA5146 /* TestHorizontalNormalCollectionViewController.swift in Sources */,
 				2A1CD8311EEE79A300EA5146 /* TestGifImagesCollectionViewController.swift in Sources */,
-				0478C1A22075A58E003735F8 /* SYRefresh.swift in Sources */,
 				2A3797D01EF3B13F00E63D6C /* CoreTextHeaderFooter.swift in Sources */,
 				2A1CD7FD1EEB866300EA5146 /* GifAnimatedImageView.swift in Sources */,
 				2A5A66C71EE8F26E00521D32 /* RefreshView.swift in Sources */,

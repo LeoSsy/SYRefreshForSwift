@@ -41,9 +41,9 @@
 		2A5A66A01EE8EFEB00521D32 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A5A669E1EE8EFEB00521D32 /* LaunchScreen.storyboard */; };
 		2A5A66AB1EE8EFEB00521D32 /* SYRefreshExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66AA1EE8EFEB00521D32 /* SYRefreshExampleTests.swift */; };
 		2A5A66B61EE8EFEB00521D32 /* SYRefreshExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66B51EE8EFEB00521D32 /* SYRefreshExampleUITests.swift */; };
-		2A5A66C51EE8F26E00521D32 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C41EE8F26E00521D32 /* RefreshView.swift */; };
-		2A5A66C61EE8F26E00521D32 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C41EE8F26E00521D32 /* RefreshView.swift */; };
-		2A5A66C71EE8F26E00521D32 /* RefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C41EE8F26E00521D32 /* RefreshView.swift */; };
+		2A5A66C51EE8F26E00521D32 /* SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C41EE8F26E00521D32 /* SYRefresh.swift */; };
+		2A5A66C61EE8F26E00521D32 /* SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C41EE8F26E00521D32 /* SYRefresh.swift */; };
+		2A5A66C71EE8F26E00521D32 /* SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C41EE8F26E00521D32 /* SYRefresh.swift */; };
 		2A5A66C91EE8F98500521D32 /* UIScrollView+SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C81EE8F98500521D32 /* UIScrollView+SYRefresh.swift */; };
 		2A5A66CA1EE8F98500521D32 /* UIScrollView+SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C81EE8F98500521D32 /* UIScrollView+SYRefresh.swift */; };
 		2A5A66CB1EE8F98500521D32 /* UIScrollView+SYRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A5A66C81EE8F98500521D32 /* UIScrollView+SYRefresh.swift */; };
@@ -119,7 +119,7 @@
 		2A5A66B11EE8EFEB00521D32 /* SYRefreshExampleforSwiftUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SYRefreshExampleforSwiftUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A5A66B51EE8EFEB00521D32 /* SYRefreshExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SYRefreshExampleUITests.swift; sourceTree = "<group>"; };
 		2A5A66B71EE8EFEB00521D32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2A5A66C41EE8F26E00521D32 /* RefreshView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshView.swift; sourceTree = "<group>"; };
+		2A5A66C41EE8F26E00521D32 /* SYRefresh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYRefresh.swift; sourceTree = "<group>"; };
 		2A5A66C81EE8F98500521D32 /* UIScrollView+SYRefresh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+SYRefresh.swift"; sourceTree = "<group>"; };
 		2A684FCF1EE942AB00E14989 /* TextHeaderFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextHeaderFooter.swift; sourceTree = "<group>"; };
 		2A684FD31EE94AFF00E14989 /* TestTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTableViewController.swift; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 		2A5A66C31EE8F00900521D32 /* SYRefresh */ = {
 			isa = PBXGroup;
 			children = (
-				2A5A66C41EE8F26E00521D32 /* RefreshView.swift */,
+				2A5A66C41EE8F26E00521D32 /* SYRefresh.swift */,
 				2A1CD7FA1EEB866300EA5146 /* GifAnimatedImageView.swift */,
 				2A684FCF1EE942AB00E14989 /* TextHeaderFooter.swift */,
 				2A684FDF1EEA413200E14989 /* GifHeaderFooter.swift */,
@@ -396,7 +396,7 @@
 				2A684FD81EE94B8300E14989 /* AccessoryView.swift in Sources */,
 				2A684FE41EEA69F500E14989 /* TestVerticalGifTableViewController.swift in Sources */,
 				2A684FE01EEA413200E14989 /* GifHeaderFooter.swift in Sources */,
-				2A5A66C51EE8F26E00521D32 /* RefreshView.swift in Sources */,
+				2A5A66C51EE8F26E00521D32 /* SYRefresh.swift in Sources */,
 				2A5A66961EE8EFEB00521D32 /* AppDelegate.swift in Sources */,
 				2A684FEC1EEA821C00E14989 /* TestVerticalCollectionViewController.swift in Sources */,
 				2A3797D21EF3D98D00E63D6C /* CoreTextTableViewController.swift in Sources */,
@@ -418,7 +418,7 @@
 				2A1CD8301EEE79A300EA5146 /* TestGifImagesCollectionViewController.swift in Sources */,
 				2A3797CF1EF3B13F00E63D6C /* CoreTextHeaderFooter.swift in Sources */,
 				2A1CD7FC1EEB866300EA5146 /* GifAnimatedImageView.swift in Sources */,
-				2A5A66C61EE8F26E00521D32 /* RefreshView.swift in Sources */,
+				2A5A66C61EE8F26E00521D32 /* SYRefresh.swift in Sources */,
 				2A684FE11EEA413200E14989 /* GifHeaderFooter.swift in Sources */,
 				2A5A66AB1EE8EFEB00521D32 /* SYRefreshExampleTests.swift in Sources */,
 				2A6850051EEAA2AF00E14989 /* TestVerticalGifCollectionViewController.swift in Sources */,
@@ -444,7 +444,7 @@
 				2A1CD8311EEE79A300EA5146 /* TestGifImagesCollectionViewController.swift in Sources */,
 				2A3797D01EF3B13F00E63D6C /* CoreTextHeaderFooter.swift in Sources */,
 				2A1CD7FD1EEB866300EA5146 /* GifAnimatedImageView.swift in Sources */,
-				2A5A66C71EE8F26E00521D32 /* RefreshView.swift in Sources */,
+				2A5A66C71EE8F26E00521D32 /* SYRefresh.swift in Sources */,
 				2A684FE21EEA413200E14989 /* GifHeaderFooter.swift in Sources */,
 				2A5A66B61EE8EFEB00521D32 /* SYRefreshExampleUITests.swift in Sources */,
 				2A6850061EEAA2AF00E14989 /* TestVerticalGifCollectionViewController.swift in Sources */,

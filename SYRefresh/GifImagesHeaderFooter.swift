@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GifImagesHeaderFooter: RefreshView {
+public class GifImagesHeaderFooter: RefreshView {
     
     private let imageView  = UIImageView(frame: .zero)
     var images =  Dictionary<SYRefreshViewState, Array<UIImage>>()
@@ -48,7 +48,7 @@ class GifImagesHeaderFooter: RefreshView {
         self.durations[state] = duration
     }
     
-    override func updateRefreshState(isRefreshing: Bool) {
+    override public func updateRefreshState(isRefreshing: Bool) {
     }
     /// 设置状态值
     /// - Parameter state: 状态值
@@ -75,7 +75,7 @@ class GifImagesHeaderFooter: RefreshView {
     /// 更新拖动的比例
     ///
     /// - Parameter progress: 0 - 1
-    override func updatePullProgress(progress: CGFloat) {
+    override public func updatePullProgress(progress: CGFloat) {
         if self.images.count == 0  { return }
         if self.durations.count == 0  { return }
         if (self.images.count>0) {
@@ -90,7 +90,7 @@ class GifImagesHeaderFooter: RefreshView {
     }
     
     /// 布局控件位置
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         var imageSize:CGSize = CGSize.zero
         if self.images.count > 0 {
@@ -102,7 +102,7 @@ class GifImagesHeaderFooter: RefreshView {
         imageView.center = CGPoint(x: bounds.midX, y: bounds.midY)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 private var headerKey = "0x01"
 private var footerKey = "0x02"
-extension UIScrollView {
+public extension UIScrollView {
     var sy_header:RefreshView?{
         set{
             objc_setAssociatedObject(self, &headerKey, newValue, .OBJC_ASSOCIATION_ASSIGN)

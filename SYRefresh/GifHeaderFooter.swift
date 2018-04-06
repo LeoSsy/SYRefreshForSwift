@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GifHeaderFooter: RefreshView {
+public class GifHeaderFooter: RefreshView {
     public var imageView  =  GifAnimatedImageView(frame: .zero)
     /// 创建一个GIF刷新控件
     /// - Parameters:
@@ -31,13 +31,13 @@ class GifHeaderFooter: RefreshView {
     
     /// 当前的控件状态
     /// - Parameter isRefreshing: 是否正在刷新中
-    override func updateRefreshState(isRefreshing: Bool) {
+    override public func updateRefreshState(isRefreshing: Bool) {
         isRefreshing ? imageView.startAnimating() : imageView.stopAnimating()
     }
     
     /// 用户拖拽的比例 0 - 1
     /// - Parameter progress: 当前拖拽值
-    override func updatePullProgress(progress: CGFloat) {
+    override public func updatePullProgress(progress: CGFloat) {
         if progress == 1 {
             imageView.startAnimating()
         } else {
@@ -61,7 +61,7 @@ class GifHeaderFooter: RefreshView {
     }
     
     /// 布局子控件
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         UIView.performWithoutAnimation {
             imageView.bounds.size.width = bounds.width
@@ -69,7 +69,7 @@ class GifHeaderFooter: RefreshView {
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

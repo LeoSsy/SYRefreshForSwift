@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GifTextHeaderFooter: RefreshView {
+public class GifTextHeaderFooter: RefreshView {
     private var textItem:TextItem //文本视图
     public var imageView  =  GifAnimatedImageView(frame: .zero)
     /// 创建一个GIF刷新控件
@@ -36,7 +36,7 @@ init(data:Data?,textItem:TextItem,orientation:RefreshViewOrientation,height:CGFl
     /// 更新控件状态
     ///
     /// - Parameter isRefreshing: 是否正在刷新
-    override func updateRefreshState(isRefreshing: Bool) {
+    override public func updateRefreshState(isRefreshing: Bool) {
         isRefreshing ? imageView.startAnimating() : imageView.stopAnimating()
         textItem.updateRefreshState(isRefreshing: isRefreshing)
         self.setNeedsLayout()
@@ -46,7 +46,7 @@ init(data:Data?,textItem:TextItem,orientation:RefreshViewOrientation,height:CGFl
     /// 更新拖动的比例
     ///
     /// - Parameter progress: 0 - 1
-    override func updatePullProgress(progress: CGFloat) {
+    override public func updatePullProgress(progress: CGFloat) {
         textItem.updatePullProgress(progress: progress)
         if progress == 1 {
             imageView.startAnimating()
@@ -58,7 +58,7 @@ init(data:Data?,textItem:TextItem,orientation:RefreshViewOrientation,height:CGFl
     }
     
     /// 布局控件位置
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         let margin:CGFloat = 2.0
         if isRefreshing { return }
@@ -76,7 +76,7 @@ init(data:Data?,textItem:TextItem,orientation:RefreshViewOrientation,height:CGFl
             }
         }
     }
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

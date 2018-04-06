@@ -24,20 +24,20 @@ enum RefreshViewOrientation {
     case right   //右边
 }
 
-class RefreshView: UIView {
+public class RefreshView: UIView {
     /**是否是尾部控件*/
-    open var isFooter:Bool = false
+    var isFooter:Bool = false
     /**设置尾部自动刷新 比例，当用户拖拽到百分之几的时候开始自动加载更多数据 取值：0.0-1.0 默认值1.0代表100%，也就是刷新控件完全显示的时候开始刷新*/
-    open var footerAutoRefreshProgress:CGFloat = 1.0
+    var footerAutoRefreshProgress:CGFloat = 1.0
     /**保存当前刷新控件方向*/
-    open var orientation:RefreshViewOrientation
+    var orientation:RefreshViewOrientation
     /**保存当前刷新控件的状态*/
-    open var state : SYRefreshViewState = .stateIdle
+    var state : SYRefreshViewState = .stateIdle
     /**UIScrollView控件*/
-    open weak var scrollview:UIScrollView?{
+    weak var scrollview:UIScrollView?{
         return superview as? UIScrollView
     }
-    open var isNoMoreData:Bool = false //是否没有更多数据 
+    var isNoMoreData:Bool = false //是否没有更多数据
     
     /**是否正在刷新*/
     var isRefreshing:Bool = false
@@ -67,7 +67,7 @@ class RefreshView: UIView {
     ///   - orientaton: 控件的方向
     ///   - height: 控件的高度
     ///   - completion: 进入刷新后的回调
-    public init(orientaton: RefreshViewOrientation,height:CGFloat,completion:@escaping ()->Void) {
+    init(orientaton: RefreshViewOrientation,height:CGFloat,completion:@escaping ()->Void) {
         if orientaton == .bottom || orientaton == .right { isFooter = true }
         self.completionCallBack = completion
         self.orientation = orientaton
@@ -77,7 +77,7 @@ class RefreshView: UIView {
         self.bounds.size.height = height
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -95,7 +95,7 @@ class RefreshView: UIView {
     
     /// 设置刷新控件的状态 交给子类重写
     /// - Parameter state: 状态
-    open func setState(state:SYRefreshViewState){self.state = state}
+    func setState(state:SYRefreshViewState){self.state = state}
     
     /// 返回是否是左右刷新方向
     open func isHorizontalOrientation()->Bool{
@@ -104,12 +104,12 @@ class RefreshView: UIView {
     
     /// 将要添加到父控件的时候调用此方法 系统调用
     /// - Parameter newSuperview: 将要添加到的父控件
-    override func willMove(toSuperview newSuperview: UIView?) {
+    override public func willMove(toSuperview newSuperview: UIView?) {
         removeObserver()
     }
     
     /// 被添加到父控件上之后调用
-    override func didMoveToSuperview() {
+    override public func didMoveToSuperview() {
         panGestureRecognizer = scrollview?.panGestureRecognizer
         addObserver()
         guard let scrollview = scrollview else { return }
@@ -164,7 +164,7 @@ class RefreshView: UIView {
     ///   - object: 监听的对象
     ///   - change: 被监听的值
     ///   - context: 上下文
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         guard let scrollview = scrollview else { return }
         if keyPath == #keyPath(UIScrollView.contentOffset)  {
             contentOffsetChange()
@@ -179,7 +179,7 @@ class RefreshView: UIView {
     
     //================================监听方法===============================
     /// contentOffset 改变之后调用此方法
-    open func contentOffsetChange(){
+    public func contentOffsetChange(){
         guard let scrollview = scrollview else { return }
         if isNoMoreData { return } //如果已经全部加载完毕 直接返回
         if isRefreshing { return}
@@ -446,7 +446,7 @@ class RefreshView: UIView {
     }
     
     /// 重置刷新控件的状态
-    open func resentNoMoreData(){
+    public func resentNoMoreData(){
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
         if isHorizontalOrientation() {
             UIView.animate(withDuration: RefreshConfig.animationDuration, animations: {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TextHeaderFooter: RefreshView {
+ public class TextHeaderFooter: RefreshView {
     private var accessoryView:AccessoryView //箭头视图
     private var textItem:TextItem //文本视图
     
@@ -54,7 +54,7 @@ init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UI
     
     /// 当前的控件状态
     /// - Parameter isRefreshing: 是否正在刷新中
-    override func updateRefreshState(isRefreshing: Bool) {
+    override public func updateRefreshState(isRefreshing: Bool) {
         guard let scrollview = self.scrollview else { return }
         //重置控件状态
         if (!isFooter && scrollview.contentInset.bottom > 0 ) ||
@@ -71,7 +71,7 @@ init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UI
 
     /// 用户拖拽的比例 0 - 1
     /// - Parameter progress: 当前拖拽值
-    override func updatePullProgress(progress: CGFloat) {
+    override public func updatePullProgress(progress: CGFloat) {
      if  !isNoMoreData {
         if accessoryView.arrowLayer().isHidden {
             accessoryView.arrowLayer().isHidden = false
@@ -82,7 +82,7 @@ init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UI
     }
     
     /// 没有更多数据状态设置
-    override func noMoreData(){
+    override public func noMoreData(){
         super.noMoreData()
         textItem.noMoreData()
         accessoryView.arrowLayer().isHidden = true
@@ -91,7 +91,7 @@ init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UI
     }
     
     /// 重置控件状态
-    override  func resentNoMoreData() {
+    override  public func resentNoMoreData() {
         textItem.resentMoreData()
         accessoryView.arrowLayer().isHidden = false
         accessoryView.indicatorView.isHidden = false
@@ -100,7 +100,7 @@ init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UI
     }
     
     /// 布局子控件
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         guard let scrollview = self.scrollview else { return }
         var contentW = bounds.width
@@ -139,7 +139,7 @@ init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UI
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

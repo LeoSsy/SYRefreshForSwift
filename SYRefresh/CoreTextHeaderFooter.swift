@@ -11,7 +11,7 @@ import CoreText
 import CoreGraphics
 
 //======================== 目前不支持水平方向的文字动画 后期加上
-class CoreTextHeaderFooter: RefreshView {
+public class CoreTextHeaderFooter: RefreshView {
     fileprivate var textItem:TextItem //文本视图
     fileprivate lazy var textPathLayer:CAShapeLayer = { //创建文字形状
         let path = self.textPath()
@@ -63,14 +63,14 @@ class CoreTextHeaderFooter: RefreshView {
         self.layer.addSublayer(gradientLayer)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     /// 更新控件状态
     ///
     /// - Parameter isRefreshing: 是否正在刷新
-    override func updateRefreshState(isRefreshing: Bool) {
+    override public func updateRefreshState(isRefreshing: Bool) {
         textItem.updateRefreshState(isRefreshing: isRefreshing)
         if isRefreshing {
             self.textPathLayer.removeFromSuperlayer()
@@ -85,7 +85,7 @@ class CoreTextHeaderFooter: RefreshView {
     /// 更新拖动的比例
     ///
     /// - Parameter progress: 0 - 1
-    override func updatePullProgress(progress: CGFloat) {
+    override public func updatePullProgress(progress: CGFloat) {
         self.textItem.updatePullProgress(progress: progress)
         self.textPathLayer.path = self.textPath().cgPath
         if ((progress < 1 && progress > 0)){
@@ -95,7 +95,7 @@ class CoreTextHeaderFooter: RefreshView {
         }
     }
     /// 布局控件位置
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         let margin:CGFloat = isFooter ? -2 : 8
             self.textPathLayer.position = CGPoint(x: bounds.width * 0.5 , y: bounds.height*0.5+margin)

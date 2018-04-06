@@ -48,13 +48,13 @@ public class GifHeaderFooter: RefreshView {
     }
 
     /// 开始刷新
-    override func beginRefreshing() {
+    override public func beginRefreshing() {
         super.beginRefreshing()
         imageView.startAnimating()
     }
     
     /// 结束刷新
-    override func endRefreshing() {
+    override public func endRefreshing() {
         super.endRefreshing()
         imageView.stopAnimating()
         imageView.index = 0

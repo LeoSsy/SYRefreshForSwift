@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 s.name         = 'SYRefresh'
 s.summary      = 'Small and flexibly refresh framework for iOS UIScrollview.'
-s.version      = '1.1.1'
+s.version      = '1.1.2'
 s.swift_version = "4.0"
 s.license      = { :type => 'MIT', :file => 'LICENSE' }
 s.authors      = { 'ssy' => '781739973@qq.com' }

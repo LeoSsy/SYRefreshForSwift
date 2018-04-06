@@ -339,7 +339,7 @@ public class RefreshView: UIView {
     }
     
     /// 开始刷新
-    func beginRefreshing(){
+   public  func beginRefreshing(){
         if isRefreshing {return}
         if checkContentSizeValid() { return }
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
@@ -383,7 +383,7 @@ public class RefreshView: UIView {
     }
     
     /// 结束刷新
-    func endRefreshing(){
+   public  func endRefreshing(){
         guard let scrollview = scrollview else { return } //作用：在下面使用scrollview的时候不用解包
         if isHorizontalOrientation() {
             UIView.animate(withDuration: RefreshConfig.animationDuration, animations: {

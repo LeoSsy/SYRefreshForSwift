@@ -8,6 +8,10 @@
 
 [oc版本地址点击进入](https://github.com/shushaoyong/SYRefresh)
 
+支持pod安装：
+
+pod 'SYRefresh', '~> 1.1.2'
+
 默认刷新控件使用方法：
 	
         //添加头部刷新控件 
@@ -20,11 +24,11 @@
 
 
         tableView：
-        tableView.sy_header = TextHeader(normalText: "12", pullingText: "222", refreshingText: "333", orientation: .top, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self?.tableView.sy_header?.endRefreshing()
-            }
-        })
+        tableView.sy_header =  TextHeaderFooter(normalText:  "下拉可以刷新", pullingText:  "松手即可刷新", refreshingText:  "刷新中.....", nomoreDataText:  nil, orientation: .top, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        self.tableView.sy_header?.endRefreshing()
+        }
+        }
         
         //添加尾部刷新控件  
         scrollview：
@@ -35,11 +39,11 @@
         })
             
         tableView：
-        tableView.sy_footer = TextHeader(normalText: "12", pullingText: "222", refreshingText: "333", orientation: .bottom, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black, completion: { [weak self] in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self?.tableView.sy_footer?.endRefreshing()
-            }
-        })
+        tableView.sy_header =  TextHeaderFooter(normalText:  "下拉可以刷新", pullingText:  "松手即可刷新", refreshingText:  "刷新中.....", nomoreDataText:  “全部加在完成”, orientation: .top, height: 60, font: UIFont.systemFont(ofSize: 14), color: UIColor.black) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        self.tableView.sy_header?.endRefreshing()
+        }
+        }
 
 GIF图片刷新控件使用方法：
 

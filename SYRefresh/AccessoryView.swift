@@ -33,7 +33,7 @@ extension UIView {
     }
 }
 
-struct VerticalHintText {
+public  struct VerticalHintText {
     static let headerNomalText:String = "下拉即可刷新"   /// 头部默认状态提示文字
     static let headerPullingText:String = "松手即可刷新" ///头部拖拽状态提示文字
     static let headerRefreshText:String = "刷新中..."   ///头部刷新状态提示文字
@@ -43,7 +43,7 @@ struct VerticalHintText {
     static let footerNomoreDataText:String = "———— 别再拉了，再拉我也长不高 ————"   ///尾部刷新状态提示文字
 }
 
-struct HorizontalHintText {
+public struct HorizontalHintText {
     static let headerNomalText:String = "右边拉即可刷新"   /// 头部默认状态提示文字
     static let headerPullingText:String = "松手即可刷新" ///头部拖拽状态提示文字
     static let headerRefreshText:String = "刷新中"   ///头部刷新状态提示文字
@@ -53,14 +53,14 @@ struct HorizontalHintText {
     static let footerNomoreDataText:String = "没有更多数据"   ///尾部刷新状态提示文字
 }
 
-struct RefreshConfig {
+public struct RefreshConfig {
     static let animationDuration:TimeInterval = 0.3   /// 默认动画时间
     static let height:CGFloat = 44                     /// 默认刷新控件高度
     static let color:UIColor = UIColor.black           /// 默认字体颜色
     static let font:UIFont = UIFont.systemFont(ofSize:14)/// 默认字体大小
 }
 
-final class TextItem {
+public class TextItem {
     private let normalText:String //默认状态提示文字
     private let pullingText:String //拖拽到临界点松开即可刷新状态提示文字
     private let refreshingText:String //刷新状态提示文字
@@ -68,7 +68,7 @@ final class TextItem {
     private let font:UIFont //提示文字字体
     private let color:UIColor//提示文字颜色
     let label = UILabel()
-    init(normalText:String,pullingText:String,refreshingText:String,nomoreDataText:String?,font:UIFont,color:UIColor){
+    public init(normalText:String,pullingText:String,refreshingText:String,nomoreDataText:String?,font:UIFont,color:UIColor){
         self.normalText = normalText
         self.pullingText = pullingText
         self.refreshingText = refreshingText
@@ -82,20 +82,20 @@ final class TextItem {
     }
     
     /// 没有更多数据提示文字
-    func noMoreData(){
+   public func noMoreData(){
         self.label.text = self.nomoreDataText
         self.label.sizeToFit()
     }
     
     /// 重置更多数据提示文字
-    func resentMoreData(){
+   public func resentMoreData(){
         self.label.text = self.normalText
         self.label.sizeToFit()
     }
     
     /// 根据状态更新当前的控件提示文字
     /// - Parameter isRefreshing: 是否正在刷新
-    func updateRefreshState(isRefreshing:Bool){
+   public func updateRefreshState(isRefreshing:Bool){
         label.text =  isRefreshing ? self.refreshingText : self.normalText
         label.sizeToFit()
     }
@@ -103,13 +103,13 @@ final class TextItem {
     /// 根据拖拽比例 设置状态文字
     /// - Parameters:
     ///   - progress: 拖拽比例
-    func updatePullProgress(progress:CGFloat){
+   public func updatePullProgress(progress:CGFloat){
        label.text = progress == 1 ? self.pullingText : self.normalText
        label.sizeToFit()
     }
 }
 
-final class AccessoryView { // 不允许子类继承
+public class AccessoryView { // 不允许子类继承
     private let color :UIColor /// 视图颜色
     public  var isHorizontalOrientation:Bool = false //是否是左右刷新控件 通过外界设置
     lazy var indicatorView:UIActivityIndicatorView = {/// 菊花控件
@@ -117,7 +117,7 @@ final class AccessoryView { // 不允许子类继承
         indicatorView.hidesWhenStopped = true
         return indicatorView
     }()
-    open var isNoMoreData:Bool = false //是否没有更多数据
+    public var isNoMoreData:Bool = false //是否没有更多数据
     /// 垂直箭头控件
     lazy var arrowLayerV:CAShapeLayer =  {
         let bezierPath = UIBezierPath()
@@ -156,19 +156,19 @@ final class AccessoryView { // 不允许子类继承
     
     /// 返回当前正在显示的箭头控件
     /// - Returns: CAShapeLayer
-    func arrowLayer() -> CAShapeLayer {
+    public func arrowLayer() -> CAShapeLayer {
         return isHorizontalOrientation ? arrowLayerH : arrowLayerV
     }
     
     /// 初始化方法
     /// - Parameter color: 初始颜色
-    init(color:UIColor){
+    public init(color:UIColor){
         self.color = color
     }
 
     /// 更新当前的控件状态
     /// - Parameter isRefreshing: 是否正在刷新
-    func updateRefreshState(isRefreshing:Bool){
+    public func updateRefreshState(isRefreshing:Bool){
         if isNoMoreData == false { indicatorView.isHidden = false }
         arrowLayer().isHidden = isRefreshing
         isRefreshing ? indicatorView.startAnimating() : indicatorView.stopAnimating()
@@ -178,7 +178,7 @@ final class AccessoryView { // 不允许子类继承
     /// - Parameters:
     ///   - progress: 拖拽比例
     ///   - isFooter: 是否是尾部控件
-    func updatePullProgress(progress:CGFloat,isFooter:Bool = false){
+    public func updatePullProgress(progress:CGFloat,isFooter:Bool = false){
         if isFooter {
             arrowLayer().transform = progress == 1 ? CATransform3DIdentity : CATransform3DMakeRotation(CGFloat.pi, 0, 0, 1)
         }else{

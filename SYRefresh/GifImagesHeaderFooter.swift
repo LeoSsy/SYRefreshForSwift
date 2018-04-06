@@ -9,18 +9,16 @@
 import UIKit
 
 public class GifImagesHeaderFooter: RefreshView {
-    
     private let imageView  = UIImageView(frame: .zero)
     var images =  Dictionary<SYRefreshViewState, Array<UIImage>>()
     var durations =  Dictionary<SYRefreshViewState, Double >()
-    
     /// 创建一个GIF图片数组刷新控件
     /// - Parameters:
     ///   - orientation: 刷新控件的方向
     ///   - height: 刷新控件的高度
     ///   - contentMode: gif图片显示模式
     ///   - completion: 开始刷新之后回调
-    init(orientation:RefreshViewOrientation,height:CGFloat,contentMode:UIViewContentMode,completion:@escaping ()->Void){
+    public init(orientation:RefreshViewOrientation,height:CGFloat,contentMode:UIViewContentMode,completion:@escaping ()->Void){
         super.init(orientaton: orientation, height: height, completion: completion)
         addSubview(imageView)
         imageView.contentMode = contentMode
@@ -32,7 +30,7 @@ public class GifImagesHeaderFooter: RefreshView {
     /// - Parameters:
     ///   - state: 状态值
     ///   - images: 图片数组
-    func setRefreshState(state:SYRefreshViewState = .stateIdle,images:Array<UIImage>){
+     public func setRefreshState(state:SYRefreshViewState = .stateIdle,images:Array<UIImage>){
          setRefreshState(state: state, images: images, duration: Double(images.count)*0.1)
     }
     
@@ -43,7 +41,7 @@ public class GifImagesHeaderFooter: RefreshView {
     ///   - state: 状态值
     ///   - images: 图片数组
     ///   - duration: 动画时间
-    func setRefreshState(state:SYRefreshViewState = .stateIdle,images:Array<UIImage>,duration:TimeInterval){
+    public func setRefreshState(state:SYRefreshViewState = .stateIdle,images:Array<UIImage>,duration:TimeInterval){
         self.images[state] = images
         self.durations[state] = duration
     }

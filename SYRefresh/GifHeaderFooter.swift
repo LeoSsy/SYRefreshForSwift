@@ -17,7 +17,7 @@ public class GifHeaderFooter: RefreshView {
     ///   - height: 刷新控件的高度
     ///   - contentMode: gif图片显示模式
     ///   - completion: 开始刷新之后回调
-    init(data:Data?,orientation:RefreshViewOrientation,height:CGFloat,contentMode:UIViewContentMode,completion:@escaping ()->Void){
+    public init(data:Data?,orientation:RefreshViewOrientation,height:CGFloat,contentMode:UIViewContentMode,completion:@escaping ()->Void){
         if data != nil {
             imageView.animatedImage = GIFAnimatedImage(data: data!)
             imageView.bounds.size.height = height

@@ -11,7 +11,6 @@ import UIKit
  public class TextHeaderFooter: RefreshView {
     private var accessoryView:AccessoryView //箭头视图
     private var textItem:TextItem //文本视图
-    
     /// 创建一个刷新控件
     /// - Parameters:
     ///   - normalText: 默认状态提示文字
@@ -22,7 +21,7 @@ import UIKit
     ///   - font:   提示文字字体
     ///   - color:  提示文字颜色
     ///   - completion: 开始刷新之后回调
-init(normalText:String,pullingText:String,refreshingText:String,nomoreDataText:String?,orientation:RefreshViewOrientation,height:CGFloat,font:UIFont,color:UIColor,completion: @escaping ()->Void){
+public init(normalText:String,pullingText:String,refreshingText:String,nomoreDataText:String?,orientation:RefreshViewOrientation,height:CGFloat,font:UIFont,color:UIColor,completion: @escaping ()->Void){
         self.accessoryView = AccessoryView(color: color)
         self.textItem = TextItem(normalText: normalText, pullingText: pullingText, refreshingText: refreshingText,nomoreDataText:nomoreDataText , font: font, color: color)
         super.init(orientaton: orientation, height: height, completion: completion)
@@ -41,7 +40,7 @@ init(normalText:String,pullingText:String,refreshingText:String,nomoreDataText:S
     ///   - font:   提示文字字体
     ///   - color:  提示文字颜色
     ///   - completion: 开始刷新之后回调
-init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UIFont,color:UIColor,completion: @escaping ()->Void){
+public init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,font:UIFont,color:UIColor,completion: @escaping ()->Void){
         self.accessoryView = AccessoryView(color: color)
         self.textItem = textItem
         super.init(orientaton: orientation, height: height, completion: completion)

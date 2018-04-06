@@ -19,7 +19,7 @@ public class GifTextHeaderFooter: RefreshView {
     ///   - height: 刷新控件的高度
     ///   - contentMode: gif图片显示模式
     ///   - completion: 开始刷新之后回调
-init(data:Data?,textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,contentMode:UIViewContentMode,completion:@escaping ()->Void){
+public init(data:Data?,textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,contentMode:UIViewContentMode,completion:@escaping ()->Void){
         self.textItem = textItem
         if data != nil {
             imageView.animatedImage = GIFAnimatedImage(data: data!)

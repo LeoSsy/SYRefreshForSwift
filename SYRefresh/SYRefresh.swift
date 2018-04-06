@@ -9,7 +9,7 @@
 import UIKit
 
 /**刷新控件的状态 */
-enum SYRefreshViewState {
+public enum SYRefreshViewState {
     case stateIdle       /** 普通闲置状态 */
     case pulling        /** 松开就可以进行进行刷新的状态 */
     case refreshing   /** 正在刷新的状态 */
@@ -17,7 +17,7 @@ enum SYRefreshViewState {
 }
 
 /// 刷新控件的方向
-enum RefreshViewOrientation {
+public enum RefreshViewOrientation {
     case top     // 上边
     case left     // 左边
     case bottom//下边

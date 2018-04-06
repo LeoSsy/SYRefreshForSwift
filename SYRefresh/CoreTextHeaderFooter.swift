@@ -12,7 +12,7 @@ import CoreGraphics
 
 //======================== 目前不支持水平方向的文字动画 后期加上
 public class CoreTextHeaderFooter: RefreshView {
-    fileprivate var textItem:TextItem //文本视图
+    public var textItem:TextItem //文本视图
     fileprivate lazy var textPathLayer:CAShapeLayer = { //创建文字形状
         let path = self.textPath()
         path.move(to: CGPoint.zero)
@@ -53,7 +53,7 @@ public class CoreTextHeaderFooter: RefreshView {
     ///   - height: 刷新控件的高度
     ///   - contentMode: gif图片显示模式
     ///   - completion: 开始刷新之后回调
-    init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,completion:@escaping ()->Void){
+    public init(textItem:TextItem,orientation:RefreshViewOrientation,height:CGFloat,completion:@escaping ()->Void){
         self.textItem = textItem
         super.init(orientaton: orientation, height: height, completion: completion)
         if isHorizontalOrientation() { textItem.label.numberOfLines = 0 }
@@ -104,11 +104,11 @@ public class CoreTextHeaderFooter: RefreshView {
     }
 }
 
-extension CoreTextHeaderFooter {
+public extension CoreTextHeaderFooter {
     /// 返回字符串的字形路径
     /// - Parameter font: 字体
     /// - Returns: 字形路径
-    fileprivate func textPath()->UIBezierPath{
+    public func textPath()->UIBezierPath{
         let font:UIFont = self.textItem.label.font
         let ctFont = CTFontCreateWithName(font.fontName as CFString, font.pointSize, nil) //创建一个font的引用
         
@@ -135,7 +135,7 @@ extension CoreTextHeaderFooter {
     }
     
     /// 开始动画
-    fileprivate func startAnimation(){
+    public func startAnimation(){
         let pausedTime = self.gradientLayer.timeOffset
         self.gradientLayer.isHidden = false
         self.gradientLayer.speed = 1.0;
